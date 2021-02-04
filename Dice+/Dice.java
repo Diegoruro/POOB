@@ -52,7 +52,6 @@ public class Dice
        Random n = new Random();
        this.value = n.nextInt(6) + 1;
        delete(sq,points);
-       this.draw();
     }
     
     public void makeVisible()
