@@ -46,6 +46,14 @@ public class Dice
        draw();
     }
     
+    
+    public void moveVertical(int distance)
+    {
+       delete(sq,points);
+       yPosition += distance;
+       draw();
+    }
+    
 
     public void roll()
     {
