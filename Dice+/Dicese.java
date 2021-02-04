@@ -7,8 +7,7 @@
 public class Dicese
 {
     // instance variables - replace the example below with your own
-    private int rows;
-    private int columns;
+    private int rows, columns;
     private int dices;
     private boolean win;
     private int winningTimes;
@@ -28,6 +27,25 @@ public class Dicese
         for (int i=0; i<dices;i++)
         {
             diceseV1[i]= new Dice();
+        }
+    }
+    
+    
+    /**
+     * Constructor for objects of class DiceseV2
+     */
+    public Dicese(int n, int m)
+    {
+        rows=n;
+        this.dices=n*m;
+        columns=m;
+        diceseV2=new Dice[n][m];
+        for (int i=0; i<n;i++)
+        {
+            for (int j=0; j < m;j++)
+            {
+                diceseV2 = new Dice[i][j];
+            }
         }
     }
 
@@ -155,10 +173,20 @@ public class Dicese
      * @param  y   a sample parameter for a method
      * @return     the sum of x and y
      */
-    public void makeVisible()
+    public void playV2()
     {
-        // put your code here
-        return y;
+        Dice[][] array=this.diceseV2;
+        this.timesPlayed++;
+        for (int i=0; i<this.rows;i++)
+        {
+            for (int j=0; j < this.columns; j++)
+            {
+                array[i][j].roll();
+                array[i][j].moveHorizontal(i*155);
+                array[i][j].moveVertical(j*155);
+                array[i][j].makeVisible();
+            }
+        }
     }
 
     
