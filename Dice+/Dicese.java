@@ -157,9 +157,47 @@ public class Dicese
      */
     public void makeVisible()
     {
-        // put your code here
-        return y;
+        Dice[] array=this.diceseV1;
+        for (int j=0; j<this.dices;j++)
+            {
+                array[j].makeVisible();
+            }
     }
+    
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public void makeInvisible()
+    {
+        Dice[] array=this.diceseV1;
+        for (int j=0; j<this.dices;j++)
+            {
+                array[j].makeInvisible();
+            }
+    }
+    
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public void move(int horizontal,int vertical)
+    {
+        Dice[] array=this.diceseV1;
+        for (int j=0; j<this.dices;j++)
+            {
+                array[j].moveHorizontal(horizontal);
+                array[j].moveVertical(vertical);
+            }
+    }
+
+
 
     
     
