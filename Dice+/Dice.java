@@ -41,7 +41,7 @@ public class Dice
 
     public void moveHorizontal(int distance)
     {
-       delete(sq);
+       delete(sq,points);
        xPosition += distance;
        draw();
     }
@@ -51,7 +51,7 @@ public class Dice
     {
        Random n = new Random();
        this.value = n.nextInt(6) + 1;
-       delete(sq);
+       delete(sq,points);
        this.draw();
     }
     
@@ -64,7 +64,7 @@ public class Dice
 
     public void makeInvisible()
     {
-           delete(sq);
+           delete(sq,points);
            isVisible = false;
     }
     
@@ -149,11 +149,15 @@ public class Dice
     }
     
     
-    private void delete(Rectangle cuadro)
+    private void delete(Rectangle cuadro,Circle[] points)
     {
         if(isVisible) {
             Canvas canvas = Canvas.getCanvas();
             canvas.erase(cuadro);
+            for (int i=0; i<6;i++)
+            {
+                canvas.erase(points[i]);
+            }
         }
     }
 }
