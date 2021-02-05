@@ -44,7 +44,7 @@ public class Dicese
         {
             for (int j=0; j < m;j++)
             {
-                diceseV2 = new Dice[i][j];
+                diceseV2[i][j] = new Dice();
             }
         }
     }
@@ -87,12 +87,16 @@ public class Dicese
             if (dice2-dice1==1||dice2-dice1==0)
             {
                 this.win=true;
-                this.winningTimes++;
             }
             else
             {
                 this.win=false;
+                break;
             }
+        }
+        if (this.win==true)
+        {
+            this.winningTimes++;
         }
         return this.win;
     }
@@ -166,30 +170,24 @@ public class Dicese
     }
     
     
-    
     /**
      * An example of a method - replace this comment with your own
      *
      * @param  y   a sample parameter for a method
      * @return     the sum of x and y
      */
-    public void playV2()
+    public void makeVisible()
     {
-        Dice[][] array=this.diceseV2;
-        this.timesPlayed++;
-        for (int i=0; i<this.rows;i++)
-        {
-            for (int j=0; j < this.columns; j++)
+        Dice[] array=this.diceseV1;
+        for (int j=0; j<this.dices;j++)
             {
-                array[i][j].roll();
-                array[i][j].moveHorizontal(i*155);
-                array[i][j].moveVertical(j*155);
-                array[i][j].makeVisible();
+                array[j].makeVisible();
             }
-        }
     }
 
-/**
+    
+    
+    /**
      * An example of a method - replace this comment with your own
      *
      * @param  y   a sample parameter for a method
@@ -220,6 +218,218 @@ public class Dicese
                 array[j].moveVertical(vertical);
             }
     
+    }
+    /** -----------------------------------------v2-----------------------------------------*/
     
     
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public void playV2()
+    {
+        Dice[][] array=this.diceseV2;
+        this.timesPlayed++;
+        for (int i=0; i<this.rows;i++)
+        {
+            for (int j=0; j < this.columns; j++)
+            {
+                array[i][j].roll();
+                array[i][j].moveHorizontal(j*155);
+                array[i][j].moveVertical(i*155);
+                array[i][j].makeVisible();
+            }
+        }
+    }
+
+
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public void playV2(int times)
+    {
+        Dice[][] array=this.diceseV2;
+        this.timesPlayed++;
+        for (int i=0; i<times;i++)
+        {
+            for (int j=0; j<this.rows;j++)
+            {
+                for (int k=0; k < this.columns; k++)
+                {
+                    array[j][k].roll();
+                    array[j][k].moveHorizontal(k*155);
+                    array[j][k].moveVertical(j*155);
+                    array[j][k].makeVisible();
+                }
+            }
+            for (int j=0; j<this.rows;j++)
+            {
+                for (int k=0; k<this.columns; k++)
+                {
+                    array[j][k].makeInvisible();
+                    array[j][k].moveHorizontal(k*-155);
+                    array[j][k].moveVertical(j*-155);
+                }
+            }
+        
+            if (winningDiag()||winningVert()||winningHorz()||winningDiag2())
+            {
+                this.win=true;
+            }
+            else
+            {
+                this.win=false;
+            }
+            System.out.println(this.win);
+        }
+    }
+    
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public boolean winningDiag()
+    {
+       Dice[][] array=this.diceseV2;
+       int dice1=0;
+       int dice2=0;
+       for (int j=0; j<this.rows-1;j++)
+            {
+                dice1=array[j][j].getValue();
+                dice2=array[j+1][j+1].getValue();
+                if (dice2-dice1==1||dice2-dice1==0)
+                {
+                    this.win=true;
+                }
+                else
+                {
+                    this.win=false;
+                    break;
+                }
+            }
+       if (this.win==true)
+        {
+            this.winningTimes++;
+        }
+       return this.win;
+    }
+    
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public boolean winningDiag2()
+    {
+       Dice[][] array=this.diceseV2;
+       int dice1=0;
+       int dice2=0;
+       int i=array.length-1;
+       for (int j=0; j<this.rows-1;j++)
+            {
+                dice1=array[i][j].getValue();
+                dice2=array[i-1][j+1].getValue();
+                if ((dice2-dice1)==1||(dice2-dice1)==0)
+                {
+                    this.win=true;
+                }
+                else
+                {
+                    this.win=false;
+                    break;
+                }
+                i--;
+            }
+       if (this.win==true)
+        {
+            this.winningTimes++;
+        }
+       return this.win;
+    }
+
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public boolean winningVert()
+    {
+       Dice[][] array=this.diceseV2;
+       int dice1=0;
+       int dice2=0;
+       for (int j=0; j<this.columns-1;j++)
+            {
+                for (int i=0; i<this.rows-1;i++)
+                {
+                    dice1=array[i][j].getValue();
+                    dice2=array[i+1][j].getValue();
+                    if (dice2-dice1==1||dice2-dice1==0)
+                    {
+                        this.win=true;
+                    }
+                    else
+                    {
+                        this.win=false;
+                        break;
+                    }
+                } 
+            }
+       if (this.win==true)
+        {
+            this.winningTimes++;
+        }
+       return this.win;
+    }
+    
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public boolean winningHorz()
+    {
+        Dice[][] array=this.diceseV2;
+       int dice1=0;
+       int dice2=0;
+       for (int j=0; j<this.rows-1;j++)
+            {
+                for (int i=0; i<this.columns-1;i++)
+                {
+                    dice1=array[j][i].getValue();
+                    dice2=array[j][i+1].getValue();
+                    if (dice2-dice1==1||dice2-dice1==0)
+                    {
+                        this.win=true;
+                    }
+                    else
+                    {
+                        this.win=false;
+                        break;
+                    }
+                } 
+            }
+       if (this.win==true)
+        {
+            this.winningTimes++;
+        }
+       return this.win;
+    }
+
+
+
 }
