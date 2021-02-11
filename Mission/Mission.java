@@ -7,7 +7,6 @@ import java.util.ArrayList;
  */
 public class Mission
 {
-    // instance variables - replace t   he example below with your own
     public int lenght;
     public int width;
     public Rectangle[][] bodegaTop;
