@@ -17,15 +17,15 @@ public class Rectangle{
     private int width;
     private int xPosition;
     private int yPosition;
-    private String color;
+    public String color;
     private boolean isVisible;
 
     /**
      * Create a new rectangle at default position with default color.
      */
     public Rectangle(){
-        height = 40;
-        width = 40;
+        height = 18;
+        width = 18;
         xPosition = 70;
         yPosition = 15;
         color = "magenta";
