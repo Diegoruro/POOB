@@ -12,14 +12,16 @@ public class Mission
     public int width;
     private static final int size=20;
     public int stolenCrates=0;
+    public int lastStolenCrates=0;
     public Rectangle[][] bodegaTop;
     public Rectangle[][] bodegaLado;
     public Rectangle[][] bodegaEntry;
     public Rectangle[][] planBodegaTop;
     public Rectangle[][] planBodegaLado;
     public Rectangle[][] planBodegaEntry;
-    public ArrayList<Integer[]> robadas;
+    public ArrayList<String> robadas;
     public int[][] valores;
+    public int[][] planValores;
     /**
      * Constructor for objects of class Mission
      */
@@ -46,11 +48,13 @@ public class Mission
         this.planBodegaLado=new Rectangle[largo][ancho];
         this.planBodegaEntry=new Rectangle[largo][ancho];
         this.valores=new int[largo][ancho];
+        this.planValores=new int[largo][ancho];
         for (int i=0;i<largo;i++)
         {
             for (int j=0;j<ancho;j++)
             {   
                 this.valores[i][j]=0;
+                this.planValores[i][j]=0;
                 this.bodegaTop[i][j]=new Rectangle();
                 this.bodegaLado[i][j]=new Rectangle();
                 this.bodegaEntry[i][j]=new Rectangle();
@@ -96,11 +100,18 @@ public class Mission
     {
         i--;
         j--;
-        this.valores[i][j]+=1;
-        this.bodegaTop[i][j].changeColor("blue");
-        this.bodegaLado[this.width-this.valores[i][j]][i].changeColor("blue");
-        this.bodegaEntry[this.lenght-this.valores[i][j]][j].changeColor("blue");
-    }
+        if (this.valores[i][j]<this.lenght||this.valores[i][j]<this.width)
+        {
+            this.valores[i][j]+=1;
+            this.bodegaTop[i][j].changeColor("blue");
+            this.bodegaLado[this.width-this.valores[i][j]][i].changeColor("blue");
+            this.bodegaEntry[this.lenght-this.valores[i][j]][j].changeColor("blue");
+        }   
+        else
+        {
+            System.out.println("no hay espacio para guardar esta caja");
+        }
+    } 
 
     
     /**
@@ -123,11 +134,13 @@ public class Mission
      */
     public void copy()
     {   
+        
         for (int i=0;i<this.lenght;i++)
         {
             for (int j=0;j<this.width;j++)
             {   
                 int x=this.valores[i][j];
+                this.planValores[i][j]=this.valores[i][j];
                 if (x>0)
                 {
                     for (int k=this.valores[i][j];k>0;k--)
@@ -142,6 +155,8 @@ public class Mission
                 this.planBodegaEntry[i][j].makeVisible();
             }
         }
+        this.lastStolenCrates=this.stolenCrates;
+        this.stolenCrates=0;
     }
     
     
@@ -152,16 +167,24 @@ public class Mission
      * @return     the sum of x and y
      */
     public void steal(int i,int j)
-    {   
+    {
         i--;
         j--;
-        //haga el if pedazo de mierda :3
-        Integer[] crate=new Integer[2];
-        this.robadas.add(crate);
-        this.stolenCrates++;
-        this.planBodegaTop[i][j].changeColor("yellow");
-        this.planBodegaLado[this.width-this.valores[i][j]][i].changeColor("yellow");
-        this.planBodegaEntry[this.lenght-this.valores[i][j]][j].changeColor("yellow");
+        if (this.planValores[i][j]>0)
+        {
+            
+            String crate=i+"-"+j;
+            this.robadas.add(crate);
+            this.stolenCrates++;
+            this.planBodegaTop[i][j].changeColor("yellow");
+            this.planBodegaLado[this.width-this.planValores[i][j]][i].changeColor("yellow");
+            this.planBodegaEntry[this.lenght-this.planValores[i][j]][j].changeColor("yellow");
+            this.planValores[i][j]-=1;
+        }
+        else
+        {
+            System.out.println("no hay nada que robar en esta posición");
+        }
     }
     
     
@@ -185,11 +208,71 @@ public class Mission
      */
     public void returnCrate()
     {   
-        //int newRow = Integer.parseInt(pos[0]);
-        //int newCol = Integer.parseInt(pos[1]);
-        //this.planBodegaTop[i][j].changeColor("blue");
-        //this.planBodegaLado[this.width-this.valores[i][j]][i].changeColor("blue");
-        //this.planBodegaEntry[this.lenght-this.valores[i][j]][j].changeColor("blue");
+        String lastCrate = this.robadas.get(this.robadas.size() - 1);
+        String coordenada[] = lastCrate.split("-");
+
+        int i = Integer.parseInt(coordenada[0]);
+        int j = Integer.parseInt(coordenada[1]);
+        this.planValores[i][j]+=1;
+        if (this.planValores[i][j]>1)
+        {
+            this.planBodegaTop[i][j].changeColor("blue");
+            this.planBodegaLado[this.width-this.planValores[i][j]][i].changeColor("blue");
+            this.planBodegaEntry[this.lenght-this.planValores[i][j]][j].changeColor("blue");
+        }
+        else
+        {
+            this.planBodegaLado[this.width-this.planValores[i][j]][i].changeColor("blue");
+            this.planBodegaEntry[this.lenght-this.planValores[i][j]][j].changeColor("blue"); 
+        }
     }
 
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public void arrange(int[] from,int[] to)
+    {
+        int i=from[0];
+        int j=from[1];
+        int k=to[0];
+        int l=to[1];
+        i--;
+        j--;
+        k--;
+        l--;
+        this.planValores[i][j]+=1;
+        if (this.planValores[i][j]>1 && (this.planValores[k][l]<this.lenght && this.planValores[k][l]<this.width))
+        {
+            this.planBodegaTop[i][j].changeColor("magenta");
+            this.planBodegaLado[this.width-this.planValores[i][j]][i].changeColor("magenta");
+            this.planBodegaEntry[this.lenght-this.planValores[i][j]][j].changeColor("magenta");
+            this.planValores[i][j]-=1;
+            this.planBodegaTop[k][l].changeColor("blue");
+            this.planBodegaLado[this.width-this.planValores[k][l]][k].changeColor("blue");
+            this.planBodegaEntry[this.lenght-this.planValores[k][l]][l].changeColor("blue");
+        }
+        else
+        {
+            System.out.println("no hay nada que mover en esta posición o no hay espacio en la posicion a mover");
+        }
+    }
+
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public int stolen()
+    {
+        return this.lastStolenCrates;
+    }
+    
+    
+    
 }
