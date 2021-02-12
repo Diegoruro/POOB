@@ -20,6 +20,7 @@ public class Mission
     public Rectangle[][] planBodegaLado;
     public Rectangle[][] planBodegaEntry;
     public ArrayList<String> robadas;
+    public boolean sePudo;
     public int[][] valores;
     public int[][] planValores;
     /**
@@ -34,13 +35,15 @@ public class Mission
     }
 
     /**
-     * An example of a method - replace this comment with your own
+     * Este metodo crea las bodegas, tanto la bodega de la camara como la bodega del plan con las 3 camaras
      * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
+     * @param  void
+     * @return void
      */
     public void crearBodega(int largo,int ancho)
     {
+        this.lenght=largo;
+        this.width=ancho;
         this.bodegaTop=new Rectangle[largo][ancho];
         this.bodegaLado=new Rectangle[largo][ancho];
         this.bodegaEntry=new Rectangle[largo][ancho];
@@ -91,10 +94,10 @@ public class Mission
     
     
     /**
-     * An example of a method - replace this comment with your own
+     * Guarda una caja en la bodega real
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @param  i,j   1,1
+     * @return     void
      */
     public void store(int i, int j)
     {
@@ -106,10 +109,12 @@ public class Mission
             this.bodegaTop[i][j].changeColor("blue");
             this.bodegaLado[this.width-this.valores[i][j]][i].changeColor("blue");
             this.bodegaEntry[this.lenght-this.valores[i][j]][j].changeColor("blue");
+            this.sePudo=true;
         }   
         else
         {
             System.out.println("no hay espacio para guardar esta caja");
+            this.sePudo=false;
         }
     } 
 
@@ -127,10 +132,10 @@ public class Mission
 
     
     /**
-     * An example of a method - replace this comment with your own
+     * hace una copia de la bodega desde sus 3 puntos de vista
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @param  void
+     * @return void
      */
     public void copy()
     {   
@@ -157,14 +162,15 @@ public class Mission
         }
         this.lastStolenCrates=this.stolenCrates;
         this.stolenCrates=0;
+        this.sePudo=true;
     }
     
     
     /**
-     * An example of a method - replace this comment with your own
+     * Roba una caja de la bodega en el plan.
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @param  i,j 1,1
+     * @return void
      */
     public void steal(int i,int j)
     {
@@ -180,19 +186,21 @@ public class Mission
             this.planBodegaLado[this.width-this.planValores[i][j]][i].changeColor("yellow");
             this.planBodegaEntry[this.lenght-this.planValores[i][j]][j].changeColor("yellow");
             this.planValores[i][j]-=1;
+            this.sePudo=true;
         }
         else
         {
             System.out.println("no hay nada que robar en esta posición");
+            this.sePudo=false;
         }
     }
     
     
     /**
-     * An example of a method - replace this comment with your own
+     * Roba una caja de la bodega en el plan.
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @param  [i,j] {2,3}
+     * @return void
      */
     public void steal(int[] crate)
     {
@@ -201,10 +209,10 @@ public class Mission
 
     
     /**
-     * An example of a method - replace this comment with your own
+     * Devuelve la ultima caja a su posicion original.
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @param  void
+     * @return void
      */
     public void returnCrate()
     {   
@@ -219,20 +227,22 @@ public class Mission
             this.planBodegaTop[i][j].changeColor("blue");
             this.planBodegaLado[this.width-this.planValores[i][j]][i].changeColor("blue");
             this.planBodegaEntry[this.lenght-this.planValores[i][j]][j].changeColor("blue");
+            this.sePudo=true;
         }
         else
         {
             this.planBodegaLado[this.width-this.planValores[i][j]][i].changeColor("blue");
-            this.planBodegaEntry[this.lenght-this.planValores[i][j]][j].changeColor("blue"); 
+            this.planBodegaEntry[this.lenght-this.planValores[i][j]][j].changeColor("blue");
+            this.sePudo=true; 
         }
     }
 
     
     /**
-     * An example of a method - replace this comment with your own
+     * Mueve una caja de una posicion a otra si hay espacio en el lugar a mover.
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @param  from[] to[] {1,1} {1,2} 
+     * @return void
      */
     public void arrange(int[] from,int[] to)
     {
@@ -254,19 +264,21 @@ public class Mission
             this.planBodegaTop[k][l].changeColor("blue");
             this.planBodegaLado[this.width-this.planValores[k][l]][k].changeColor("blue");
             this.planBodegaEntry[this.lenght-this.planValores[k][l]][l].changeColor("blue");
+            this.sePudo=true;
         }
         else
         {
             System.out.println("no hay nada que mover en esta posición o no hay espacio en la posicion a mover");
+            this.sePudo=false;
         }
     }
 
     
     /**
-     * An example of a method - replace this comment with your own
+     * Calcula la cantidad de cajas robadas.
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @param  void
+     * @return la cantidad de cajas robadas
      */
     public int stolen()
     {
@@ -274,5 +286,113 @@ public class Mission
     }
     
     
+    /**
+     * verifica la cantidad de cajas que hay en la bodega real.
+     *
+     * @param  void
+     * @return Devuelve la matriz de valores de la bodega real.
+     */
+    public int[][] warehouse()
+    {
+        return this.valores;
+    }
     
+    
+    /**
+     * verifica la cantidad de cajas que hay en la bodega del plan.
+     *
+     * @param  void
+     * @return Devuelve la matriz de valores de la bodega del plan.
+     */
+    public int[][] layout()
+    {
+        return this.planValores;
+    }
+
+    
+    /**
+     * Hace visible todas las camaras y los planos de la bodega.
+     *
+     * @param  void
+     * @return void
+     */
+    public void makeVisible()
+    {
+        for (int i=0;i<this.lenght;i++)
+        {
+           for (int j=0;j<this.width;j++)
+           {
+              this.bodegaTop[i][j].makeVisible();
+              this.bodegaLado[i][j].makeVisible();
+              this.bodegaEntry[i][j].makeVisible();
+              this.planBodegaTop[i][j].makeVisible();
+              this.planBodegaLado[i][j].makeVisible();
+              this.planBodegaEntry[i][j].makeVisible();
+           } 
+        }
+    }
+
+    
+    /**
+     * Oculta todas las camaras y planos de la bodega.
+     *
+     * @param  void
+     * @return void
+     */
+    public void makeInvisible()
+    {
+        for (int i=0;i<this.lenght;i++)
+        {
+           for (int j=0;j<this.width;j++)
+           {
+              this.bodegaTop[i][j].makeInvisible();
+              this.bodegaLado[i][j].makeInvisible();
+              this.bodegaEntry[i][j].makeInvisible();
+              this.planBodegaTop[i][j].makeInvisible();
+              this.planBodegaLado[i][j].makeInvisible();
+              this.planBodegaEntry[i][j].makeInvisible();
+           } 
+        }
+    }
+
+    
+    /**
+     * Acaba con el simulador y reincia todos los datos.
+     *
+     * @param  void
+     * @return void
+     */
+    public void finish()
+    {
+      this.makeInvisible();
+      this.stolenCrates=0;
+      this.lastStolenCrates=0;
+      this.robadas.clear();
+      for (int i=0;i<this.lenght;i++)
+        {
+           for (int j=0;j<this.width;j++)
+           {
+              this.bodegaTop[i][j].changeColor("green");
+              this.bodegaLado[i][j].changeColor("green");
+              this.bodegaEntry[i][j].changeColor("green");;
+              this.planBodegaTop[i][j].changeColor("magenta");
+              this.planBodegaLado[i][j].changeColor("magenta");
+              this.planBodegaEntry[i][j].changeColor("magenta");
+              this.planValores[i][j]=0;
+              this.valores[i][j]=0;
+           } 
+      }
+    }
+    
+    /**
+     * Verifica si la ultima accion se pudo realizar
+     *
+     * @param  void
+     * @return Devuelve un valor booleano dependiendo si se pudo realizar la accion.
+     */
+    public boolean ok()
+    {
+        return this.sePudo;
+    }
+
 }
