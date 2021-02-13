@@ -26,7 +26,7 @@ public class Canvas{
 	 */
 	public static Canvas getCanvas(){
 		if(canvasSingleton == null) {
-			canvasSingleton = new Canvas("BlueJ Shapes Demo", 1200, 1200, 
+			canvasSingleton = new Canvas("BlueJ Shapes Demo", 300, 300, 
 										 Color.white);
 		}
 		canvasSingleton.setVisible(true);
@@ -152,7 +152,7 @@ public class Canvas{
 	private void redraw(){
 		erase();
 		for(Iterator i=objects.iterator(); i.hasNext(); ) {
-                       shapes.get(i.next()).draw(graphic);
+            ((ShapeDescription)shapes.get(i.next())).draw(graphic);
         }
         canvas.repaint();
     }
@@ -164,7 +164,7 @@ public class Canvas{
         Color original = graphic.getColor();
         graphic.setColor(backgroundColour);
         Dimension size = canvas.getSize();
-        graphic.fill(new java.awt.Rectangle(0, 0, size.width, size.height));
+        graphic.fill(new Rectangle(0, 0, size.width, size.height));
         graphic.setColor(original);
     }
 
@@ -196,7 +196,6 @@ public class Canvas{
 
 		public void draw(Graphics2D graphic){
 			setForegroundColor(colorString);
-			graphic.draw(shape);
 			graphic.fill(shape);
 		}
     }
