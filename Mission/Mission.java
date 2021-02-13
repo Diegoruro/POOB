@@ -22,6 +22,8 @@ public class Mission
     public boolean sePudo;
     public int[][] valores;
     public int[][] planValores;
+    
+    
     /**
      * Constructor for objects of class Mission
      */
@@ -115,14 +117,17 @@ public class Mission
             System.out.println("no hay espacio para guardar esta caja");
             this.sePudo=false;
         }
+        if (this.planBodegaTop[0][0].isVisible){
+            this.colorDifferent();
+        }
     } 
 
     
     /**
-     * An example of a method - replace this comment with your own
+     * Guarda una caja en la bodega real
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @param  i,j   1,1
+     * @return     void
      */
     public void store(int[] crate)
     {
@@ -131,7 +136,7 @@ public class Mission
 
     
     /**
-     * hace una copia de la bodega desde sus 3 puntos de vista
+     * Hace una copia de la bodega desde sus 3 puntos de vista
      *
      * @param  void
      * @return void
@@ -162,6 +167,7 @@ public class Mission
         this.lastStolenCrates=this.stolenCrates;
         this.stolenCrates=0;
         this.sePudo=true;
+        this.colorDifferent();
     }
     
     
@@ -192,6 +198,7 @@ public class Mission
             System.out.println("no hay nada que robar en esta posición");
             this.sePudo=false;
         }
+        this.colorDifferent();
     }
     
     
@@ -234,6 +241,7 @@ public class Mission
             this.planBodegaEntry[this.lenght-this.planValores[i][j]][j].changeColor("blue");
             this.sePudo=true; 
         }
+        this.colorDifferent();
     }
 
     
@@ -270,6 +278,7 @@ public class Mission
             System.out.println("no hay nada que mover en esta posición o no hay espacio en la posicion a mover");
             this.sePudo=false;
         }
+        this.colorDifferent();
     }
 
     
@@ -392,6 +401,49 @@ public class Mission
     public boolean ok()
     {
         return this.sePudo;
+    }
+
+    
+    /**
+     * Verifica si la bodega original y la del plan son iguales
+     *
+     * @param       void
+     * @return      Booleano según si son iguales o no
+     */
+    private boolean areEqual()
+    {
+        for (int i = 0; i < this.lenght; i++){
+            for (int j = 0; j < this.width; j++){
+                if (this.valores[i][j] != this.planValores[i][j]){
+                    System.out.println(this.valores[i][j]);
+                    System.out.println(this.planValores[i][j]);
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    private void colorDifferent()
+    {
+        if (this.areEqual() == false){
+            for (int i=0;i<this.lenght;i++)
+            {
+                for (int j=0;j<this.width;j++)
+                {
+                  this.planBodegaTop[i][j].changeColor("red");
+                  this.planBodegaLado[i][j].changeColor("red");
+                  this.planBodegaEntry[i][j].changeColor("red");
+               } 
+          }
+        }
     }
 
 }
