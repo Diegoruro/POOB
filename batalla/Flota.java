@@ -15,6 +15,7 @@ public class Flota {
     {
         id = 123;
         minTrips = 500;
+        this.nombre=nombre;
         score=new int[3];
         barcos=new ArrayList<Barco>();
         aviones = new ArrayList<Avion>();
@@ -74,9 +75,8 @@ public class Flota {
          }else{
              enemigo = this.flotas.get(0);
          }
-         System.out.println(enemigo);
+         
          for (int i = 0; i < enemigo.aviones.size();i++){
-             System.out.println(enemigo.aviones.get(i).getEnAire());
              if (enemigo.aviones.get(i).getEnAire()){
                  ans.add(enemigo.aviones.get(i).getPlaca());
              }
