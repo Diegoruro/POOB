@@ -9,6 +9,7 @@ public class Flota {
     private ArrayList<Avion> aviones;
     private ArrayList<PortaAviones> portaAviones;
     private ArrayList<Marino> marinos;
+    public static ArrayList<Flota> flotas=new ArrayList();
 
     public Flota(String nombre)
     {
@@ -21,8 +22,8 @@ public class Flota {
     public void createBarco(int num)
     {
         barcos=new ArrayList<Barco>();
-        barcos.add(new Barco(num));
-        
+        Barco barco=new Barco(num);
+        barcos.add(barco);
     }
     
     /**
