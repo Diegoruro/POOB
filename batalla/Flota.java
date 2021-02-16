@@ -5,6 +5,8 @@ public class Flota {
     public final int minTrips;
     public int [] score;
     public String nombre;
+    private int avionesCargados=0;
+    private int capacidadPorta=0;
     private ArrayList<Barco> barcos;
     private ArrayList<Avion> aviones;
     private ArrayList<PortaAviones> portaAviones;
@@ -15,6 +17,7 @@ public class Flota {
     {
         id = 123;
         minTrips = 500;
+        this.nombre=nombre;
         score=new int[3];
         barcos=new ArrayList<Barco>();
         aviones = new ArrayList<Avion>();
@@ -30,7 +33,6 @@ public class Flota {
     {
         Barco barco = new Barco(num);
         barcos.add(barco);
-        
     }
     
     
@@ -40,9 +42,32 @@ public class Flota {
     public void createAvion(String placa, boolean enAire)
     {
         Avion avion = new Avion(placa, enAire);
+        if (enAire==false&&this.portaAviones.size()>0)
+        {
+            avionesCargados++;
+        }
+        else if (enAire==false&&this.portaAviones.size()==0)
+        {
+            System.out.println("no tienes porta-aviones donde dejar este avion");
+        }
         aviones.add(avion);
         
     }
+    
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public void createPortaAviones(int numero,int capacidad)
+    {
+        PortaAviones portaAvion= new PortaAviones(numero, capacidad);
+        this.capacidadPorta=this.capacidadPorta+capacidad;
+        portaAviones.add(portaAvion);
+    }
+
     
     
     /**
@@ -75,14 +100,55 @@ public class Flota {
          }else{
              enemigo = this.flotas.get(0);
          }
-         System.out.println(enemigo);
+         
          for (int i = 0; i < enemigo.aviones.size();i++){
-             System.out.println(enemigo.aviones.get(i).getEnAire());
              if (enemigo.aviones.get(i).getEnAire()){
                  ans.add(enemigo.aviones.get(i).getPlaca());
              }
          }
          return ans;
+    }
+
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public int disponibilidadEnPortaAviones()
+    {
+       return this.capacidadPorta-this.avionesCargados;
+    }
+
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public boolean problemaEnAire()
+    {
+        boolean ans=false;
+        Flota enemigo;
+         if (this.nombre == this.flotas.get(0).nombre){
+             enemigo = this.flotas.get(1);
+         }else{
+             enemigo = this.flotas.get(0);
+         }
+         
+        for (int i=0;i<this.aviones.size();i++)
+        {
+            for(int j=0;j<enemigo.aviones.size();j++)
+            {
+                if (this.aviones.get(i).getPlaca()==enemigo.aviones.get(j).getPlaca())
+                {
+                    ans=true;
+                }
+            }
+        }
+        return ans;
     }
 
 }
