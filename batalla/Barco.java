@@ -16,6 +16,16 @@ public class Barco {
     }
     
     
+    /**
+     * Retorna la posición del barco
+     *
+     * @return Position coordenadas del barco
+     */
+    public Posicion getPosition(){
+        return this.ubicacion;
+    }
+    
+    
     public void movePosition(int deltaLongitud,int deltaLatitud)
     {   //cambiar posicion de los barcos
         this.ubicacion.movePosition(deltaLongitud,deltaLatitud);

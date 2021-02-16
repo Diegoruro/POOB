@@ -4,6 +4,8 @@ public class Tablero {
     public final int[] latitud;
     public final int[] longitud;
     public ArrayList<Flota> flotas;
+    public Flota flota1;
+    public Flota flota2;
     
     public Tablero()
     {
@@ -13,6 +15,6 @@ public class Tablero {
        latitud[1]=100;
        longitud[0]=-100;
        longitud[1]=100;
-       flotas=new ArrayList<Flota>();
+       flotas=flota1.flotas;
     }
 }
