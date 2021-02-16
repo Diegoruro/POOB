@@ -13,6 +13,12 @@ public class Flota {
     private ArrayList<Marino> marinos;
     public static ArrayList<Flota> flotas = new ArrayList<Flota>(2);
 
+    
+    /**
+     * Flota Constructor
+     *
+     * @param nombre: Nombre propio de la flota
+     */
     public Flota(String nombre)
     {
         id = 123;
@@ -26,8 +32,11 @@ public class Flota {
         this.flotas.add(this);
     }
     
+    
     /**
-     * 
+     * Método createBarco: Crea un barco con su respectivo numero identificador
+     *
+     * @param num: Numero identificador del barco
      */
     public void createBarco(int num)
     {
@@ -37,7 +46,10 @@ public class Flota {
     
     
     /**
-     * 
+     * Método createAvion: Crea un avion con su respectiva placa y se indica si este esta volando o esta cargado en un portaavion.
+     *
+     * @param placa: Placa del avion
+     * @param enAire: Boolean que indica si el avion esta en el aire o en un portaavion 
      */
     public void createAvion(String placa, boolean enAire)
     {
@@ -55,11 +67,12 @@ public class Flota {
     }
     
     
+    
     /**
-     * An example of a method - replace this comment with your own
+     * Método createPortaAviones: Crea un portaavion con su respectivo numero y la capacidad que tiens¿e
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @param numero: Numero identificador del portaavion
+     * @param capacidad: La capacidad del portaavion
      */
     public void createPortaAviones(int numero,int capacidad)
     {
@@ -68,13 +81,12 @@ public class Flota {
         portaAviones.add(portaAvion);
     }
 
-    
-    
+
     /**
-     * An example of a method - replace this comment with your own
+     * Método muevase: Mueve todos los barcos en una misma direccion
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @param deltaLongitud: Longitud del movimiento
+     * @param deltaLatitud: Longitud del movimiento
      */
     public void muevase(int deltaLongitud,int deltaLatitud)
     {
@@ -85,11 +97,11 @@ public class Flota {
     }
 
     
+    
     /**
-     * An example of a method - replace this comment with your own
+     * Método enAire: Halla todas las placas de los aviones enemigos que estan volando.
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @return Una ArrayList con las placas de los aviones enemigos que estan volando.
      */
     public  ArrayList<String> enAire()
     {
@@ -110,11 +122,11 @@ public class Flota {
     }
 
     
+    
     /**
-     * An example of a method - replace this comment with your own
+     * Método disponibilidadEnPortaAviones: Calcula la capacidad total para cargar aviones en los portaaviones
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @return la capacidad total de los portaaviones
      */
     public int disponibilidadEnPortaAviones()
     {
@@ -122,11 +134,11 @@ public class Flota {
     }
 
     
+    
     /**
-     * An example of a method - replace this comment with your own
+     * Método problemaEnAire: Compara y verifica si es posible confundir la placa de un avion aliado con la placa de un avion enemigo.
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @return si es posible confundirse.
      */
     public boolean problemaEnAire()
     {

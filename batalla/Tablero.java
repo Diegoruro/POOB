@@ -15,8 +15,6 @@ public class Tablero {
        latitud[1]=100;
        longitud[0]=-100;
        longitud[1]=100;
-       flota1=new Flota("LA GRAN FLOTA BLANCA");
-       flota2=new Flota("LA GRAN ARMADA DE CASTILLA");
        flotas=flota1.flotas;
     }
 }
