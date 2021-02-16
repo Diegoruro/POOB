@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 
 public class Flota {
@@ -92,7 +93,13 @@ public class Flota {
     {
         for(Barco b:barcos)
         {
-            b.movePosition(deltaLongitud,deltaLatitud);
+            if (((b.getPosition().getLongitud() + deltaLongitud) < 100) &&
+                ((b.getPosition().getLongitud() + deltaLongitud) > -100) &&
+                ((b.getPosition().getLatitud() + deltaLatitud) < 100) &&
+                ((b.getPosition().getLatitud() + deltaLatitud) > -100)){
+                b.movePosition(deltaLongitud,deltaLatitud);
+        
+            }
         }
     }
 
