@@ -1,5 +1,5 @@
 #BlueJ package file
-dependency1.from=Barco
+dependency1.from=Avion
 dependency1.to=Posicion
 dependency1.type=UsesDependency
 dependency10.from=Flota
@@ -8,6 +8,7 @@ dependency10.type=UsesDependency
 dependency11.from=Flota
 dependency11.to=PortaAviones
 dependency11.type=UsesDependency
+<<<<<<< HEAD
 dependency12.from=Flota
 dependency12.to=Marino
 dependency12.type=UsesDependency
@@ -28,6 +29,25 @@ dependency6.to=Avion
 dependency6.type=UsesDependency
 dependency7.from=Avion
 dependency7.to=Posicion
+=======
+dependency2.from=PortaAviones
+dependency2.to=Posicion
+dependency2.type=UsesDependency
+dependency3.from=PortaAviones
+dependency3.to=Marino
+dependency3.type=UsesDependency
+dependency4.from=PortaAviones
+dependency4.to=Avion
+dependency4.type=UsesDependency
+dependency5.from=Tablero
+dependency5.to=Flota
+dependency5.type=UsesDependency
+dependency6.from=Barco
+dependency6.to=Posicion
+dependency6.type=UsesDependency
+dependency7.from=Barco
+dependency7.to=Marino
+>>>>>>> d14b959ca74c6121b0a687a1ae8f47f058260ea4
 dependency7.type=UsesDependency
 dependency8.from=Avion
 dependency8.to=Marino
@@ -35,6 +55,7 @@ dependency8.type=UsesDependency
 dependency9.from=Flota
 dependency9.to=Barco
 dependency9.type=UsesDependency
+<<<<<<< HEAD
 editor.fx.0.height=1416
 editor.fx.0.width=2576
 editor.fx.0.x=-8
@@ -44,6 +65,17 @@ objectbench.width=1896
 package.divider.horizontal=0.5394736842105263
 package.divider.vertical=0.7866108786610879
 package.editor.height=745
+=======
+editor.fx.0.height=739
+editor.fx.0.width=816
+editor.fx.0.x=982
+editor.fx.0.y=48
+objectbench.height=193
+objectbench.width=1133
+package.divider.horizontal=0.6
+package.divider.vertical=0.7907949790794979
+package.editor.height=749
+>>>>>>> d14b959ca74c6121b0a687a1ae8f47f058260ea4
 package.editor.width=1780
 package.editor.x=0
 package.editor.y=0
@@ -92,8 +124,13 @@ target5.name=Flota
 target5.showInterface=false
 target5.type=ClassTarget
 target5.width=80
+<<<<<<< HEAD
 target5.x=100
 target5.y=240
+=======
+target5.x=20
+target5.y=210
+>>>>>>> d14b959ca74c6121b0a687a1ae8f47f058260ea4
 target6.height=50
 target6.name=Marino
 target6.showInterface=false
