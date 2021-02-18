@@ -23,14 +23,17 @@ public class TableTest
  
     @Test    
     public void shouldPass(){
+        assertTrue(0 == 0);
     }
     
     @Test
     public void shouldFail(){
+        fail();
     }
 
     @Test    
     public void shouldErr(){
+        throw new NullPointerException("GG");
     }
 
      @Test
