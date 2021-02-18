@@ -49,7 +49,7 @@ public class Table{
     }
     
     public String[] tuple(int n){
-        return null;
+        return this.tuples.get(n);
     }
     
     public boolean in(String tuple[]){
@@ -76,6 +76,10 @@ public class Table{
                 {
                     res=false;
                 } 
+            }
+            
+            if (res){
+                break;
             }
           }
         return res;
