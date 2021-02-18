@@ -10,24 +10,33 @@ public class RelationalCalculator{
     //Consultar en el API Java la clase Stack
     
     public RelationalCalculator(){
+        this.tables = new Stack<Table>();
     }
 
-    public void add(String [] attributes){       
+    public void add(String [] attributes){
+        Table tabla = new Table(attributes);
+        this.tables.push(tabla);
     }
     
-    public void add(String [] attributes, String[][] tuples){       
+    public void add(String [] attributes, String[][] tuples){
+        Table tabla = new Table(attributes);
+        tabla.insert(tuples);
+        this.tables.push(tabla);
     }
     
     /*Consult the top of the stack*/
     public String consult(){
-        return null;
+        return this.tables.peek().toString();
     }
     
     public void delete(){
+        this.tables.pop();
     }
     
  
-    public void insert(String[][] tuples){       
+    public void insert(String[][] tuples){
+        Table top = this.tables.peek();
+        top.insert(tuples);
     }  
     
     /*
