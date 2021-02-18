@@ -13,14 +13,19 @@ public class Table{
     /*
      * The tables must remain 
      * (i) with the attribute names in uppercase 
-     * (ii) without repeating tuples*/
+     * (ii) without repeating tuples*
 
     /**
      * Constructs a new, empty table, with the specified attribute names.
      * @param names, 
     **/
     public Table(String attributes[]){
-        
+        for (int i=0; i<attributes.length;i++)
+        {
+            attributes[i]=attributes[i].toUpperCase();
+        }
+        this.attributes=attributes;
+        this.tuples=new ArrayList<String[]>();
     }    
     
     
@@ -29,14 +34,18 @@ public class Table{
      * @param tuples, 
     **/
     public void insert(String tuples[][]) {
+        for (int i=0;i<tuples.length;i++)
+        {
+            this.tuples.add(tuples[i]);
+        }
     }
 
     public int size(){
-        return 0;
+        return this.tuples.size();
     }
     
     public String[] attributes(){
-        return null;
+        return this.attributes;
     }
     
     public String[] tuple(int n){
@@ -44,7 +53,32 @@ public class Table{
     }
     
     public boolean in(String tuple[]){
-        return false;
+        boolean res=true;
+        for (int i=0;i<this.tuples.size();i++)
+          {
+            res=true;
+            boolean[] res2=new boolean[this.tuples.get(i).length];
+            for(int j=0;j<this.tuples.get(i).length;j++)
+            {
+                if (tuple[j]==this.tuples.get(i)[j])
+                {
+                    res2[j]=true;
+                }
+                else
+                {
+                    res2[j]=false;
+                }
+            }
+            
+            for(int k=0;k<res2.length;k++)
+            {
+                if (res2[k]==false)
+                {
+                    res=false;
+                } 
+            }
+          }
+        return res;
     }    
 
     /*
@@ -102,6 +136,14 @@ public class Table{
     @Override
     public String toString () {
           String s = "";
+          s += Arrays.toString(this.attributes)+"\n";
+          for (int i=0;i<this.tuples.size();i++)
+          {
+            s+=Arrays.toString(this.tuples.get(i))+"\n";
+          }
+          s = s.replace('[', '(');
+          s = s.replace(']', ')');
+          s = s.replace(" ", "");
           return s;
     }
 

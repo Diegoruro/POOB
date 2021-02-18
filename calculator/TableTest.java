@@ -36,7 +36,7 @@ public class TableTest
         throw new NullPointerException("GG");
     }
 
-     @Test
+    @Test
     public void shouldCreateAnEmptyTables(){
         String [] attributes={"SIGLA","NOMBRE"};
         Table courses=new Table(attributes);
@@ -70,7 +70,7 @@ public class TableTest
         String [][] data={{"x","x","x"},{"b","c",""},{"b","f","g"},{"d","d","d"},{"a","b","x"},{"a","b","c"}};
         Table example=new Table(attributes);
         example.insert(data);
-        String result="[FIRST,SECOND,THIRD)\n(x,x,x)\n(b,c,)\n(b,f,g)\n(d,d,d)\n(a,b,x)\n(a,b,c)\n";
+        String result="(FIRST,SECOND,THIRD)\n(x,x,x)\n(b,c,)\n(b,f,g)\n(d,d,d)\n(a,b,x)\n(a,b,c)\n]";
         assertEquals(result,example.toString()); 
     }
    
