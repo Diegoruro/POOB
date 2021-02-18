@@ -52,6 +52,7 @@ public class Table{
         return null;
     }
     
+    
     public boolean in(String tuple[]){
         boolean res=true;
         for (int i=0;i<this.tuples.size();i++)
