@@ -40,6 +40,11 @@ public class Table{
         }
     }
 
+    /**
+     * Método size
+     *
+     * @return El valor de retorno
+     */
     public int size(){
         return this.tuples.size();
     }

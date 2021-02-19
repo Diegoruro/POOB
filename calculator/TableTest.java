@@ -28,7 +28,7 @@ public class TableTest
     
     @Test
     public void shouldFail(){
-        fail();
+        fail("prueba fallida");
     }
 
     @Test    
