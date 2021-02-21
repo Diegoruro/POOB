@@ -41,7 +41,7 @@ public class Mission
      * @param  void
      * @return void
      */
-    public void crearBodega(int largo,int ancho)
+    private void crearBodega(int largo,int ancho)
     {
         this.lenght=largo;
         this.width=ancho;

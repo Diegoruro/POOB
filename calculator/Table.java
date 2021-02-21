@@ -40,6 +40,11 @@ public class Table{
         }
     }
 
+    /**
+     * Método size
+     *
+     * @return El valor de retorno
+     */
     public int size(){
         return this.tuples.size();
     }
@@ -52,12 +57,16 @@ public class Table{
         return this.tuples.get(n);
     }
     
+<<<<<<< HEAD
     /**
      * Verifies if the parameter is in the table
      *
      * @param tuple 
      * @return Boolean
      */
+=======
+    
+>>>>>>> 3caa4aee9b97f9329ec2d55dde10755dffe0f1a8
     public boolean in(String tuple[]){
         boolean res=true;
         for (int i=0;i<this.tuples.size();i++)
