@@ -205,8 +205,7 @@ public class Mission
     /**
      * Roba una caja de la bodega en el plan.
      *
-     * @param  [i,j] {2,3}
-     * @return void
+     * @param Posicion en i y en j de la caja a robar [i,j] {2,3}
      */
     public void steal(int[] crate)
     {
@@ -216,9 +215,6 @@ public class Mission
     
     /**
      * Devuelve la ultima caja a su posicion original.
-     *
-     * @param  void
-     * @return void
      */
     public void returnCrate()
     {   
@@ -382,7 +378,7 @@ public class Mission
            {
               this.bodegaTop[i][j].changeColor("green");
               this.bodegaLado[i][j].changeColor("green");
-              this.bodegaEntry[i][j].changeColor("green");;
+              this.bodegaEntry[i][j].changeColor("green");
               this.planBodegaTop[i][j].changeColor("magenta");
               this.planBodegaLado[i][j].changeColor("magenta");
               this.planBodegaEntry[i][j].changeColor("magenta");

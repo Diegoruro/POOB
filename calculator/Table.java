@@ -52,6 +52,12 @@ public class Table{
         return this.tuples.get(n);
     }
     
+    /**
+     * Verifies if the parameter is in the table
+     *
+     * @param tuple 
+     * @return Boolean
+     */
     public boolean in(String tuple[]){
         boolean res=true;
         for (int i=0;i<this.tuples.size();i++)
@@ -89,9 +95,20 @@ public class Table{
      * Relational operations: proyection, seleccion, natural join, rename
      */
     
-    public Table proyection(String attibutes[]){
-        return null;
+    public Table proyection(String attributes[]){
+        Table tabla = new Table(attributes);
+        
+        for (String a: attributes){
+            for (int i=0; i<this.attributes.length; i++){
+                if (a == this.attributes[i]){
+                    this.analizeColumn(a);
+                }
+                
+            }
+        }
     }
+    
+    private String[]
 
     public Table selection(String attribute, String value){
         return null;

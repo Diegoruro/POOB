@@ -74,7 +74,6 @@ public class TableTest
         assertEquals(result,example.toString()); 
     }
    
-    
 
     /**
      * Tears down the test fixture.
