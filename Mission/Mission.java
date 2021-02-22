@@ -1,10 +1,11 @@
+    
 import java.util.ArrayList;
 /**
- * Write a description of class Mission here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
+* Write a description of class Mission here.
+* 
+* @author (your name) 
+* @version (a version number or a date)
+*/
 public class Mission
 {
     public int lenght;
@@ -34,12 +35,10 @@ public class Mission
         crearBodega(this.lenght,this.width);
         this.robadas=new ArrayList();
     }
-
+    
     /**
      * Este metodo crea las bodegas, tanto la bodega de la camara como la bodega del plan con las 3 camaras
      * 
-     * @param  void
-     * @return void
      */
     private void crearBodega(int largo,int ancho)
     {
@@ -97,55 +96,66 @@ public class Mission
     /**
      * Guarda una caja en la bodega real
      *
-     * @param  i,j   1,1
-     * @return     void
+     * @param  i,j   i>0 j>0
      */
     public void store(int i, int j)
     {
         i--;
         j--;
-        if (this.valores[i][j]<this.lenght||this.valores[i][j]<this.width)
+        if(i>=0&&j>=0)
         {
-            this.valores[i][j]+=1;
-            this.bodegaTop[i][j].changeColor("blue");
-            this.bodegaLado[this.width-this.valores[i][j]][i].changeColor("blue");
-            this.bodegaEntry[this.lenght-this.valores[i][j]][j].changeColor("blue");
-            this.sePudo=true;
-        }   
-        else
-        {
-            System.out.println("no hay espacio para guardar esta caja");
-            this.sePudo=false;
-        }
+            if (this.valores[i][j]<this.lenght||this.valores[i][j]<this.width)
+            {
+                this.valores[i][j]+=1;
+                this.bodegaTop[i][j].changeColor("blue");
+                this.bodegaLado[this.width-this.valores[i][j]][i].changeColor("blue");
+                this.bodegaEntry[this.lenght-this.valores[i][j]][j].changeColor("blue");
+                this.sePudo=true;
+            }   
+            else
+            {
+                System.out.println("no hay espacio para guardar esta caja");
+                this.sePudo=false;
+            }
+        
         if (this.planBodegaTop[0][0].isVisible){
             this.colorDifferent();
         }
+        }
+        else
+        {
+          System.out.println("Error:Coordenadas negativas o iguales a 0");  
+        }
     } 
 
-    
+
     /**
      * Guarda una caja en la bodega real
      *
      * @param  i,j   1,1
-     * @return     void
      */
     public void store(int[] crate)
     {
         this.store(crate[0],crate[1]);
     }
 
-    
+
     /**
      * Hace una copia de la bodega desde sus 3 puntos de vista
-     *
-     * @param  void
-     * @return void
      */
     public void copy()
     {   
-        
-        for (int i=0;i<this.lenght;i++)
+       for (int i=0;i<this.lenght;i++)
         {
+            for (int j=0;j<this.width;j++)
+            {
+              this.planBodegaTop[i][j].changeColor("magenta");
+              this.planBodegaLado[i][j].changeColor("magenta");
+              this.planBodegaEntry[i][j].changeColor("magenta");
+           } 
+        } 
+       for (int i=0;i<this.lenght;i++)
+       {
             for (int j=0;j<this.width;j++)
             {   
                 int x=this.valores[i][j];
@@ -163,11 +173,10 @@ public class Mission
                 this.planBodegaLado[i][j].makeVisible();
                 this.planBodegaEntry[i][j].makeVisible();
             }
-        }
+       }
         this.lastStolenCrates=this.stolenCrates;
         this.stolenCrates=0;
         this.sePudo=true;
-        this.colorDifferent();
     }
     
     
@@ -175,7 +184,6 @@ public class Mission
      * Roba una caja de la bodega en el plan.
      *
      * @param  i,j 1,1
-     * @return void
      */
     public void steal(int i,int j)
     {
@@ -245,7 +253,6 @@ public class Mission
      * Mueve una caja de una posicion a otra si hay espacio en el lugar a mover.
      *
      * @param  from[] to[] {1,1} {1,2} 
-     * @return void
      */
     public void arrange(int[] from,int[] to)
     {
@@ -257,12 +264,15 @@ public class Mission
         j--;
         k--;
         l--;
-        this.planValores[i][j]+=1;
-        if (this.planValores[i][j]>1 && (this.planValores[k][l]<this.lenght && this.planValores[k][l]<this.width))
+        System.out.println(k);
+        System.out.println(l);
+        System.out.println(this.planValores[i][j]);
+        this.planValores[k][l]+=1;
+        if (this.planValores[i][j]>0 && (this.planValores[k][l]<this.lenght && this.planValores[k][l]<this.width))
         {
             this.planBodegaTop[i][j].changeColor("magenta");
-            this.planBodegaLado[this.width-this.planValores[i][j]][i].changeColor("magenta");
             this.planBodegaEntry[this.lenght-this.planValores[i][j]][j].changeColor("magenta");
+            this.planBodegaLado[this.width-this.planValores[i][j]][i].changeColor("magenta");
             this.planValores[i][j]-=1;
             this.planBodegaTop[k][l].changeColor("blue");
             this.planBodegaLado[this.width-this.planValores[k][l]][k].changeColor("blue");
@@ -279,10 +289,9 @@ public class Mission
 
     
     /**
-     * Calcula la cantidad de cajas robadas.
+     * Calcula la cantidad de cajas robadas del plan anterior.
      *
-     * @param  void
-     * @return la cantidad de cajas robadas
+     * @return la cantidad de cajas robadas del plan anterior.
      */
     public int stolen()
     {
@@ -293,7 +302,6 @@ public class Mission
     /**
      * verifica la cantidad de cajas que hay en la bodega real.
      *
-     * @param  void
      * @return Devuelve la matriz de valores de la bodega real.
      */
     public int[][] warehouse()
@@ -305,7 +313,6 @@ public class Mission
     /**
      * verifica la cantidad de cajas que hay en la bodega del plan.
      *
-     * @param  void
      * @return Devuelve la matriz de valores de la bodega del plan.
      */
     public int[][] layout()
@@ -317,8 +324,6 @@ public class Mission
     /**
      * Hace visible todas las camaras y los planos de la bodega.
      *
-     * @param  void
-     * @return void
      */
     public void makeVisible()
     {
@@ -340,8 +345,6 @@ public class Mission
     /**
      * Oculta todas las camaras y planos de la bodega.
      *
-     * @param  void
-     * @return void
      */
     public void makeInvisible()
     {
@@ -363,8 +366,6 @@ public class Mission
     /**
      * Acaba con el simulador y reincia todos los datos.
      *
-     * @param  void
-     * @return void
      */
     public void finish()
     {
@@ -391,7 +392,6 @@ public class Mission
     /**
      * Verifica si la ultima accion se pudo realizar
      *
-     * @param  void
      * @return Devuelve un valor booleano dependiendo si se pudo realizar la accion.
      */
     public boolean ok()
@@ -403,7 +403,6 @@ public class Mission
     /**
      * Verifica si la bodega original y la del plan son iguales
      *
-     * @param       void
      * @return      Booleano según si son iguales o no
      */
     private boolean areEqual()
@@ -411,8 +410,6 @@ public class Mission
         for (int i = 0; i < this.lenght; i++){
             for (int j = 0; j < this.width; j++){
                 if (this.valores[i][j] != this.planValores[i][j]){
-                    System.out.println(this.valores[i][j]);
-                    System.out.println(this.planValores[i][j]);
                     return false;
                 }
             }
@@ -434,11 +431,20 @@ public class Mission
             {
                 for (int j=0;j<this.width;j++)
                 {
-                  this.planBodegaTop[i][j].changeColor("red");
-                  this.planBodegaLado[i][j].changeColor("red");
-                  this.planBodegaEntry[i][j].changeColor("red");
+                  if(this.planBodegaTop[i][j].color=="magenta")
+                  {
+                      this.planBodegaTop[i][j].changeColor("red");
+                  }
+                  if(this.planBodegaLado[i][j].color=="magenta")
+                  {
+                      this.planBodegaLado[i][j].changeColor("red");
+                  }
+                  if(this.planBodegaEntry[i][j].color=="magenta")
+                  {
+                      this.planBodegaEntry[i][j].changeColor("red");
+                  }
                } 
-          }
+            }
         }
     }
 
