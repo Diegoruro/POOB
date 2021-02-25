@@ -8,28 +8,9 @@ dependency10.type=UsesDependency
 dependency11.from=Flota
 dependency11.to=PortaAviones
 dependency11.type=UsesDependency
-<<<<<<< HEAD
 dependency12.from=Flota
 dependency12.to=Marino
 dependency12.type=UsesDependency
-dependency2.from=Barco
-dependency2.to=Marino
-dependency2.type=UsesDependency
-dependency3.from=Tablero
-dependency3.to=Flota
-dependency3.type=UsesDependency
-dependency4.from=PortaAviones
-dependency4.to=Posicion
-dependency4.type=UsesDependency
-dependency5.from=PortaAviones
-dependency5.to=Marino
-dependency5.type=UsesDependency
-dependency6.from=PortaAviones
-dependency6.to=Avion
-dependency6.type=UsesDependency
-dependency7.from=Avion
-dependency7.to=Posicion
-=======
 dependency2.from=PortaAviones
 dependency2.to=Posicion
 dependency2.type=UsesDependency
@@ -47,7 +28,6 @@ dependency6.to=Posicion
 dependency6.type=UsesDependency
 dependency7.from=Barco
 dependency7.to=Marino
->>>>>>> d14b959ca74c6121b0a687a1ae8f47f058260ea4
 dependency7.type=UsesDependency
 dependency8.from=Avion
 dependency8.to=Marino
@@ -55,30 +35,18 @@ dependency8.type=UsesDependency
 dependency9.from=Flota
 dependency9.to=Barco
 dependency9.type=UsesDependency
-<<<<<<< HEAD
-editor.fx.0.height=1416
-editor.fx.0.width=2576
-editor.fx.0.x=-8
-editor.fx.0.y=-8
-objectbench.height=197
+editor.fx.0.height=908
+editor.fx.0.width=1058
+editor.fx.0.x=1168
+editor.fx.0.y=224
+objectbench.height=192
 objectbench.width=1896
-package.divider.horizontal=0.5394736842105263
-package.divider.vertical=0.7866108786610879
-package.editor.height=745
-=======
-editor.fx.0.height=739
-editor.fx.0.width=816
-editor.fx.0.x=982
-editor.fx.0.y=48
-objectbench.height=193
-objectbench.width=1133
 package.divider.horizontal=0.6
-package.divider.vertical=0.7907949790794979
-package.editor.height=749
->>>>>>> d14b959ca74c6121b0a687a1ae8f47f058260ea4
+package.divider.vertical=0.7918410041841004
+package.editor.height=750
 package.editor.width=1780
-package.editor.x=0
-package.editor.y=0
+package.editor.x=565
+package.editor.y=398
 package.frame.height=1056
 package.frame.width=1936
 package.numDependencies=12
@@ -124,13 +92,8 @@ target5.name=Flota
 target5.showInterface=false
 target5.type=ClassTarget
 target5.width=80
-<<<<<<< HEAD
-target5.x=100
-target5.y=240
-=======
-target5.x=20
-target5.y=210
->>>>>>> d14b959ca74c6121b0a687a1ae8f47f058260ea4
+target5.x=170
+target5.y=470
 target6.height=50
 target6.name=Marino
 target6.showInterface=false
