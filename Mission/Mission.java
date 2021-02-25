@@ -144,16 +144,16 @@ public class Mission
      * Hace una copia de la bodega desde sus 3 puntos de vista
      */
     public void copy()
-    {   
+    {  
        for (int i=0;i<this.lenght;i++)
-        {
-            for (int j=0;j<this.width;j++)
-            {
-              this.planBodegaTop[i][j].changeColor("magenta");
-              this.planBodegaLado[i][j].changeColor("magenta");
-              this.planBodegaEntry[i][j].changeColor("magenta");
+       {
+           for (int j=0;j<this.width;j++)
+           {
+                  this.planBodegaTop[i][j].changeColor("magenta");
+                  this.planBodegaLado[i][j].changeColor("magenta");
+                  this.planBodegaEntry[i][j].changeColor("magenta");
            } 
-        } 
+       }
        for (int i=0;i<this.lenght;i++)
        {
             for (int j=0;j<this.width;j++)
@@ -232,19 +232,11 @@ public class Mission
         int i = Integer.parseInt(coordenada[0]);
         int j = Integer.parseInt(coordenada[1]);
         this.planValores[i][j]+=1;
-        if (this.planValores[i][j]>1)
-        {
-            this.planBodegaTop[i][j].changeColor("blue");
-            this.planBodegaLado[this.width-this.planValores[i][j]][i].changeColor("blue");
-            this.planBodegaEntry[this.lenght-this.planValores[i][j]][j].changeColor("blue");
-            this.sePudo=true;
-        }
-        else
-        {
-            this.planBodegaLado[this.width-this.planValores[i][j]][i].changeColor("blue");
-            this.planBodegaEntry[this.lenght-this.planValores[i][j]][j].changeColor("blue");
-            this.sePudo=true; 
-        }
+        this.planBodegaTop[i][j].changeColor("blue");
+        this.planBodegaLado[this.width-this.valores[i][j]][i].changeColor("blue");
+        this.planBodegaEntry[this.lenght-this.valores[i][j]][j].changeColor("blue");
+        this.sePudo=true;
+        
         this.colorDifferent();
     }
 
@@ -445,6 +437,8 @@ public class Mission
                   }
                } 
             }
+        }else{
+           this.copy();
         }
     }
 

@@ -20,4 +20,9 @@ public class PortaAviones {
     public int getCapacidad(){
         return this.capacidad;
     }
+    
+    public int disponibilidad(){
+        Posicion pos = new Posicion();
+        return this.getCapacidad() - this.aviones.size();
+    }
 }
