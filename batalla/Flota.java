@@ -137,7 +137,12 @@ public class Flota {
      */
     public int disponibilidadEnPortaAviones()
     {
-       return this.capacidadPorta-this.avionesCargados;
+       int dispPA = 0;
+       for (PortaAviones pa: portaAviones){
+           dispPA += pa.disponibilidad();
+           
+        }
+        return dispPA;
     }
 
     
