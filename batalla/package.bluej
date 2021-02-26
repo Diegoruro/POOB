@@ -8,28 +8,6 @@ dependency10.type=UsesDependency
 dependency11.from=PortaAviones
 dependency11.to=Marino
 dependency11.type=UsesDependency
-<<<<<<< HEAD
-dependency12.from=Flota
-dependency12.to=Marino
-dependency12.type=UsesDependency
-dependency2.from=PortaAviones
-dependency2.to=Posicion
-dependency2.type=UsesDependency
-dependency3.from=PortaAviones
-dependency3.to=Marino
-dependency3.type=UsesDependency
-dependency4.from=PortaAviones
-dependency4.to=Avion
-dependency4.type=UsesDependency
-dependency5.from=Tablero
-dependency5.to=Flota
-dependency5.type=UsesDependency
-dependency6.from=Barco
-dependency6.to=Posicion
-dependency6.type=UsesDependency
-dependency7.from=Barco
-dependency7.to=Marino
-=======
 dependency12.from=PortaAviones
 dependency12.to=Avion
 dependency12.type=UsesDependency
@@ -50,7 +28,6 @@ dependency6.to=Barco
 dependency6.type=UsesDependency
 dependency7.from=Flota
 dependency7.to=Avion
->>>>>>> 58db2a89abcff74f7436e633d957109b74c2d0db
 dependency7.type=UsesDependency
 dependency8.from=Flota
 dependency8.to=PortaAviones
@@ -58,17 +35,6 @@ dependency8.type=UsesDependency
 dependency9.from=Flota
 dependency9.to=Marino
 dependency9.type=UsesDependency
-<<<<<<< HEAD
-editor.fx.0.height=908
-editor.fx.0.width=1058
-editor.fx.0.x=1168
-editor.fx.0.y=224
-objectbench.height=192
-objectbench.width=1896
-package.divider.horizontal=0.6
-package.divider.vertical=0.7918410041841004
-package.editor.height=750
-=======
 editor.fx.0.height=739
 editor.fx.0.width=816
 editor.fx.0.x=1186
@@ -78,7 +44,6 @@ objectbench.width=1036
 package.divider.horizontal=0.5489473684210526
 package.divider.vertical=0.7907949790794979
 package.editor.height=749
->>>>>>> 58db2a89abcff74f7436e633d957109b74c2d0db
 package.editor.width=1780
 package.editor.x=565
 package.editor.y=398
@@ -127,13 +92,8 @@ target5.name=Flota
 target5.showInterface=false
 target5.type=ClassTarget
 target5.width=80
-<<<<<<< HEAD
-target5.x=170
-target5.y=470
-=======
 target5.x=20
 target5.y=210
->>>>>>> 58db2a89abcff74f7436e633d957109b74c2d0db
 target6.height=50
 target6.name=Marino
 target6.showInterface=false

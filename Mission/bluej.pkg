@@ -5,12 +5,6 @@ dependency1.type=UsesDependency
 dependency2.from=Mission
 dependency2.to=Rectangle
 dependency2.type=UsesDependency
-<<<<<<< HEAD
-editor.fx.0.height=739
-editor.fx.0.width=816
-editor.fx.0.x=872
-editor.fx.0.y=220
-=======
 dependency3.from=MissionTest
 dependency3.to=Mission
 dependency3.type=UsesDependency
@@ -18,7 +12,6 @@ editor.fx.0.height=739
 editor.fx.0.width=816
 editor.fx.0.x=552
 editor.fx.0.y=100
->>>>>>> 58db2a89abcff74f7436e633d957109b74c2d0db
 objectbench.height=135
 objectbench.width=625
 package.divider.horizontal=0.5996204933586338

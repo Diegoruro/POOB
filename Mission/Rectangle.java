@@ -182,5 +182,24 @@ public class Rectangle{
             canvas.erase(this);
         }
     }
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public void zoom(char c)
+    {
+        if (c == '-'){
+            this.height -= this.height*0.10;
+            this.width -= this.width*0.10;
+        }else{
+            this.height += this.height*0.10;
+            this.width += this.width*0.10;
+        }
+        draw();
+    
+    }
 }
 
