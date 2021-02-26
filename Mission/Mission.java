@@ -171,6 +171,45 @@ public class Mission
         this.store(crate[0],crate[1]);
     }
     
+    /**
+     * Hace una copia de la bodega desde sus 3 puntos de vista
+     */
+    private void copy2()
+    {  
+       for (int i=0;i<this.lenght;i++)
+       {
+           for (int j=0;j<this.width;j++)
+           {
+                  this.planBodegaTop[i][j].changeColor("magenta");
+                  this.planBodegaLado[i][j].changeColor("magenta");
+                  this.planBodegaEntry[i][j].changeColor("magenta");
+           } 
+       }
+       for (int i=0;i<this.lenght;i++)
+       {
+            for (int j=0;j<this.width;j++)
+            {   
+                int x=this.valores[i][j];
+                this.planValores[i][j]=this.valores[i][j];
+                if (x>0)
+                {
+                    for (int k=this.valores[i][j];k>0;k--)
+                    {
+                        this.planBodegaTop[i][j].changeColor("blue");
+                        this.planBodegaLado[this.width-k][i].changeColor("blue");
+                        this.planBodegaEntry[this.lenght-k][j].changeColor("blue");
+                    }
+                }
+                this.planBodegaTop[i][j].makeVisible();
+                this.planBodegaLado[i][j].makeVisible();
+                this.planBodegaEntry[i][j].makeVisible();
+            }
+       }
+        this.lastStolenCrates=this.stolenCrates;
+        this.stolenCrates=0;
+        this.sePudo=true;
+    }
+    
     
     /**
      * Hace una copia de la bodega desde sus 3 puntos de vista
@@ -361,9 +400,9 @@ public class Mission
               this.planBodegaTop[i][j].makeVisible();
               this.planBodegaLado[i][j].makeVisible();
               this.planBodegaEntry[i][j].makeVisible();
-              this.loadUndo("makeVisible",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
            } 
         }
+        this.loadUndo("makeVisible",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
     }
     
     
@@ -384,7 +423,7 @@ public class Mission
                   this.bodegaLado[i][j].makeInvisible();
                   this.bodegaEntry[i][j].makeInvisible();
               }
-              else if (plan=="yes"){
+              if (plan=="yes"){
                   this.planBodegaTop[i][j].makeInvisible();
                   this.planBodegaLado[i][j].makeInvisible();
                   this.planBodegaEntry[i][j].makeInvisible();
@@ -463,9 +502,6 @@ public class Mission
     
     /**
      * An example of a method - replace this comment with your own
-     *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
      */
     private void colorDifferent()
     {
@@ -489,7 +525,7 @@ public class Mission
                } 
             }
         }else{
-           this.copy();
+           this.copy2();
         }
     }
 
@@ -498,7 +534,6 @@ public class Mission
      * An example of a method - replace this comment with your own
      *
      * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
      */
     private void loadUndo(String accion,Integer i, Integer j, Integer k, Integer l)
     {
@@ -534,9 +569,18 @@ public class Mission
                 this.bodegaLado[this.width-k][i].changeColor("green");
                 this.bodegaEntry[this.lenght-k][j].changeColor("green");
                 this.valores[i][j]-=1;
+                values[0]++;
+                values[1]++;
                 break;
             case "steal":
-                returnCrate();
+                this.planValores[i][j]+=1;
+                k=this.planValores[i][j];
+                this.planBodegaTop[i][j].changeColor("blue");
+                this.planBodegaLado[this.width-k][i].changeColor("blue");
+                this.planBodegaEntry[this.lenght-k][j].changeColor("blue");
+                values[0]++;
+                values[1]++;
+                this.colorDifferent();
                 break;
             case "arrange":
                 int[] from = new int[2];
@@ -546,6 +590,7 @@ public class Mission
                 to[0] = i;
                 to[1] = j;
                 arrange(from,to);
+                this.ultimaAccion.pop();
                 break;
             case "return":
                 steal(i,j);
@@ -555,6 +600,15 @@ public class Mission
                 break;
             case "makeInvisible":
                 makeVisible();
+                this.ultimaAccion.pop();
+                break;
+            case "-":
+                zoom('+');
+                this.ultimaAccion.pop();
+                break;
+            case "+":
+                zoom('-');
+                this.ultimaAccion.pop();
                 break;
         }
         this.undo.push(ultimaAccion.peek());
@@ -587,21 +641,27 @@ public class Mission
                 break;
             case "arrange":
                 int[] from = new int[2];
-                from[0] = i;
-                from[1] = j;
+                from[0] = k;
+                from[1] = l;
                 int[] to = new int[2];
-                to[0] = k;
-                to[1] = l;
+                to[0] = i;
+                to[1] = j;
                 arrange(from,to);
                 break;
             case "return":
                 returnCrate();
                 break;
             case "makeVisible":
-                makeInvisible("yes", "yes");
+                makeVisible();
                 break;
             case "makeInvisible":
-                makeVisible();
+                makeInvisible();
+                break;
+            case "-":
+                zoom('-');
+                break;
+            case "+":
+                zoom('+');
                 break;
         }
         this.undo.pop();
@@ -615,11 +675,14 @@ public class Mission
     public void zoom(char z)
     {
         if(z == '-'){
+            this.loadUndo("-",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
             this.size -= this.size*0.1;
         }
         else{
+            this.loadUndo("+",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
             this.size += this.size*0.1;
         }
+        restorePosition();
         for (int i=0;i<this.lenght;i++)
         {
            for (int j=0;j<this.width;j++)
@@ -643,10 +706,35 @@ public class Mission
                this.planBodegaEntry[i][j].moveVertical(this.lenght*this.size+25+i*this.size);
                this.planBodegaEntry[i][j].moveHorizontal((this.width*this.size)*2+j*this.size+50);
            } 
-      }
+        }
     }
 
     
+    /**
+     * reestablece la posicion inicial de todos los rectangulos
+     */
+    private void restorePosition()
+    {
+        for (int i=0;i<this.lenght;i++)
+        {
+           for (int j=0;j<this.width;j++)
+           {
+               this.bodegaTop[i][j].setXPosition(70);
+               this.bodegaTop[i][j].setYPosition(15);
+               this.bodegaLado[i][j].setXPosition(70);
+               this.bodegaLado[i][j].setYPosition(15);
+               this.bodegaEntry[i][j].setXPosition(70);
+               this.bodegaEntry[i][j].setYPosition(15);
+               this.planBodegaTop[i][j].setXPosition(70);
+               this.planBodegaTop[i][j].setYPosition(15);
+               this.planBodegaLado[i][j].setXPosition(70);
+               this.planBodegaLado[i][j].setYPosition(15);
+               this.planBodegaEntry[i][j].setXPosition(70);
+               this.planBodegaEntry[i][j].setYPosition(15);
+           } 
+        }
+    }
+
     /**
      * muestra en una matriz las cajas robadas
      * 
