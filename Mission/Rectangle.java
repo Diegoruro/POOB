@@ -34,6 +34,30 @@ public class Rectangle{
     
 
     /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public void setXPosition(int nuevo)
+    {
+        this.xPosition=nuevo;
+    }
+
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public void setYPosition(int nuevo)
+    {
+        this.yPosition=nuevo;
+    }
+    
+    
+    /**
      * Make this rectangle visible. If it was already visible, do nothing.
      */
     public void makeVisible(){
@@ -169,7 +193,7 @@ public class Rectangle{
             canvas.draw(this, color,
                 new java.awt.Rectangle(xPosition, yPosition, 
                                        width, height));
-            canvas.wait(10);
+            canvas.wait(1);
         }
     }
 
