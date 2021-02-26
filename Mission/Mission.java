@@ -20,12 +20,14 @@ public class Mission
     public Rectangle[][] planBodegaLado;
     public Rectangle[][] planBodegaEntry;
     public ArrayList<String> robadas;
-    public ArrayList<Integer[]> coordenadas;
+    public ArrayList<Integer[]> coordenadas = new ArrayList<Integer[]>();
+    public ArrayList<Integer[]> undoCoor = new ArrayList<Integer[]>();
     public Stack<String> ultimaAccion;
     public Stack<String> undo;
     public boolean sePudo;
     public int[][] valores;
     public int[][] planValores;
+    
     
     /**
      * Constructor for objects of class Mission
@@ -115,7 +117,7 @@ public class Mission
                 this.bodegaLado[this.width-this.valores[i][j]][i].changeColor("blue");
                 this.bodegaEntry[this.lenght-this.valores[i][j]][j].changeColor("blue");
                 this.sePudo=true;
-                loadUndo("store",new Integer[] {i,j});
+                loadUndo("store",(Integer) i, (Integer) j, (Integer) 0, (Integer) 0);
             }   
             else
             {
@@ -157,20 +159,7 @@ public class Mission
            } 
        }
     }
-    
-    
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
-     */
-    private void loadUndo(String accion,Integer[] posicion)
-    {
-        this.ultimaAccion.push("accion");
-        //this.coordenadas.add(posicion[0]);
-    }
-    
+
     
     /**
      * Guarda una caja en la bodega real
@@ -220,7 +209,7 @@ public class Mission
         this.lastStolenCrates=this.stolenCrates;
         this.stolenCrates=0;
         this.sePudo=true;
-        this.ultimaAccion.push("copy");
+        this.loadUndo("copy",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
     }
     
     
@@ -244,7 +233,7 @@ public class Mission
             this.planBodegaEntry[this.lenght-this.planValores[i][j]][j].changeColor("yellow");
             this.planValores[i][j]-=1;
             this.sePudo=true;
-            this.ultimaAccion.push("steal");
+            this.loadUndo("steal",(Integer) i, (Integer) j, (Integer) 0, (Integer) 0);
         }
         else
         {
@@ -281,7 +270,7 @@ public class Mission
         this.planBodegaLado[this.width-this.valores[i][j]][i].changeColor("blue");
         this.planBodegaEntry[this.lenght-this.valores[i][j]][j].changeColor("blue");
         this.sePudo=true;
-        this.ultimaAccion.push("return");
+        this.loadUndo("return",(Integer) i, (Integer) j, (Integer) 0, (Integer) 0);
         this.colorDifferent();
     }
     
@@ -301,9 +290,6 @@ public class Mission
         j--;
         k--;
         l--;
-        System.out.println(k);
-        System.out.println(l);
-        System.out.println(this.planValores[i][j]);
         this.planValores[k][l]+=1;
         if (this.planValores[i][j]>0 && (this.planValores[k][l]<this.lenght && this.planValores[k][l]<this.width))
         {
@@ -315,7 +301,7 @@ public class Mission
             this.planBodegaLado[this.width-this.planValores[k][l]][k].changeColor("blue");
             this.planBodegaEntry[this.lenght-this.planValores[k][l]][l].changeColor("blue");
             this.sePudo=true;
-            this.ultimaAccion.push("arrange:from("+i+","+j+")to("+k+","+l+")");
+            this.loadUndo("arrange",(Integer) i+1, (Integer) j+1, (Integer) k+1, (Integer) l+1);
         }
         else
         {
@@ -375,7 +361,7 @@ public class Mission
               this.planBodegaTop[i][j].makeVisible();
               this.planBodegaLado[i][j].makeVisible();
               this.planBodegaEntry[i][j].makeVisible();
-              this.ultimaAccion.push("makeVisible");
+              this.loadUndo("makeVisible",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
            } 
         }
     }
@@ -416,7 +402,7 @@ public class Mission
     public void makeInvisible()
     {
         makeInvisible("yes","yes");
-        this.ultimaAccion.push("makeInvisible");
+        this.loadUndo("makeInvisible",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
     }
     
     
@@ -507,39 +493,74 @@ public class Mission
         }
     }
 
+    
+        /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    private void loadUndo(String accion,Integer i, Integer j, Integer k, Integer l)
+    {
+        this.ultimaAccion.push(accion);
+        Integer[] temp = new Integer[4];
+        temp[0] = i;
+        temp[1] = j;
+        temp[2] = k;
+        temp[3] = l;
+        this.coordenadas.add(temp);
+    }
 
+    
     /**
      * deshace la ultima accion realizada
      */
     public void undo()
     {
-        //int i=;
-        //int j=;
-        //int k=;
-        //int l=;
+        int i, j, k, l;
+        Integer[] values = coordenadas.get(coordenadas.size()-1);
+        i = (int) values[0];
+        j = (int) values[1];
+        k = (int) values[2];
+        l = (int) values[3];
         switch(ultimaAccion.peek()){
             case "copy":
                 ceros("no","yes");
                 makeInvisible("no","yes");
+                break;
             case "store":
-                //k=this.valores[i][j];
-                //this.bodegaTop[i][j].changeColor("green");
-                //this.bodegaLado[this.width-k][i].changeColor("green");
-                //this.bodegaEntry[this.lenght-k][j].changeColor("green");
-                //this.valores[i][j]-=1;
+                k=this.valores[i][j];
+                this.bodegaTop[i][j].changeColor("green");
+                this.bodegaLado[this.width-k][i].changeColor("green");
+                this.bodegaEntry[this.lenght-k][j].changeColor("green");
+                this.valores[i][j]-=1;
+                break;
             case "steal":
                 returnCrate();
+                break;
             case "arrange":
-                //arrange({k,l},{i,j});
+                int[] from = new int[2];
+                from[0] = k;
+                from[1] = l;
+                int[] to = new int[2];
+                to[0] = i;
+                to[1] = j;
+                arrange(from,to);
+                break;
             case "return":
-                //steal(i,j);
+                steal(i,j);
+                break;
             case "makeVisible":
-                makeInvisible();
+                makeInvisible("yes", "yes");
+                break;
             case "makeInvisible":
                 makeVisible();
+                break;
         }
         this.undo.push(ultimaAccion.peek());
         this.ultimaAccion.pop();
+        this.undoCoor.add(this.coordenadas.get(this.coordenadas.size()-1));
+        this.coordenadas.remove(this.coordenadas.size()-1);
     }
     
     
@@ -548,26 +569,43 @@ public class Mission
      */
     public void redo()
     {
-        //int i=;
-        //int j=;
-        //int k=;
-        //int l=;
+        int i, j, k, l;
+        Integer[] values = this.undoCoor.get(this.undoCoor.size()-1);
+        i = (int) values[0];
+        j = (int) values[1];
+        k = (int) values[2];
+        l = (int) values[3];
         switch(undo.peek()){
             case "copy":
                 copy();
+                break;
             case "store":
-                //store(i,j);
+                store(i,j);
+                break;
             case "steal":
-                //steal(i,j);
+                steal(i,j);
+                break;
             case "arrange":
-                //arrange({i,j},{k,l});
+                int[] from = new int[2];
+                from[0] = i;
+                from[1] = j;
+                int[] to = new int[2];
+                to[0] = k;
+                to[1] = l;
+                arrange(from,to);
+                break;
             case "return":
                 returnCrate();
+                break;
             case "makeVisible":
-                makeVisible();
+                makeInvisible("yes", "yes");
+                break;
             case "makeInvisible":
-                makeInvisible();
+                makeVisible();
+                break;
         }
+        this.undo.pop();
+        this.undoCoor.remove(this.undoCoor.size()-1);
     }
     
     
