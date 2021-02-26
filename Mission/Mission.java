@@ -614,14 +614,14 @@ public class Mission
      */
     public void zoom(char z)
     {
-        if(z == '-'){
-            this.size -= this.size*0.1;
-        }
-        else{
-            this.size += this.size*0.1;
-        }
-        for (int i=0;i<this.lenght;i++)
-        {
+      if(z == '-'){
+          this.size -= this.size*0.1;           
+      }
+      else{
+          this.size += this.size*0.1;
+      }
+      for (int i=0;i<this.lenght;i++)
+      {
            for (int j=0;j<this.width;j++)
            {
                this.bodegaTop[i][j].zoom(z);
