@@ -199,6 +199,40 @@ public class MissionTest
     }
     
     
+    @Test
+    public void undoTest(){
+        mission.store(2,2);
+        mission.copy();
+        mission.steal(2,2);
+        mission.undo();
+        assertEquals(1,mission.planValores[1][1]);
+        mission.undo();
+        assertFalse(mission.planBodegaTop[0][0].isVisible);
+        
+        
+    }
+    
+    @Test
+    public void redoTest(){
+        mission.store(3,3);
+        mission.undo();
+        mission.redo();
+        assertEquals(1, mission.valores[2][2]);
+    }
+    
+    @Test
+    public void zoomTest(){
+        mission.zoom('+');
+        assertTrue(mission.size > 20);
+        mission.zoom('-');
+        assertTrue(mission.size<20);
+    }
+    
+    @Test
+    public void toStealTest(){
+        assertEquals(0, mission.robadas.size());        
+    }
+    
     /**
      * Tears down the test fixture.
      *

@@ -527,7 +527,7 @@ public class Mission
     
     
     /**
-     * An example of a method - replace this comment with your own
+     * Pinta el plan de rojo si las bodegas son diferentes
      */
     private void colorDifferent()
     {
