@@ -92,9 +92,113 @@ public class MissionTest
         mission.returnCrate();
         
         assertEquals(2, mission.layout()[i-1][j-1]);
-     }
+    }
     
 
+    @Test
+    public void arrangeTest()
+    {
+        int[] from={1,1};
+        int[] to = {2,2};
+        mission.store(from);
+        mission.copy();
+        mission.arrange(from,to);
+        
+        assertEquals(1,mission.layout()[to[0]-1][to[1]-1]);
+    }
+
+    
+    @Test
+    public void checkStolenTest()
+    {
+        int[] from={1,1};
+        mission.store(from);
+        mission.copy();
+        mission.steal(from);
+        mission.copy();
+        int ans=mission.checkStolen();
+        
+        assertEquals(1,ans);
+    }
+    
+    
+    @Test
+    public void warehouseTest()
+    {
+        int[] from={1,1};
+        mission.store(from);
+        
+        assertEquals(1,mission.warehouse()[from[0]-1][from[1]-1]);
+    }
+    
+    
+    @Test
+    public void layoutTest()
+    {
+        int[] from={1,1};
+        mission.store(from);
+        mission.copy();
+        
+        assertEquals(1,mission.layout()[from[0]-1][from[1]-1]);
+    }
+    
+    
+    @Test
+    public void makeVisibleTest()
+    {
+        mission.copy();
+        mission.makeInvisible();
+        mission.makeVisible();
+        
+        assertTrue(mission.isVisibleBodega);
+        assertTrue(mission.isVisiblePlanBodega);
+    }
+    
+    
+    @Test
+    public void makeInvisibleTest()
+    {
+        mission.copy();
+        mission.makeVisible();
+        mission.makeInvisible();
+        
+        assertFalse(mission.isVisibleBodega);
+        assertFalse(mission.isVisiblePlanBodega);
+    }
+    
+    
+    @Test
+    public void finishTest()
+    {
+        int[] from={1,1};
+        mission.store(from);
+        mission.copy();
+        mission.steal(from);
+        mission.finish();
+        
+        assertFalse(mission.isVisibleBodega);
+        assertFalse(mission.isVisiblePlanBodega);
+        assertEquals(0,mission.stolenCrates);
+        assertEquals(0,mission.planValores[from[0]-1][from[1]-1]);
+        assertEquals(0,mission.valores[from[0]-1][from[1]-1]);
+    }
+    
+    
+    @Test
+    public void okTest()
+    {
+        int[] from={3,2};
+        int[] fromFalse={2,1};
+        int[] to={1,1};
+        mission.store(from);
+        mission.copy();
+        mission.arrange(from,to);
+        assertFalse(mission.ok());
+        mission.store(1,2);
+        assertTrue(mission.ok());
+    }
+    
+    
     /**
      * Tears down the test fixture.
      *
