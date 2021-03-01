@@ -56,6 +56,26 @@ public class Mission
         this.robadas=new ArrayList();
         this.ultimaAccion=new Stack();
         this.undo=new Stack();
+        this.valores = heights;
+        for (int i=0;i<this.lenght;i++)
+       {
+            for (int j=0;j<this.width;j++)
+            {   
+                int x=this.valores[i][j];
+                if (x>0)
+                {
+                    for (int k=this.valores[i][j];k>0;k--)
+                    {
+                        this.bodegaTop[i][j].changeColor("blue");
+                        this.bodegaLado[this.width-k][i].changeColor("blue");
+                        this.bodegaEntry[this.lenght-k][j].changeColor("blue");
+                    }
+                }
+                this.bodegaTop[i][j].makeVisible();
+                this.bodegaLado[i][j].makeVisible();
+                this.bodegaEntry[i][j].makeVisible();
+            }
+       }
     }
     
     
