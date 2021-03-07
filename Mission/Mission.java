@@ -25,6 +25,8 @@ public class Mission
     public Stack<String> ultimaAccion;
     public Stack<String> undo;
     public boolean sePudo;
+    public boolean isVisibleBodega;
+    public boolean isVisiblePlanBodega;
     public int[][] valores;
     public int[][] planValores;
     
@@ -42,19 +44,40 @@ public class Mission
         this.undo=new Stack();
     }
     
+    
     /**
      * Constructor for objects of class Mission
      */
-    public Mission(int largo,int ancho, int[][]heights)
+    public Mission(int largo,int ancho, int[][] heights)
     {
         this.lenght=largo;
         this.width=ancho;
-        crearBodega(this.lenght,this.width, heights);
+        crearBodega(this.lenght,this.width);
         this.robadas=new ArrayList();
         this.ultimaAccion=new Stack();
         this.undo=new Stack();
-        
+        this.valores = heights;
+        for (int i=0;i<this.lenght;i++)
+       {
+            for (int j=0;j<this.width;j++)
+            {   
+                int x=this.valores[i][j];
+                if (x>0)
+                {
+                    for (int k=this.valores[i][j];k>0;k--)
+                    {
+                        this.bodegaTop[i][j].changeColor("blue");
+                        this.bodegaLado[this.width-k][i].changeColor("blue");
+                        this.bodegaEntry[this.lenght-k][j].changeColor("blue");
+                    }
+                }
+                this.bodegaTop[i][j].makeVisible();
+                this.bodegaLado[i][j].makeVisible();
+                this.bodegaEntry[i][j].makeVisible();
+            }
+       }
     }
+    
     
     /**
      * Este metodo crea las bodegas, tanto la bodega de la camara como la bodega del plan con las 3 camaras
@@ -110,63 +133,8 @@ public class Mission
                 this.planBodegaEntry[i][j].moveHorizontal((this.width*this.size)*2+j*this.size+50);
             }
         }
-    }
-    
-    
-     /**
-     * Este metodo crea las bodegas, tanto la bodega de la camara como la bodega del plan con las 3 camaras
-     * 
-     */
-    private void crearBodega(int largo,int ancho, int[][] alturas)
-    {
-        this.lenght=largo;
-        this.width=ancho;
-        this.bodegaTop=new Rectangle[largo][ancho];
-        this.bodegaLado=new Rectangle[largo][ancho];
-        this.bodegaEntry=new Rectangle[largo][ancho];
-        this.planBodegaTop=new Rectangle[largo][ancho];
-        this.planBodegaLado=new Rectangle[largo][ancho];
-        this.planBodegaEntry=new Rectangle[largo][ancho];
-        this.valores=new int[largo][ancho];
-        this.planValores=new int[largo][ancho];
-        for (int i=0;i<largo;i++)
-        {
-            for (int j=0;j<ancho;j++)
-            {   
-                this.valores[i][j]=alturas[i][j];
-                this.planValores[i][j]=0;
-                this.bodegaTop[i][j]=new Rectangle();
-                this.bodegaLado[i][j]=new Rectangle();
-                this.bodegaEntry[i][j]=new Rectangle();
-                this.planBodegaTop[i][j]=new Rectangle();
-                this.planBodegaLado[i][j]=new Rectangle();
-                this.planBodegaEntry[i][j]=new Rectangle();
-                
-                this.bodegaTop[i][j].changeColor("green");
-                this.bodegaTop[i][j].makeVisible();
-                this.bodegaTop[i][j].moveVertical(i*this.size);
-                this.bodegaTop[i][j].moveHorizontal(j*this.size);
-                
-                this.bodegaLado[i][j].changeColor("green");
-                this.bodegaLado[i][j].makeVisible();
-                this.bodegaLado[i][j].moveVertical(i*this.size);
-                this.bodegaLado[i][j].moveHorizontal(this.width*this.size+j*this.size+25);
-                
-                this.bodegaEntry[i][j].changeColor("green");
-                this.bodegaEntry[i][j].makeVisible();
-                this.bodegaEntry[i][j].moveVertical(i*this.size);
-                this.bodegaEntry[i][j].moveHorizontal((this.width*this.size)*2+j*this.size+50);
-                
-                this.planBodegaTop[i][j].moveVertical(this.lenght*this.size+25+i*this.size);
-                this.planBodegaTop[i][j].moveHorizontal(j*this.size);
-                
-                this.planBodegaLado[i][j].moveVertical(this.lenght*this.size+25+i*this.size);
-                this.planBodegaLado[i][j].moveHorizontal(this.width*this.size+j*this.size+25);
-                
-                this.planBodegaEntry[i][j].moveVertical(this.lenght*this.size+25+i*this.size);
-                this.planBodegaEntry[i][j].moveHorizontal((this.width*this.size)*2+j*this.size+50);
-            }
-        }
+        this.isVisibleBodega=true;
+        this.isVisiblePlanBodega=false;
     }
     
     
@@ -210,10 +178,10 @@ public class Mission
     
     
     /**
-     * An example of a method - replace this comment with your own
+     * rellena de ceros la matriz de valores de la bodega y/o del plan
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @param  bodega:"yes" si se quiere rellenar de 0 la matriz de valores de la bodega,de lo contrario"no".
+     *         plan:"yes" si se quiere rellenar de 0 la matriz de valores de los planos de la bodega,de lo contrario"no".
      */
     private void ceros(String bodega,String plan)
     {
@@ -427,7 +395,7 @@ public class Mission
      *
      * @return la cantidad de cajas robadas del plan anterior.
      */
-    public int stolen()
+    public int checkStolen()
     {
         return this.lastStolenCrates;
     }
@@ -473,15 +441,18 @@ public class Mission
               this.planBodegaEntry[i][j].makeVisible();
            } 
         }
+        this.isVisibleBodega=true;
+        this.isVisiblePlanBodega=true;
         this.loadUndo("makeVisible",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
     }
     
     
     /**
-     * An example of a method - replace this comment with your own
+     * oculta las camaras y/o el plan segun la eleccion del usuario
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
+     * @param  bodega:"yes" si se quieren ocultar las camaras de la bodega,"no" si no se quiere ocultar
+     *         plan:"yes" si se quieren ocultar los planos de la bodega,"no" si no se quiere ocultar
+     * 
      */
     private void makeInvisible(String bodega,String plan)
     {
@@ -493,11 +464,13 @@ public class Mission
                   this.bodegaTop[i][j].makeInvisible();
                   this.bodegaLado[i][j].makeInvisible();
                   this.bodegaEntry[i][j].makeInvisible();
+                  this.isVisibleBodega=false;
               }
               if (plan=="yes"){
                   this.planBodegaTop[i][j].makeInvisible();
                   this.planBodegaLado[i][j].makeInvisible();
                   this.planBodegaEntry[i][j].makeInvisible();
+                  this.isVisiblePlanBodega=false;
               }
            } 
         }
@@ -513,6 +486,8 @@ public class Mission
     {
         makeInvisible("yes","yes");
         this.loadUndo("makeInvisible",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
+        this.isVisibleBodega=false;
+        this.isVisiblePlanBodega=false;
     }
     
     
@@ -572,7 +547,7 @@ public class Mission
     
     
     /**
-     * An example of a method - replace this comment with your own
+     * Pinta el plan de rojo si las bodegas son diferentes
      */
     private void colorDifferent()
     {
@@ -601,10 +576,17 @@ public class Mission
     }
 
     
-    /**
-     * An example of a method - replace this comment with your own
+        /**
+     * agrega la información para el metodo undo
      *
-     * @param  y   a sample parameter for a method
+     * @param  accion:ultima accion realizada por el usuario
+     *         los siguientes parametros son solo si el usuario realizo una accion que tenga que ver con la manipulacion 
+     *         de las ubicaciones de las cajas o las creaciones de estas mismas, de lo contrario estas son 0.
+     *         i:fila incial
+     *         j:columna incial
+     *         los siguientes parametros son si se efectua un arrange, de lo contrario estos son 0.
+     *         k:fila final
+     *         l:columna final
      */
     private void loadUndo(String accion,Integer i, Integer j, Integer k, Integer l)
     {
@@ -631,8 +613,8 @@ public class Mission
         l = (int) values[3];
         switch(ultimaAccion.peek()){
             case "copy":
-                ceros("no","yes");
-                makeInvisible("no","yes");
+                this.ceros("no","yes");
+                this.makeInvisible("no","yes");
                 break;
             case "store":
                 k=this.valores[i][j];
@@ -753,7 +735,7 @@ public class Mission
             this.loadUndo("+",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
             this.size += this.size*0.1;
         }
-        restorePosition();
+        this.restorePosition();
         for (int i=0;i<this.lenght;i++)
         {
            for (int j=0;j<this.width;j++)
@@ -811,7 +793,7 @@ public class Mission
      * 
      * @return  robadas: matriz de las cajas robadas.
      */
-    public ArrayList<String> check()
+    public ArrayList<String> toSteal()
     {
         return this.robadas;
     }
