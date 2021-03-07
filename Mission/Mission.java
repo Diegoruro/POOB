@@ -43,6 +43,20 @@ public class Mission
     }
     
     /**
+     * Constructor for objects of class Mission
+     */
+    public Mission(int largo,int ancho, int[][]heights)
+    {
+        this.lenght=largo;
+        this.width=ancho;
+        crearBodega(this.lenght,this.width, heights);
+        this.robadas=new ArrayList();
+        this.ultimaAccion=new Stack();
+        this.undo=new Stack();
+        
+    }
+    
+    /**
      * Este metodo crea las bodegas, tanto la bodega de la camara como la bodega del plan con las 3 camaras
      * 
      */
@@ -63,6 +77,63 @@ public class Mission
             for (int j=0;j<ancho;j++)
             {   
                 this.valores[i][j]=0;
+                this.planValores[i][j]=0;
+                this.bodegaTop[i][j]=new Rectangle();
+                this.bodegaLado[i][j]=new Rectangle();
+                this.bodegaEntry[i][j]=new Rectangle();
+                this.planBodegaTop[i][j]=new Rectangle();
+                this.planBodegaLado[i][j]=new Rectangle();
+                this.planBodegaEntry[i][j]=new Rectangle();
+                
+                this.bodegaTop[i][j].changeColor("green");
+                this.bodegaTop[i][j].makeVisible();
+                this.bodegaTop[i][j].moveVertical(i*this.size);
+                this.bodegaTop[i][j].moveHorizontal(j*this.size);
+                
+                this.bodegaLado[i][j].changeColor("green");
+                this.bodegaLado[i][j].makeVisible();
+                this.bodegaLado[i][j].moveVertical(i*this.size);
+                this.bodegaLado[i][j].moveHorizontal(this.width*this.size+j*this.size+25);
+                
+                this.bodegaEntry[i][j].changeColor("green");
+                this.bodegaEntry[i][j].makeVisible();
+                this.bodegaEntry[i][j].moveVertical(i*this.size);
+                this.bodegaEntry[i][j].moveHorizontal((this.width*this.size)*2+j*this.size+50);
+                
+                this.planBodegaTop[i][j].moveVertical(this.lenght*this.size+25+i*this.size);
+                this.planBodegaTop[i][j].moveHorizontal(j*this.size);
+                
+                this.planBodegaLado[i][j].moveVertical(this.lenght*this.size+25+i*this.size);
+                this.planBodegaLado[i][j].moveHorizontal(this.width*this.size+j*this.size+25);
+                
+                this.planBodegaEntry[i][j].moveVertical(this.lenght*this.size+25+i*this.size);
+                this.planBodegaEntry[i][j].moveHorizontal((this.width*this.size)*2+j*this.size+50);
+            }
+        }
+    }
+    
+    
+     /**
+     * Este metodo crea las bodegas, tanto la bodega de la camara como la bodega del plan con las 3 camaras
+     * 
+     */
+    private void crearBodega(int largo,int ancho, int[][] alturas)
+    {
+        this.lenght=largo;
+        this.width=ancho;
+        this.bodegaTop=new Rectangle[largo][ancho];
+        this.bodegaLado=new Rectangle[largo][ancho];
+        this.bodegaEntry=new Rectangle[largo][ancho];
+        this.planBodegaTop=new Rectangle[largo][ancho];
+        this.planBodegaLado=new Rectangle[largo][ancho];
+        this.planBodegaEntry=new Rectangle[largo][ancho];
+        this.valores=new int[largo][ancho];
+        this.planValores=new int[largo][ancho];
+        for (int i=0;i<largo;i++)
+        {
+            for (int j=0;j<ancho;j++)
+            {   
+                this.valores[i][j]=alturas[i][j];
                 this.planValores[i][j]=0;
                 this.bodegaTop[i][j]=new Rectangle();
                 this.bodegaLado[i][j]=new Rectangle();
@@ -530,7 +601,7 @@ public class Mission
     }
 
     
-        /**
+    /**
      * An example of a method - replace this comment with your own
      *
      * @param  y   a sample parameter for a method
