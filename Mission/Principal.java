@@ -35,16 +35,11 @@ public class Principal extends Bodega
                 this.lado[this.width-this.valores[i][j]][i].changeColor("blue");
                 this.entry[this.lenght-this.valores[i][j]][j].changeColor("blue");
                 this.sePudo=true;
-                //loadUndo("store",(Integer) i, (Integer) j, (Integer) 0, (Integer) 0);
             }   
             else
             {
                 System.out.println("no hay espacio para guardar esta caja");
                 this.sePudo=false;
-            }
-        
-            if (this.top[0][0].isVisible){
-                //this.colorDifferent();
             }
         }
         else

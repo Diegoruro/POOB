@@ -69,6 +69,111 @@ public class Mission
         this.ppal.draw();
     }
     
+    /**
+     * Guarda una caja en la bodega real
+     *
+     * @param  i,j   1,1
+     */
+    public void store(int i, int j){
+        this.ppal.store(i, j);
+        this.loadUndo("store",i,j,null,null);
+    }
+    
+    /**
+     * Guarda una caja en la bodega real
+     *
+     * @param  i,j   1,1
+     */
+    public void store(int[] crate)
+    {
+        this.store(crate[0],crate[1]);
+        if (this.ppal.top[0][0].isVisible){
+                this.colorDifferent();
+        }
+    }
+    
+    /**
+     * Roba una caja de la bodega en el plan.
+     *
+     * @param  i,j 1,1
+     */
+    public void steal(int i,int j){
+        this.plan.steal(i, j);
+        this.loadUndo("steal",(Integer) i, (Integer) j, (Integer) 0, (Integer) 0);
+        this.colorDifferent();
+    }
+    
+    /**
+     * Roba una caja de la bodega en el plan.
+     *
+     * @param Posicion en i y en j de la caja a robar [i,j] {2,3}
+     */
+    public void steal(int[] crate)
+    {
+        this.steal(crate[0],crate[1]);
+    }
+    
+    /**
+     * Devuelve la ultima caja a su posicion original.
+     */
+    public void returnCrate()
+    {
+        this.plan.returnCrate();
+        this.loadUndo("return",(Integer) i, (Integer) j, (Integer) 0, (Integer) 0);
+        this.colorDifferent();
+    }
+    
+    /**
+     * Mueve una caja de una posicion a otra si hay espacio en el lugar a mover.
+     *
+     * @param  from[] to[] {1,1} {1,2} 
+     */
+    public void arrange(int[] from,int[] to)
+    {
+        this.plan.arrange(from, to);
+        this.loadUndo("arrange",(Integer) i+1, (Integer) j+1, (Integer) k+1, (Integer) l+1);
+        this.colorDifferent();
+    }
+    
+    /**
+     * muestra en una matriz las cajas robadas
+     * 
+     * @return  robadas: matriz de las cajas robadas.
+     */
+    public ArrayList<String> toSteal()
+    {
+        return this.plan.toSteal();
+    }
+    
+    /**
+     * Calcula la cantidad de cajas robadas del plan anterior.
+     *
+     * @return la cantidad de cajas robadas del plan anterior.
+     */
+    public int checkStolen()
+    {
+        return this.plan.checkStolen();
+    }
+    
+    /**
+    * verifica la cantidad de cajas que hay en la bodega del plan.
+    *
+    * @return Devuelve la matriz de valores de la bodega del plan.
+    */
+    public int[][] layout()
+    {
+        return this.plan.layout();
+    }
+    
+    /**
+     * verifica la cantidad de cajas que hay en la bodega real.
+     *
+     * @return Devuelve la matriz de valores de la bodega real.
+     */
+    public int[][] warehouse()
+    {
+        return this.ppal.warehouse();
+    }
     
     /**
      * Hace una copia de la bodega desde sus 3 puntos de vista
@@ -286,12 +391,12 @@ public class Mission
     public void undo()
     {
         int i, j, k, l;
-        Integer[] values = coordenadas.get(coordenadas.size()-1);
+        Integer[] values = acciones.peek().coordenadas;
         i = (int) values[0];
         j = (int) values[1];
         k = (int) values[2];
         l = (int) values[3];
-        switch(ultimaAccion.peek()){
+        switch(acciones.peek().action){
             case "copy":
                 this.plan.ceros();
                 this.plan.makeInvisible();
@@ -323,7 +428,7 @@ public class Mission
                 to[0] = i;
                 to[1] = j;
                 this.plan.arrange(from,to);
-                this.ultimaAccion.pop();
+                this.acciones.pop();
                 break;
             case "return":
                 this.plan.steal(i,j);
@@ -333,20 +438,20 @@ public class Mission
                 break;
             case "makeInvisible":
                 this.makeVisible();
-                this.ultimaAccion.pop();
+                this.acciones.pop();
                 break;
             case "-":
                 zoom('+');
-                this.ultimaAccion.pop();
+                this.acciones.pop();
                 break;
             case "+":
                 zoom('-');
-                this.ultimaAccion.pop();
+                this.acciones.pop();
                 break;
         }
+        
+        this.undos.push(acciones.peek());
         this.acciones.pop();
-        this.undo.push(ultimaAccion.peek());
-        this.undoCoor.add(this.coordenadas.get(this.coordenadas.size()-1));
     }
     
     
@@ -356,7 +461,7 @@ public class Mission
     public void redo()
     {
         int i, j, k, l;
-        Integer[] values = this.undoCoor.get(this.undoCoor.size()-1);
+        Integer[] values = this.undos.peek().coordenadas;
         i = (int) values[0];
         j = (int) values[1];
         k = (int) values[2];

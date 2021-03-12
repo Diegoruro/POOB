@@ -41,14 +41,13 @@ public class Plan extends Bodega
             this.entry[this.lenght-this.valores[i][j]][j].changeColor("yellow");
             this.valores[i][j]-=1;
             this.sePudo=true;
-            //this.loadUndo("steal",(Integer) i, (Integer) j, (Integer) 0, (Integer) 0);
         }
         else
         {
             System.out.println("no hay nada que robar en esta posición");
             this.sePudo=false;
         }
-        //this.colorDifferent();
+        
     }
     
     /**
@@ -77,8 +76,6 @@ public class Plan extends Bodega
         this.lado[this.width-this.valores[i][j]][i].changeColor("blue");
         this.entry[this.lenght-this.valores[i][j]][j].changeColor("blue");
         this.sePudo=true;
-        //this.loadUndo("return",(Integer) i, (Integer) j, (Integer) 0, (Integer) 0);
-        //this.colorDifferent();
     }
     
     /**
@@ -117,14 +114,14 @@ public class Plan extends Bodega
             this.lado[this.width-this.valores[k][l]][k].changeColor("blue");
             this.entry[this.lenght-this.valores[k][l]][l].changeColor("blue");
             this.sePudo=true;
-            //this.loadUndo("arrange",(Integer) i+1, (Integer) j+1, (Integer) k+1, (Integer) l+1);
+            
         }
         else
         {
             System.out.println("no hay nada que mover en esta posición o no hay espacio en la posicion a mover");
             this.sePudo=false;
         }
-        //this.colorDifferent();
+        
     }
     
     /**
