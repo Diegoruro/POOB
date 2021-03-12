@@ -74,4 +74,33 @@ public class Principal extends Bodega
     {
         return this.valores;
     }
+    
+    /**
+     * Dibuja la bodega en el tablero
+     */
+    public void draw(){
+        for (int i=0;i<this.lenght;i++)
+        {
+            for (int j=0;j<this.width;j++)
+            {   
+                
+                this.top[i][j].changeColor("green");
+                this.top[i][j].makeVisible();
+                this.top[i][j].moveVertical(i*this.size);
+                this.top[i][j].moveHorizontal(j*this.size);
+                
+                this.lado[i][j].changeColor("green");
+                this.lado[i][j].makeVisible();
+                this.lado[i][j].moveVertical(i*this.size);
+                this.lado[i][j].moveHorizontal(this.width*this.size+j*this.size+25);
+                
+                this.entry[i][j].changeColor("green");
+                this.entry[i][j].makeVisible();
+                this.entry[i][j].moveVertical(i*this.size);
+                this.entry[i][j].moveHorizontal((this.width*this.size)*2+j*this.size+50);
+            }
+        }
+        this.isVisible=true;
+    }
+    
 }

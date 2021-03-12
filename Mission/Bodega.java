@@ -39,15 +39,13 @@ public class Bodega
                 this.entry[i][j]=new Rectangle();
             }
         }
-        
-        
     }
 
     /**
      * rellena de ceros la matriz de valores de la bodega
      *
      */
-    private void ceros()
+    public void ceros()
     {
         for (int i=0;i<this.lenght;i++)
        {
@@ -58,10 +56,10 @@ public class Bodega
        }
     }
     
-     /**
-     * oculta las camaras de la bodega
-     *
-     */
+    /**
+    * oculta las camaras de la bodega
+    *
+    */
     public void makeInvisible()
     {
         for (int i=0;i<this.lenght;i++)
@@ -71,15 +69,15 @@ public class Bodega
                   this.top[i][j].makeInvisible();
                   this.lado[i][j].makeInvisible();
                   this.entry[i][j].makeInvisible();
-                  this.isVisible=false;
            } 
         }
+        this.isVisible=false;
     }
     
     /**
-     * Hace visible todas las camaras y los planos de la bodega.
-     *
-     */
+    * Hace visible todas las camaras y los planos de la bodega.
+    *
+    */
     public void makeVisible()
     {
         for (int i=0;i<this.lenght;i++)
@@ -92,6 +90,24 @@ public class Bodega
            } 
         }
         this.isVisible=true;
-        //this.loadUndo("makeVisible",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
+    }
+    
+    /**
+     * reestablece la posicion inicial de todos los rectangulos
+     */
+    public void restorePosition()
+    {
+        for (int i=0;i<this.lenght;i++)
+        {
+           for (int j=0;j<this.width;j++)
+           {
+               this.top[i][j].setXPosition(70);
+               this.top[i][j].setYPosition(15);
+               this.lado[i][j].setXPosition(70);
+               this.lado[i][j].setYPosition(15);
+               this.entry[i][j].setXPosition(70);
+               this.entry[i][j].setYPosition(15);
+            }
+        }
     }
 }

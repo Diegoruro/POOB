@@ -15,9 +15,9 @@ public class Accion
     /**
      * Constructor for objects of class Accion
      */
-    public Accion(String action)
+    public Accion(String action, Integer[] coordenadas)
     {
-        this.coordenadas = new Integer[2];
+        this.coordenadas = coordenadas;
         this.action = action;
     }
 

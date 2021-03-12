@@ -27,28 +27,6 @@ Constructing Javadoc information...
 Standard Doclet version 11.0.2
 Building tree for all the packages and classes...
 Generating C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\doc\Mission.html...
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:41: warning - @param argument "void" is not a parameter name.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:44: warning - @return tag cannot be used in method with void return type.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:103: warning - @return tag cannot be used in method with void return type.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:126: warning - @param argument "y" is not a parameter name.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:129: warning - @return tag cannot be used in method with void return type.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:138: warning - @param argument "void" is not a parameter name.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:141: warning - @return tag cannot be used in method with void return type.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:176: warning - @return tag cannot be used in method with void return type.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:206: warning - @return tag cannot be used in method with void return type.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:215: warning - @param argument "void" is not a parameter name.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:218: warning - @return tag cannot be used in method with void return type.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:248: warning - @return tag cannot be used in method with void return type.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:281: warning - @param argument "void" is not a parameter name.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:293: warning - @param argument "void" is not a parameter name.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:305: warning - @param argument "void" is not a parameter name.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:317: warning - @param argument "void" is not a parameter name.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:320: warning - @return tag cannot be used in method with void return type.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:340: warning - @param argument "void" is not a parameter name.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:343: warning - @return tag cannot be used in method with void return type.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:363: warning - @param argument "void" is not a parameter name.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:366: warning - @return tag cannot be used in method with void return type.
-C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\Mission.java:391: warning - @param argument "void" is not a parameter name.
 Generating C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\doc\package-summary.html...
 Generating C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\doc\constant-values.html...
 Building index for all the packages and classes...
@@ -56,4 +34,3 @@ Building index for all classes...
 Generating C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\doc\allclasses.html...
 Generating C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\doc\allclasses.html...
 Generating C:\Users\Felipe\Desktop\ECI\2021-1\POOB\POOB\Mission\doc\index.html...
-22 warnings

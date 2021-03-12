@@ -9,10 +9,12 @@ import java.util.Stack;
 */
 public class Mission
 {
-    public Bodega ppal;
-    public Bodega plan;
-    public ArrayList<Accion> acciones;
-    public ArrayList<Accion> undos;
+    public int width;
+    public int lenght;
+    public Principal ppal;
+    public Plan plan;
+    public Stack<Accion> acciones;
+    public Stack<Accion> undos;
     public boolean sePudo;
     
     /**
@@ -20,10 +22,8 @@ public class Mission
      */
     public Mission(int largo,int ancho)
     {
-        this.ppal = new Bodega(largo, ancho);
-        this.plan = new Bodega(largo, ancho);
-        this.acciones = new ArrayList<Accion>();
-        this.undos = new ArrayList<Accion>();
+        this.acciones = new Stack<Accion>();
+        this.undos = new Stack<Accion>();
         crearBodega(largo,ancho);
     }
     
@@ -33,78 +33,41 @@ public class Mission
      */
     public Mission(int largo,int ancho, int[][] heights)
     {
-        this.lenght=largo;
-        this.width=ancho;
-        crearBodega(this.lenght,this.width);
-        this.robadas=new ArrayList();
-        this.ultimaAccion=new Stack();
-        this.undo=new Stack();
+        crearBodega(largo,ancho);
+        this.acciones = new Stack<Accion>();
+        this.undos = new Stack<Accion>();
         this.ppal.valores = heights;
-        for (int i=0;i<this.lenght;i++)
+        for (int i=0;i<largo;i++)
        {
-            for (int j=0;j<this.width;j++)
+            for (int j=0;j<ancho;j++)
             {   
-                int x=this.valores[i][j];
+                int x=this.ppal.valores[i][j];
                 if (x>0)
                 {
-                    for (int k=this.valores[i][j];k>0;k--)
+                    for (int k=this.ppal.valores[i][j];k>0;k--)
                     {
-                        this.bodegaTop[i][j].changeColor("blue");
-                        this.bodegaLado[this.width-k][i].changeColor("blue");
-                        this.bodegaEntry[this.lenght-k][j].changeColor("blue");
+                        this.ppal.top[i][j].changeColor("blue");
+                        this.ppal.lado[ancho-k][i].changeColor("blue");
+                        this.ppal.entry[largo-k][j].changeColor("blue");
                     }
                 }
-                this.bodegaTop[i][j].makeVisible();
-                this.bodegaLado[i][j].makeVisible();
-                this.bodegaEntry[i][j].makeVisible();
+                this.ppal.top[i][j].makeVisible();
+                this.ppal.lado[i][j].makeVisible();
+                this.ppal.entry[i][j].makeVisible();
             }
        }
-    }
+    }    
     
     
     /**
-     * Este metodo crea las bodegas, tanto la bodega de la camara como la bodega del plan con las 3 camaras
-     * 
+     * Crea ambas bodegas y dibuja la bodega principal
+     *
      */
-    private void crearBodega(int largo,int ancho)
-    {
-        /*
-        for (int i=0;i<largo;i++)
-        {
-            for (int j=0;j<ancho;j++)
-            {   
-                
-                this.bodegaTop[i][j].changeColor("green");
-                this.bodegaTop[i][j].makeVisible();
-                this.bodegaTop[i][j].moveVertical(i*this.size);
-                this.bodegaTop[i][j].moveHorizontal(j*this.size);
-                
-                this.bodegaLado[i][j].changeColor("green");
-                this.bodegaLado[i][j].makeVisible();
-                this.bodegaLado[i][j].moveVertical(i*this.size);
-                this.bodegaLado[i][j].moveHorizontal(this.width*this.size+j*this.size+25);
-                
-                this.bodegaEntry[i][j].changeColor("green");
-                this.bodegaEntry[i][j].makeVisible();
-                this.bodegaEntry[i][j].moveVertical(i*this.size);
-                this.bodegaEntry[i][j].moveHorizontal((this.width*this.size)*2+j*this.size+50);
-                
-                this.planBodegaTop[i][j].moveVertical(this.lenght*this.size+25+i*this.size);
-                this.planBodegaTop[i][j].moveHorizontal(j*this.size);
-                
-                this.planBodegaLado[i][j].moveVertical(this.lenght*this.size+25+i*this.size);
-                this.planBodegaLado[i][j].moveHorizontal(this.width*this.size+j*this.size+25);
-                
-                this.planBodegaEntry[i][j].moveVertical(this.lenght*this.size+25+i*this.size);
-                this.planBodegaEntry[i][j].moveHorizontal((this.width*this.size)*2+j*this.size+50);
-            }
-        }
-        this.isVisibleBodega=true;
-        this.isVisiblePlanBodega=false;
-        */
-    }  
-
-    
+    private void crearBodega(int largo, int ancho){
+        this.ppal = new Principal(largo, ancho);
+        this.plan = new Plan(largo, ancho);
+        this.ppal.draw();
+    }
     
     
     /**
@@ -116,33 +79,33 @@ public class Mission
        {
            for (int j=0;j<this.width;j++)
            {
-                  this.planBodegaTop[i][j].changeColor("magenta");
-                  this.planBodegaLado[i][j].changeColor("magenta");
-                  this.planBodegaEntry[i][j].changeColor("magenta");
+                  this.plan.top[i][j].changeColor("magenta");
+                  this.plan.lado[i][j].changeColor("magenta");
+                  this.plan.entry[i][j].changeColor("magenta");
            } 
        }
        for (int i=0;i<this.lenght;i++)
        {
             for (int j=0;j<this.width;j++)
             {   
-                int x=this.valores[i][j];
-                this.planValores[i][j]=this.valores[i][j];
+                int x=this.ppal.valores[i][j];
+                this.plan.valores[i][j]=this.ppal.valores[i][j];
                 if (x>0)
                 {
-                    for (int k=this.valores[i][j];k>0;k--)
+                    for (int k=this.ppal.valores[i][j];k>0;k--)
                     {
-                        this.planBodegaTop[i][j].changeColor("blue");
-                        this.planBodegaLado[this.width-k][i].changeColor("blue");
-                        this.planBodegaEntry[this.lenght-k][j].changeColor("blue");
+                        this.plan.top[i][j].changeColor("blue");
+                        this.plan.lado[this.width-k][i].changeColor("blue");
+                        this.plan.entry[this.lenght-k][j].changeColor("blue");
                     }
                 }
-                this.planBodegaTop[i][j].makeVisible();
-                this.planBodegaLado[i][j].makeVisible();
-                this.planBodegaEntry[i][j].makeVisible();
+                this.plan.top[i][j].makeVisible();
+                this.plan.lado[i][j].makeVisible();
+                this.plan.entry[i][j].makeVisible();
             }
        }
-        this.lastStolenCrates=this.stolenCrates;
-        this.stolenCrates=0;
+        this.plan.lastStolenCrates=this.plan.stolenCrates;
+        this.plan.stolenCrates=0;
         this.sePudo=true;
     }
     
@@ -156,67 +119,80 @@ public class Mission
        {
            for (int j=0;j<this.width;j++)
            {
-                  this.planBodegaTop[i][j].changeColor("magenta");
-                  this.planBodegaLado[i][j].changeColor("magenta");
-                  this.planBodegaEntry[i][j].changeColor("magenta");
+                  this.plan.top[i][j].changeColor("magenta");
+                  this.plan.lado[i][j].changeColor("magenta");
+                  this.plan.entry[i][j].changeColor("magenta");
            } 
        }
        for (int i=0;i<this.lenght;i++)
        {
             for (int j=0;j<this.width;j++)
             {   
-                int x=this.valores[i][j];
-                this.planValores[i][j]=this.valores[i][j];
+                int x=this.ppal.valores[i][j];
+                this.plan.valores[i][j]=this.ppal.valores[i][j];
                 if (x>0)
                 {
-                    for (int k=this.valores[i][j];k>0;k--)
+                    for (int k=this.ppal.valores[i][j];k>0;k--)
                     {
-                        this.planBodegaTop[i][j].changeColor("blue");
-                        this.planBodegaLado[this.width-k][i].changeColor("blue");
-                        this.planBodegaEntry[this.lenght-k][j].changeColor("blue");
+                        this.plan.top[i][j].changeColor("blue");
+                        this.plan.lado[this.width-k][i].changeColor("blue");
+                        this.plan.entry[this.lenght-k][j].changeColor("blue");
                     }
                 }
-                this.planBodegaTop[i][j].makeVisible();
-                this.planBodegaLado[i][j].makeVisible();
-                this.planBodegaEntry[i][j].makeVisible();
+                this.plan.top[i][j].makeVisible();
+                this.plan.lado[i][j].makeVisible();
+                this.plan.entry[i][j].makeVisible();
             }
        }
-        this.lastStolenCrates=this.stolenCrates;
-        this.stolenCrates=0;
+        this.plan.lastStolenCrates=this.plan.stolenCrates;
+        this.plan.stolenCrates=0;
         this.sePudo=true;
         this.loadUndo("copy",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
     }    
     
     
-    
-    
-    
-
-   
+    /**
+     * Hace Visibles ambas bodegas
+     */
+    public void makeVisible(){
+        this.plan.makeVisible();
+        this.ppal.makeInvisible();
+        this.loadUndo("makeVisible",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
+    }
     
     
     /**
-     * Acaba con el simulador y reincia todos los datos.
+     * Hace invisibles ambas bodegas
+     */
+    public void makeInvisible(){
+        this.plan.makeInvisible();
+        this.ppal.makeInvisible();
+        this.loadUndo("makeInvisible",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
+    }
+    
+    
+    /**
+     * Acaba con el simulador y reinicia todos los datos.
      *
      */
     public void finish()
     {
       this.makeInvisible();
-      this.stolenCrates=0;
-      this.lastStolenCrates=0;
-      this.robadas.clear();
+      this.plan.stolenCrates=0;
+      this.plan.lastStolenCrates=0;
+      this.plan.robadas.clear();
       for (int i=0;i<this.lenght;i++)
         {
            for (int j=0;j<this.width;j++)
            {
-              this.bodegaTop[i][j].changeColor("green");
-              this.bodegaLado[i][j].changeColor("green");
-              this.bodegaEntry[i][j].changeColor("green");
-              this.planBodegaTop[i][j].changeColor("magenta");
-              this.planBodegaLado[i][j].changeColor("magenta");
-              this.planBodegaEntry[i][j].changeColor("magenta");
-              this.planValores[i][j]=0;
-              this.valores[i][j]=0;
+              this.ppal.top[i][j].changeColor("green");
+              this.ppal.lado[i][j].changeColor("green");
+              this.ppal.entry[i][j].changeColor("green");
+              this.plan.top[i][j].changeColor("magenta");
+              this.plan.lado[i][j].changeColor("magenta");
+              this.plan.entry[i][j].changeColor("magenta");
+              this.plan.valores[i][j]=0;
+              this.ppal.valores[i][j]=0;
            } 
       }
     }
@@ -241,7 +217,7 @@ public class Mission
     {
         for (int i = 0; i < this.lenght; i++){
             for (int j = 0; j < this.width; j++){
-                if (this.valores[i][j] != this.planValores[i][j]){
+                if (this.ppal.valores[i][j] != this.plan.valores[i][j]){
                     return false;
                 }
             }
@@ -260,17 +236,17 @@ public class Mission
             {
                 for (int j=0;j<this.width;j++)
                 {
-                  if(this.planBodegaTop[i][j].color=="magenta")
+                  if(this.plan.top[i][j].color=="magenta")
                   {
-                      this.planBodegaTop[i][j].changeColor("red");
+                      this.plan.top[i][j].changeColor("red");
                   }
-                  if(this.planBodegaLado[i][j].color=="magenta")
+                  if(this.plan.lado[i][j].color=="magenta")
                   {
-                      this.planBodegaLado[i][j].changeColor("red");
+                      this.plan.lado[i][j].changeColor("red");
                   }
-                  if(this.planBodegaEntry[i][j].color=="magenta")
+                  if(this.plan.entry[i][j].color=="magenta")
                   {
-                      this.planBodegaEntry[i][j].changeColor("red");
+                      this.plan.entry[i][j].changeColor("red");
                   }
                } 
             }
@@ -280,7 +256,7 @@ public class Mission
     }
 
     
-     /**
+    /**
      * agrega la información para el metodo undo
      *
      * @param  accion:ultima accion realizada por el usuario
@@ -294,13 +270,13 @@ public class Mission
      */
     private void loadUndo(String accion,Integer i, Integer j, Integer k, Integer l)
     {
-        this.ultimaAccion.push(accion);
         Integer[] temp = new Integer[4];
         temp[0] = i;
         temp[1] = j;
         temp[2] = k;
         temp[3] = l;
-        this.coordenadas.add(temp);
+        Accion action = new Accion(accion, temp);
+        acciones.push(action);
     }
 
     
@@ -317,24 +293,24 @@ public class Mission
         l = (int) values[3];
         switch(ultimaAccion.peek()){
             case "copy":
-                this.ceros("no","yes");
-                this.makeInvisible("no","yes");
+                this.plan.ceros();
+                this.plan.makeInvisible();
                 break;
             case "store":
-                k=this.valores[i][j];
-                this.bodegaTop[i][j].changeColor("green");
-                this.bodegaLado[this.width-k][i].changeColor("green");
-                this.bodegaEntry[this.lenght-k][j].changeColor("green");
-                this.valores[i][j]-=1;
+                k=this.ppal.valores[i][j];
+                this.ppal.top[i][j].changeColor("green");
+                this.ppal.lado[this.width-k][i].changeColor("green");
+                this.ppal.entry[this.lenght-k][j].changeColor("green");
+                this.ppal.valores[i][j]-=1;
                 values[0]++;
                 values[1]++;
                 break;
             case "steal":
-                this.planValores[i][j]+=1;
-                k=this.planValores[i][j];
-                this.planBodegaTop[i][j].changeColor("blue");
-                this.planBodegaLado[this.width-k][i].changeColor("blue");
-                this.planBodegaEntry[this.lenght-k][j].changeColor("blue");
+                this.plan.valores[i][j]+=1;
+                k=this.plan.valores[i][j];
+                this.plan.top[i][j].changeColor("blue");
+                this.plan.lado[this.width-k][i].changeColor("blue");
+                this.plan.entry[this.lenght-k][j].changeColor("blue");
                 values[0]++;
                 values[1]++;
                 this.colorDifferent();
@@ -346,17 +322,17 @@ public class Mission
                 int[] to = new int[2];
                 to[0] = i;
                 to[1] = j;
-                arrange(from,to);
+                this.plan.arrange(from,to);
                 this.ultimaAccion.pop();
                 break;
             case "return":
-                steal(i,j);
+                this.plan.steal(i,j);
                 break;
             case "makeVisible":
-                makeInvisible("yes", "yes");
+                this.makeInvisible();
                 break;
             case "makeInvisible":
-                makeVisible();
+                this.makeVisible();
                 this.ultimaAccion.pop();
                 break;
             case "-":
@@ -368,10 +344,9 @@ public class Mission
                 this.ultimaAccion.pop();
                 break;
         }
+        this.acciones.pop();
         this.undo.push(ultimaAccion.peek());
-        this.ultimaAccion.pop();
         this.undoCoor.add(this.coordenadas.get(this.coordenadas.size()-1));
-        this.coordenadas.remove(this.coordenadas.size()-1);
     }
     
     
@@ -386,15 +361,15 @@ public class Mission
         j = (int) values[1];
         k = (int) values[2];
         l = (int) values[3];
-        switch(undo.peek()){
+        switch(undos.peek().action){
             case "copy":
                 copy();
                 break;
             case "store":
-                store(i,j);
+                this.ppal.store(i,j);
                 break;
             case "steal":
-                steal(i,j);
+                this.plan.steal(i,j);
                 break;
             case "arrange":
                 int[] from = new int[2];
@@ -403,16 +378,16 @@ public class Mission
                 int[] to = new int[2];
                 to[0] = i;
                 to[1] = j;
-                arrange(from,to);
+                this.plan.arrange(from,to);
                 break;
             case "return":
-                returnCrate();
+                this.plan.returnCrate();
                 break;
             case "makeVisible":
-                makeVisible();
+                this.makeVisible();
                 break;
             case "makeInvisible":
-                makeInvisible();
+                this.makeInvisible();
                 break;
             case "-":
                 zoom('-');
@@ -421,8 +396,7 @@ public class Mission
                 zoom('+');
                 break;
         }
-        this.undo.pop();
-        this.undoCoor.remove(this.undoCoor.size()-1);
+        this.undos.pop();
     }
     
     
@@ -433,63 +407,39 @@ public class Mission
     {
         if(z == '-'){
             this.loadUndo("-",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
-            this.size -= this.size*0.1;
+            this.ppal.size -= this.ppal.size*0.1;
         }
         else{
             this.loadUndo("+",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
-            this.size += this.size*0.1;
+            this.ppal.size += this.ppal.size*0.1;
         }
-        this.restorePosition();
+        this.ppal.restorePosition();
+        this.plan.restorePosition();
         for (int i=0;i<this.lenght;i++)
         {
            for (int j=0;j<this.width;j++)
            {
-               this.bodegaTop[i][j].zoom(z);
-               this.bodegaLado[i][j].zoom(z);
-               this.bodegaEntry[i][j].zoom(z);
-               this.planBodegaTop[i][j].zoom(z);
-               this.planBodegaLado[i][j].zoom(z);
-               this.planBodegaEntry[i][j].zoom(z);
-               this.bodegaTop[i][j].moveVertical(i*this.size);
-               this.bodegaTop[i][j].moveHorizontal(j*this.size);
-               this.bodegaLado[i][j].moveVertical(i*this.size);
-               this.bodegaLado[i][j].moveHorizontal(this.width*this.size+j*this.size+25);
-               this.bodegaEntry[i][j].moveVertical(i*this.size);
-               this.bodegaEntry[i][j].moveHorizontal((this.width*this.size)*2+j*this.size+50);
-               this.planBodegaTop[i][j].moveVertical(this.lenght*this.size+25+i*this.size);
-               this.planBodegaTop[i][j].moveHorizontal(j*this.size);
-               this.planBodegaLado[i][j].moveVertical(this.lenght*this.size+25+i*this.size);
-               this.planBodegaLado[i][j].moveHorizontal(this.width*this.size+j*this.size+25);
-               this.planBodegaEntry[i][j].moveVertical(this.lenght*this.size+25+i*this.size);
-               this.planBodegaEntry[i][j].moveHorizontal((this.width*this.size)*2+j*this.size+50);
+               this.ppal.top[i][j].zoom(z);
+               this.ppal.lado[i][j].zoom(z);
+               this.ppal.entry[i][j].zoom(z);
+               this.plan.top[i][j].zoom(z);
+               this.plan.lado[i][j].zoom(z);
+               this.plan.entry[i][j].zoom(z);
+               this.ppal.top[i][j].moveVertical(i*this.ppal.size);
+               this.ppal.top[i][j].moveHorizontal(j*this.ppal.size);
+               this.ppal.lado[i][j].moveVertical(i*this.ppal.size);
+               this.ppal.lado[i][j].moveHorizontal(this.width*this.ppal.size+j*this.ppal.size+25);
+               this.ppal.entry[i][j].moveVertical(i*this.ppal.size);
+               this.ppal.entry[i][j].moveHorizontal((this.width*this.ppal.size)*2+j*this.ppal.size+50);
+               this.plan.top[i][j].moveVertical(this.lenght*this.ppal.size+25+i*this.ppal.size);
+               this.plan.top[i][j].moveHorizontal(j*this.ppal.size);
+               this.plan.lado[i][j].moveVertical(this.lenght*this.ppal.size+25+i*this.ppal.size);
+               this.plan.lado[i][j].moveHorizontal(this.width*this.ppal.size+j*this.ppal.size+25);
+               this.plan.entry[i][j].moveVertical(this.lenght*this.ppal.size+25+i*this.ppal.size);
+               this.plan.entry[i][j].moveHorizontal((this.width*this.ppal.size)*2+j*this.ppal.size+50);
            } 
         }
     }
-
-    
-    /**
-     * reestablece la posicion inicial de todos los rectangulos
-     */
-    private void restorePosition()
-    {
-        for (int i=0;i<this.lenght;i++)
-        {
-           for (int j=0;j<this.width;j++)
-           {
-               this.bodegaTop[i][j].setXPosition(70);
-               this.bodegaTop[i][j].setYPosition(15);
-               this.bodegaLado[i][j].setXPosition(70);
-               this.bodegaLado[i][j].setYPosition(15);
-               this.bodegaEntry[i][j].setXPosition(70);
-               this.bodegaEntry[i][j].setYPosition(15);
-               this.planBodegaTop[i][j].setXPosition(70);
-               this.planBodegaTop[i][j].setYPosition(15);
-               this.planBodegaLado[i][j].setXPosition(70);
-               this.planBodegaLado[i][j].setYPosition(15);
-               this.planBodegaEntry[i][j].setXPosition(70);
-               this.planBodegaEntry[i][j].setYPosition(15);
-           } 
-        }
-    }
-
 }
+    
+    
