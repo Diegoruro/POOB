@@ -22,6 +22,8 @@ public class Mission
      */
     public Mission(int largo,int ancho)
     {
+        this.lenght = largo;
+        this.width = ancho;
         this.acciones = new Stack<Accion>();
         this.undos = new Stack<Accion>();
         crearBodega(largo,ancho);
@@ -33,6 +35,8 @@ public class Mission
      */
     public Mission(int largo,int ancho, int[][] heights)
     {
+        this.lenght = largo;
+        this.width = ancho;
         crearBodega(largo,ancho);
         this.acciones = new Stack<Accion>();
         this.undos = new Stack<Accion>();
@@ -67,6 +71,7 @@ public class Mission
         this.ppal = new Principal(largo, ancho);
         this.plan = new Plan(largo, ancho);
         this.ppal.draw();
+        this.plan.draw();
     }
     
     /**
@@ -77,6 +82,9 @@ public class Mission
     public void store(int i, int j){
         this.ppal.store(i, j);
         this.loadUndo("store",i,j,null,null);
+        if (this.plan.isVisible){
+            this.colorDifferent();
+        }
     }
     
     /**
@@ -87,9 +95,6 @@ public class Mission
     public void store(int[] crate)
     {
         this.store(crate[0],crate[1]);
-        if (this.ppal.top[0][0].isVisible){
-                this.colorDifferent();
-        }
     }
     
     /**
@@ -118,7 +123,14 @@ public class Mission
      */
     public void returnCrate()
     {
+        String lastCrate = this.plan.robadas.get(this.plan.robadas.size() - 1);
+        String coordenada[] = lastCrate.split("-");
+    
+        int i = Integer.parseInt(coordenada[0]);
+        int j = Integer.parseInt(coordenada[1]);
+        
         this.plan.returnCrate();
+        
         this.loadUndo("return",(Integer) i, (Integer) j, (Integer) 0, (Integer) 0);
         this.colorDifferent();
     }
@@ -131,6 +143,14 @@ public class Mission
     public void arrange(int[] from,int[] to)
     {
         this.plan.arrange(from, to);
+        int i=from[0];
+        int j=from[1];
+        int k=to[0];
+        int l=to[1];
+        i--;
+        j--;
+        k--;
+        l--;
         this.loadUndo("arrange",(Integer) i+1, (Integer) j+1, (Integer) k+1, (Integer) l+1);
         this.colorDifferent();
     }
@@ -180,21 +200,12 @@ public class Mission
      */
     private void copy2()
     {  
-       for (int i=0;i<this.lenght;i++)
-       {
-           for (int j=0;j<this.width;j++)
-           {
-                  this.plan.top[i][j].changeColor("magenta");
-                  this.plan.lado[i][j].changeColor("magenta");
-                  this.plan.entry[i][j].changeColor("magenta");
-           } 
-       }
-       for (int i=0;i<this.lenght;i++)
+       this.plan.valores = this.ppal.valores;
+        for (int i=0;i<this.lenght;i++)
        {
             for (int j=0;j<this.width;j++)
             {   
                 int x=this.ppal.valores[i][j];
-                this.plan.valores[i][j]=this.ppal.valores[i][j];
                 if (x>0)
                 {
                     for (int k=this.ppal.valores[i][j];k>0;k--)
@@ -220,6 +231,7 @@ public class Mission
      */
     public void copy()
     {  
+       this.plan.valores = this.ppal.valores;
        for (int i=0;i<this.lenght;i++)
        {
            for (int j=0;j<this.width;j++)
@@ -229,12 +241,11 @@ public class Mission
                   this.plan.entry[i][j].changeColor("magenta");
            } 
        }
-       for (int i=0;i<this.lenght;i++)
+        for (int i=0;i<this.lenght;i++)
        {
             for (int j=0;j<this.width;j++)
             {   
                 int x=this.ppal.valores[i][j];
-                this.plan.valores[i][j]=this.ppal.valores[i][j];
                 if (x>0)
                 {
                     for (int k=this.ppal.valores[i][j];k>0;k--)
@@ -318,7 +329,7 @@ public class Mission
      *
      * @return      Booleano según si son iguales o no
      */
-    private boolean areEqual()
+    public boolean areEqual()
     {
         for (int i = 0; i < this.lenght; i++){
             for (int j = 0; j < this.width; j++){

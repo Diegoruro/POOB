@@ -150,8 +150,8 @@ public class MissionTest
         mission.makeInvisible();
         mission.makeVisible();
         
-        assertTrue(mission.isVisibleBodega);
-        assertTrue(mission.isVisiblePlanBodega);
+        assertTrue(mission.ppal.isVisible);
+        assertTrue(mission.plan.isVisible);
     }
     
     
@@ -162,8 +162,8 @@ public class MissionTest
         mission.makeVisible();
         mission.makeInvisible();
         
-        assertFalse(mission.isVisibleBodega);
-        assertFalse(mission.isVisiblePlanBodega);
+        assertFalse(mission.ppal.isVisible);
+        assertFalse(mission.plan.isVisible);
     }
     
     
@@ -176,11 +176,11 @@ public class MissionTest
         mission.steal(from);
         mission.finish();
         
-        assertFalse(mission.isVisibleBodega);
-        assertFalse(mission.isVisiblePlanBodega);
-        assertEquals(0,mission.stolenCrates);
-        assertEquals(0,mission.planValores[from[0]-1][from[1]-1]);
-        assertEquals(0,mission.valores[from[0]-1][from[1]-1]);
+        assertFalse(mission.ppal.isVisible);
+        assertFalse(mission.plan.isVisible);
+        assertEquals(0,mission.plan.stolenCrates);
+        assertEquals(0,mission.plan.valores[from[0]-1][from[1]-1]);
+        assertEquals(0,mission.ppal.valores[from[0]-1][from[1]-1]);
     }
     
     
@@ -205,9 +205,9 @@ public class MissionTest
         mission.copy();
         mission.steal(2,2);
         mission.undo();
-        assertEquals(1,mission.planValores[1][1]);
+        assertEquals(1,mission.plan.valores[1][1]);
         mission.undo();
-        assertFalse(mission.planBodegaTop[0][0].isVisible);
+        assertFalse(mission.plan.top[0][0].isVisible);
         
         
     }
@@ -217,20 +217,20 @@ public class MissionTest
         mission.store(3,3);
         mission.undo();
         mission.redo();
-        assertEquals(1, mission.valores[2][2]);
+        assertEquals(1, mission.ppal.valores[2][2]);
     }
     
     @Test
     public void zoomTest(){
         mission.zoom('+');
-        assertTrue(mission.size > 20);
+        assertTrue(mission.ppal.size > 20);
         mission.zoom('-');
-        assertTrue(mission.size<20);
+        assertTrue(mission.ppal.size<20);
     }
     
     @Test
     public void toStealTest(){
-        assertEquals(0, mission.robadas.size());        
+        assertEquals(0, mission.plan.robadas.size());        
     }
     
     /**

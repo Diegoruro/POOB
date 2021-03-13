@@ -76,10 +76,10 @@ public class Bodega
     
     /**
     * Hace visible todas las camaras y los planos de la bodega.
-    *
     */
     public void makeVisible()
     {
+        
         for (int i=0;i<this.lenght;i++)
         {
            for (int j=0;j<this.width;j++)
