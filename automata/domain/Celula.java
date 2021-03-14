@@ -13,6 +13,9 @@ public class Celula extends Ser implements Elemento{
     protected Color color;
     private AutomataCelular automata;
     private int fila,columna;
+    private Elemento[] vecinos;
+    private Elemento[][] matrix;
+    private int vecinosVivos;
 
 
     /**Crea una célula en la posición (<b>fila,columna</b>) del autómta <b>ac</b>.Toda nueva célula va a estar viva en el estado siguiente.
@@ -27,6 +30,7 @@ public class Celula extends Ser implements Elemento{
         estadoSiguiente=Ser.VIVO;
         automata.setElemento(fila,columna,(Elemento)this);  
         color=Color.blue;
+        matrix = this.automata.getMatrix();
     }
 
     /**Retorna la fila del automata en que se encuentra 
@@ -49,35 +53,53 @@ public class Celula extends Ser implements Elemento{
      */
     public final Color getColor(){
         return color;
-    }
-
+    }    
     
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
-     */
-    public boolean vecinos()
+    public int getVecinosVivos(){
+        return this.vecinosVivos;
+    }
+    
+    public Elemento[] vecinos()
     {
-        for (int i=-1;i<2;i++){
-            for (int j=-1;j<2;j++){
-                
+        vecinos = new Elemento[8];
+        int cont = 0;
+        for (int i=this.fila-1;i<this.fila+2;i++){
+            for (int j=this.columna-1;j<this.columna+2;j++){
+                if (i!=this.fila || j!=this.columna ){
+                    vecinos[cont] = this.automata.getElemento(i, j);
+                    cont++;
+                }
             }
         }
-        return false;
-    }
 
-    
+        return vecinos;
+    }
 
     /**Decide cual va a ser su  siguiente estado 
      */
     public void decida(){
         if (getEdad()>=3){
             estadoSiguiente=Ser.MUERTO;
-        }   
+        }else if(getVecinosVivos() == 3 && !this.isVivo()){
+            estadoSiguiente=Ser.VIVO;
+        }else if((getVecinosVivos() == 2 || getVecinosVivos() == 3) && this.isVivo()){
+            estadoSiguiente=Ser.VIVO;
+        }else if(getVecinosVivos()<2 || getVecinosVivos()>3){
+            estadoSiguiente=Ser.MUERTO;
+        }else if (!this.isVivo()){
+        }
     }
 
+    private void calculateVecinosVivos(){
+        vecinosVivos = 0;
+        for (Elemento vecino: this.vecinos){
+            if (vecino.isVivo()){
+                vecinosVivos += 1;
+            }
+        }
+    }
+
+    
     /**Actualiza su estado actual considerando lo definido como siguiente estado
      */
     public final void cambie(){

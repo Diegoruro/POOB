@@ -6,7 +6,8 @@ import java.util.*;
 public class AutomataCelular{
     static private int LONGITUD=30;
     private Elemento[][] automata;
-	
+    private Elemento[][] newMatrix;
+    
     public AutomataCelular() {
         automata=new Elemento[LONGITUD][LONGITUD];
         for (int f=0;f<LONGITUD;f++){
@@ -15,8 +16,17 @@ public class AutomataCelular{
             }
         }
         algunosElementos();
+        modifyMatrix();
     }
 
+    public Elemento[][] getAutomata(){
+        return this.automata;
+    }
+    
+    public Elemento[][] getMatrix(){
+        return this.newMatrix;
+    }
+    
     public int  getLongitud(){
         return LONGITUD;
     }
@@ -33,6 +43,24 @@ public class AutomataCelular{
     }
     
     public void ticTac(){
+        
+    }
+    
+    public void modifyMatrix(){
+        Elemento[][] matrix = this.automata;
+        int n = this.getLongitud()+2;
+        newMatrix = new Elemento[n][n];
+        for (int i=0; i<n;i++){
+            for (int j=0; i<n; i++){
+                if (i==0 || j==0 || i==n-1 || j==n-1){
+                    newMatrix[i][j] = null;
+                }else{
+                    System.out.println("changing");
+                    newMatrix[i][j] = matrix[i-1][j-1];
+                }
+            }
+        }
+        
     }
 
 }
