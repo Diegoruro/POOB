@@ -4,7 +4,8 @@ import java.awt.Color;
 
 /**Informacion sobre una célula<br>
 <b>(automata,fila,columna,edad, estado, estadoSigiente, color)</b><br>
-Las celulas conocenel automata en la que viven, la posición en la que están en ese autómata,su edad, su estado actual y el estado que van a tomar en el siguiente instante.<br>
+Las celulas conocen el automata en la que viven, la posición en la que están en ese autómata,su edad, su 
+estado actual y el estado que van a tomar en el siguiente instante.<br>
 Todas las células son de color azul<br>
  */
 public class Celula extends Ser implements Elemento{
@@ -24,7 +25,7 @@ public class Celula extends Ser implements Elemento{
         this.fila=fila;
         this.columna=columna;
         estadoSiguiente=Ser.VIVO;
-        automata.setElemento(fila,columna,(Elemento)this);	
+        automata.setElemento(fila,columna,(Elemento)this);  
         color=Color.blue;
     }
 
@@ -50,6 +51,24 @@ public class Celula extends Ser implements Elemento{
         return color;
     }
 
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public boolean vecinos()
+    {
+        for (int i=-1;i<2;i++){
+            for (int j=-1;j<2;j++){
+                
+            }
+        }
+        return false;
+    }
+
+    
 
     /**Decide cual va a ser su  siguiente estado 
      */
