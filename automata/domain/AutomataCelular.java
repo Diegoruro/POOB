@@ -18,7 +18,29 @@ public class AutomataCelular{
         algunosElementos();
         modifyMatrix();
     }
+    
+    public int vecinos(int fila, int columna)
+    {
+        Elemento[] vecinos = new Elemento[8];
+        int cont = 0;
+        for (int i=fila-1;i<fila+2;i++){
+            for (int j=columna-1;j<columna+2;j++){
+                if (i!=fila || j!=columna){
+                    vecinos[cont] = this.getElemento(i+1, j+1);
+                    cont++;
+                }
+            }
+        }
 
+        int vecinosVivos = 0;
+        for (Elemento vecino: vecinos){
+            if (vecino != null && vecino.isVivo()){
+                vecinosVivos++;
+            }
+        }
+        return vecinosVivos;
+    }
+    
     public Elemento[][] getAutomata(){
         return this.automata;
     }
@@ -40,10 +62,20 @@ public class AutomataCelular{
     }
 
     public void algunosElementos(){
+        Celula indiana = new Celula(this, 1,1);
+        Celula OO7 = new Celula(this, 2,2);
     }
     
     public void ticTac(){
-        
+        for (int i=0; i<LONGITUD;i++){
+            for (int j=0; j<LONGITUD; j++){
+                if (automata[i][j] != null){
+                    int vivos = automata[i][j].getVecinosVivos();
+                    automata[i][j].decida();
+                    automata[i][j].cambie();
+                }
+            }
+        }
     }
     
     public void modifyMatrix(){
@@ -51,11 +83,10 @@ public class AutomataCelular{
         int n = this.getLongitud()+2;
         newMatrix = new Elemento[n][n];
         for (int i=0; i<n;i++){
-            for (int j=0; i<n; i++){
+            for (int j=0; j<n; j++){
                 if (i==0 || j==0 || i==n-1 || j==n-1){
                     newMatrix[i][j] = null;
                 }else{
-                    System.out.println("changing");
                     newMatrix[i][j] = matrix[i-1][j-1];
                 }
             }

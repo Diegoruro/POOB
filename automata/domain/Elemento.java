@@ -25,4 +25,8 @@ public interface Elemento{
       return false;
   }
   
+  default int getVecinosVivos(){
+      return 0;
+  }
+  
 }

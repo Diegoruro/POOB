@@ -56,23 +56,8 @@ public class Celula extends Ser implements Elemento{
     }    
     
     public int getVecinosVivos(){
+        automata.vecinos(this.fila, this.columna);
         return this.vecinosVivos;
-    }
-    
-    public Elemento[] vecinos()
-    {
-        vecinos = new Elemento[8];
-        int cont = 0;
-        for (int i=this.fila-1;i<this.fila+2;i++){
-            for (int j=this.columna-1;j<this.columna+2;j++){
-                if (i!=this.fila || j!=this.columna ){
-                    vecinos[cont] = this.automata.getElemento(i, j);
-                    cont++;
-                }
-            }
-        }
-
-        return vecinos;
     }
 
     /**Decide cual va a ser su  siguiente estado 
@@ -80,22 +65,56 @@ public class Celula extends Ser implements Elemento{
     public void decida(){
         if (getEdad()>=3){
             estadoSiguiente=Ser.MUERTO;
-        }else if(getVecinosVivos() == 3 && !this.isVivo()){
-            estadoSiguiente=Ser.VIVO;
-        }else if((getVecinosVivos() == 2 || getVecinosVivos() == 3) && this.isVivo()){
-            estadoSiguiente=Ser.VIVO;
-        }else if(getVecinosVivos()<2 || getVecinosVivos()>3){
-            estadoSiguiente=Ser.MUERTO;
-        }else if (!this.isVivo()){
         }
-    }
-
-    private void calculateVecinosVivos(){
-        vecinosVivos = 0;
-        for (Elemento vecino: this.vecinos){
-            if (vecino.isVivo()){
-                vecinosVivos += 1;
+        if(getVecinosVivos() == 3 && !this.isVivo()){
+            estadoSiguiente=Ser.VIVO;
+        }
+        if((getVecinosVivos() == 2 || getVecinosVivos() == 3) && this.isVivo()){
+            estadoSiguiente=Ser.VIVO;
+        }
+        if(getVecinosVivos()<2 || getVecinosVivos()>3){
+            estadoSiguiente=Ser.MUERTO;
+        }
+        int cont = 1;
+        for (int i = 0, i<vecinos.lenght;){
+            int vivos = 0;
+            if (vecino == null ){
+                    switch(cont){
+                        case 1:
+                            if (automata.vecinos(this.fila-1, this.columna-1)==3){
+                                new Celula(automata, this.fila-1, this.columna-1);
+                            }
+                        case 2:
+                            if (automata.vecinos(this.fila-1, this.columna)==3){
+                                new Celula(automata, this.fila-1, this.columna-1);
+                            }
+                        case 3:
+                            if (automata.vecinos(this.fila-1, this.columna+1)==3){
+                                new Celula(automata, this.fila-1, this.columna-1);
+                            }
+                        case 4:
+                            if (automata.vecinos(this.fila, this.columna-1)==3){
+                                new Celula(automata, this.fila-1, this.columna-1);
+                            }
+                        case 5:
+                            if (automata.vecinos(this.fila, this.columna+1)==3){
+                                new Celula(automata, this.fila-1, this.columna-1);
+                            }
+                        case 6:
+                            if (automata.vecinos(this.fila+1, this.columna-1)==3){
+                                new Celula(automata, this.fila-1, this.columna-1);
+                            }
+                        case 7:
+                            if (automata.vecinos(this.fila+1, this.columna)==3){
+                                new Celula(automata, this.fila-1, this.columna-1);
+                            }
+                        case 8:
+                            if (automata.vecinos(this.fila+1, this.columna+1)==3){
+                                new Celula(automata, this.fila-1, this.columna-1);
+                            }
+                    }
             }
+            cont++;
         }
     }
 
