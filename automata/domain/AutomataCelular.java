@@ -19,34 +19,23 @@ public class AutomataCelular{
         modifyMatrix();
     }
     
-    public int vecinos(int fila, int columna)
+    public Elemento[] vecinos(int fila, int columna)
     {
         Elemento[] vecinos = new Elemento[8];
         int cont = 0;
         for (int i=fila-1;i<fila+2;i++){
             for (int j=columna-1;j<columna+2;j++){
                 if (i!=fila || j!=columna){
-                    vecinos[cont] = this.getElemento(i+1, j+1);
+                    vecinos[cont] = this.getElementoMatrix(i+1, j+1);
                     cont++;
                 }
             }
         }
-
-        int vecinosVivos = 0;
-        for (Elemento vecino: vecinos){
-            if (vecino != null && vecino.isVivo()){
-                vecinosVivos++;
-            }
-        }
-        return vecinosVivos;
+        return vecinos;
     }
     
     public Elemento[][] getAutomata(){
         return this.automata;
-    }
-    
-    public Elemento[][] getMatrix(){
-        return this.newMatrix;
     }
     
     public int  getLongitud(){
@@ -57,41 +46,67 @@ public class AutomataCelular{
         return automata[f][c];
     }
 
+    public Elemento getElementoMatrix(int f,int c){
+        return this.newMatrix[f][c];
+    }
+    
     public void setElemento(int f, int c, Elemento nueva){
         automata[f][c]=nueva;
     }
 
     public void algunosElementos(){
-        Celula indiana = new Celula(this, 1,1);
-        Celula OO7 = new Celula(this, 2,2);
+        CelulaNormal indiana = new CelulaNormal(this, 1,1);
+        CelulaNormal OO7 = new CelulaNormal(this, 2,2);
+        CelulaEspecial agamenon = new CelulaEspecial(this, 3,2);
+        CelulaEspecial venus = new CelulaEspecial(this, 5,5);
+        Calefactor noroeste= new Calefactor(this,0,0);
+        Calefactor sureste= new Calefactor(this,29,29);
     }
     
     public void ticTac(){
         for (int i=0; i<LONGITUD;i++){
             for (int j=0; j<LONGITUD; j++){
                 if (automata[i][j] != null){
-                    int vivos = automata[i][j].getVecinosVivos();
-                    automata[i][j].decida();
                     automata[i][j].cambie();
+                    Elemento[] vecinos =vecinos(i,j);
+                    automata[i][j].decida(vecinos);
                 }
             }
         }
     }
     
+    public void newCelula(int fila,int columna){
+        boolean flag=false;
+        for (int i=fila-1;i<fila+2;i++){
+            for (int j=columna-1;j<columna+2;j++){
+                if (i!=fila || j!=columna){
+                    if(this.getElementoMatrix(i+1,j+1)==null){
+                        flag=true;
+                        new CelulaNormal(this,i,j);
+                        break;
+                    }
+                }
+            }
+            if (flag){
+                break;
+            }
+        }
+    }    
+    
+    
     public void modifyMatrix(){
         Elemento[][] matrix = this.automata;
         int n = this.getLongitud()+2;
-        newMatrix = new Elemento[n][n];
+        this.newMatrix = new Elemento[n][n];
         for (int i=0; i<n;i++){
             for (int j=0; j<n; j++){
                 if (i==0 || j==0 || i==n-1 || j==n-1){
-                    newMatrix[i][j] = null;
+                    this.newMatrix[i][j] = null;
                 }else{
-                    newMatrix[i][j] = matrix[i-1][j-1];
+                    this.newMatrix[i][j] = matrix[i-1][j-1];
                 }
             }
         }
         
     }
-
 }

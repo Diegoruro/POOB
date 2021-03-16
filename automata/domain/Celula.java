@@ -11,8 +11,8 @@ Todas las células son de color azul<br>
 public class Celula extends Ser implements Elemento{
     protected char estadoSiguiente;
     protected Color color;
-    private AutomataCelular automata;
-    private int fila,columna;
+    protected AutomataCelular automata;
+    protected int fila,columna;
     private Elemento[] vecinos;
     private Elemento[][] matrix;
     private int vecinosVivos;
@@ -28,9 +28,7 @@ public class Celula extends Ser implements Elemento{
         this.fila=fila;
         this.columna=columna;
         estadoSiguiente=Ser.VIVO;
-        automata.setElemento(fila,columna,(Elemento)this);  
-        color=Color.blue;
-        matrix = this.automata.getMatrix();
+        automata.setElemento(fila,columna,(Elemento)this);
     }
 
     /**Retorna la fila del automata en que se encuentra 
@@ -55,67 +53,10 @@ public class Celula extends Ser implements Elemento{
         return color;
     }    
     
-    public int getVecinosVivos(){
-        automata.vecinos(this.fila, this.columna);
-        return this.vecinosVivos;
-    }
 
     /**Decide cual va a ser su  siguiente estado 
      */
-    public void decida(){
-        if (getEdad()>=3){
-            estadoSiguiente=Ser.MUERTO;
-        }
-        if(getVecinosVivos() == 3 && !this.isVivo()){
-            estadoSiguiente=Ser.VIVO;
-        }
-        if((getVecinosVivos() == 2 || getVecinosVivos() == 3) && this.isVivo()){
-            estadoSiguiente=Ser.VIVO;
-        }
-        if(getVecinosVivos()<2 || getVecinosVivos()>3){
-            estadoSiguiente=Ser.MUERTO;
-        }
-        int cont = 1;
-        for (int i = 0, i<vecinos.lenght;){
-            int vivos = 0;
-            if (vecino == null ){
-                    switch(cont){
-                        case 1:
-                            if (automata.vecinos(this.fila-1, this.columna-1)==3){
-                                new Celula(automata, this.fila-1, this.columna-1);
-                            }
-                        case 2:
-                            if (automata.vecinos(this.fila-1, this.columna)==3){
-                                new Celula(automata, this.fila-1, this.columna-1);
-                            }
-                        case 3:
-                            if (automata.vecinos(this.fila-1, this.columna+1)==3){
-                                new Celula(automata, this.fila-1, this.columna-1);
-                            }
-                        case 4:
-                            if (automata.vecinos(this.fila, this.columna-1)==3){
-                                new Celula(automata, this.fila-1, this.columna-1);
-                            }
-                        case 5:
-                            if (automata.vecinos(this.fila, this.columna+1)==3){
-                                new Celula(automata, this.fila-1, this.columna-1);
-                            }
-                        case 6:
-                            if (automata.vecinos(this.fila+1, this.columna-1)==3){
-                                new Celula(automata, this.fila-1, this.columna-1);
-                            }
-                        case 7:
-                            if (automata.vecinos(this.fila+1, this.columna)==3){
-                                new Celula(automata, this.fila-1, this.columna-1);
-                            }
-                        case 8:
-                            if (automata.vecinos(this.fila+1, this.columna+1)==3){
-                                new Celula(automata, this.fila-1, this.columna-1);
-                            }
-                    }
-            }
-            cont++;
-        }
+    public void decida(Elemento [] vecinos){
     }
 
     

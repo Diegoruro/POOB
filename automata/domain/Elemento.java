@@ -7,7 +7,7 @@ public interface Elemento{
   int CUADRADA = 2;
 
 
-  default void decida(){
+  default void decida(Elemento[] vecinos){
   };
    
   default void cambie(){
