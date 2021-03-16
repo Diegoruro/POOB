@@ -20,8 +20,9 @@ public class Calefactor implements Elemento
     }
 
     
-    /**Retorna la fila del automata en que se encuentra 
-    @return 
+    /**
+     * Retorna la fila del automata en que se encuentra 
+     * @return 
      */
     public final int getFila(){
         return fila;

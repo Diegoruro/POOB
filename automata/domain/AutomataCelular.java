@@ -70,6 +70,7 @@ public class AutomataCelular{
                     automata[i][j].cambie();
                     Elemento[] vecinos =vecinos(i,j);
                     automata[i][j].decida(vecinos);
+                    this.modifyMatrix();
                 }
             }
         }
