@@ -44,7 +44,6 @@ public class Poblacion implements Elemento
     
     
     public void cambie(){
-        System.out.print(automata.poblacion);
         int n=automata.poblacion;
         if (n>0 && n<10){
             this.color=Color.green;
