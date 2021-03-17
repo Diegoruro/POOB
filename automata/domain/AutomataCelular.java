@@ -7,6 +7,7 @@ public class AutomataCelular{
     static private int LONGITUD=30;
     private Elemento[][] automata;
     private Elemento[][] newMatrix;
+    public static int poblacion;
     
     public AutomataCelular() {
         automata=new Elemento[LONGITUD][LONGITUD];
@@ -61,6 +62,10 @@ public class AutomataCelular{
         CelulaEspecial venus = new CelulaEspecial(this, 5,5);
         Calefactor noroeste= new Calefactor(this,0,0);
         Calefactor sureste= new Calefactor(this,29,29);
+        CelulaAsustada diego=new CelulaAsustada(this,3,4);
+        CelulaAsustada felipe=new CelulaAsustada(this,5,3);
+        Poblacion poblacion1=new Poblacion(this,0,29);
+        Poblacion poblacion2=new Poblacion(this,29,0);
     }
     
     public void ticTac(){

@@ -29,6 +29,7 @@ public class Celula extends Ser implements Elemento{
         this.columna=columna;
         estadoSiguiente=Ser.VIVO;
         automata.setElemento(fila,columna,(Elemento)this);
+        automata.poblacion++;
     }
 
     /**Retorna la fila del automata en que se encuentra 
