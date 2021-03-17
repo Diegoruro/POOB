@@ -56,6 +56,7 @@ public class AutomataCelular{
     }
 
     public void algunosElementos(){
+        /*
         CelulaNormal indiana = new CelulaNormal(this, 1,1);
         CelulaNormal OO7 = new CelulaNormal(this, 2,2);
         CelulaEspecial agamenon = new CelulaEspecial(this, 3,2);
@@ -63,7 +64,7 @@ public class AutomataCelular{
         Calefactor noroeste= new Calefactor(this,0,0);
         Calefactor sureste= new Calefactor(this,29,29);
         CelulaAsustada diego=new CelulaAsustada(this,3,4);
-        CelulaAsustada felipe=new CelulaAsustada(this,5,3);
+        CelulaAsustada felipe=new CelulaAsustada(this,5,3);*/
         Poblacion poblacion1=new Poblacion(this,0,29);
         Poblacion poblacion2=new Poblacion(this,29,0);
     }
