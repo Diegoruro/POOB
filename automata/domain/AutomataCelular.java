@@ -56,27 +56,57 @@ public class AutomataCelular{
     }
 
     public void algunosElementos(){
-        /*
-        CelulaNormal indiana = new CelulaNormal(this, 1,1);
-        CelulaNormal OO7 = new CelulaNormal(this, 2,2);
-        CelulaEspecial agamenon = new CelulaEspecial(this, 3,2);
-        CelulaEspecial venus = new CelulaEspecial(this, 5,5);
-        Calefactor noroeste= new Calefactor(this,0,0);
-        Calefactor sureste= new Calefactor(this,29,29);
-        CelulaAsustada diego=new CelulaAsustada(this,3,4);
-        CelulaAsustada felipe=new CelulaAsustada(this,5,3);*/
-        Poblacion poblacion1=new Poblacion(this,0,29);
-        Poblacion poblacion2=new Poblacion(this,29,0);
+        /* Indiana y 007
+        CelulaNormal indiana = new CelulaNormal(this,1,1);
+        CelulaNormal oo7 = new CelulaNormal(this,2,2);
+        */
+        
+        /* Agamenon y Venus
+        CelulaEspecial agamenon = new CelulaEspecial(this,5,1);
+        CelulaEspecial venus = new CelulaEspecial(this,8,1);
+        */
+        
+        /* Horton y Jhon
+        CelulaConway jhon = new CelulaConway(this,5,1);
+        CelulaConway horton = new CelulaConway(this,5,2);
+        */
+       
+        /* Bloque
+        CelulaConway celulaBloque1 = new CelulaConway(this,28,0);
+        CelulaConway celulaBloque2 = new CelulaConway(this,28,1);
+        CelulaConway celulaBloque3 = new CelulaConway(this,29,0);
+        CelulaConway celulaBloque4 = new CelulaConway(this,29,1);
+        */
+       
+        /* parpadeador
+        CelulaConway celulaParpadeador1 = new CelulaConway(this,28,13);
+        CelulaConway celulaParpadeador2 = new CelulaConway(this,28,14);
+        CelulaConway celulaParpadeador3 = new CelulaConway(this,28,15);
+         */
+        
     }
     
     public void ticTac(){
         for (int i=0; i<LONGITUD;i++){
             for (int j=0; j<LONGITUD; j++){
+                Elemento[] vecinos =vecinos(i,j);
+                if (automata[i][j] != null){
+                    automata[i][j].decida(vecinos);
+                }
+                else{
+                    int vivos=vecinosVivos(vecinos);
+                    if(vivos==3){
+                        CelulaConway nueva=new CelulaConway(this,i,j);
+                        nueva.estado='d';
+                    }
+                }
+                this.modifyMatrix();
+            }
+        }
+        for (int i=0; i<LONGITUD;i++){
+            for (int j=0; j<LONGITUD; j++){
                 if (automata[i][j] != null){
                     automata[i][j].cambie();
-                    Elemento[] vecinos =vecinos(i,j);
-                    automata[i][j].decida(vecinos);
-                    this.modifyMatrix();
                 }
             }
         }
@@ -115,5 +145,16 @@ public class AutomataCelular{
             }
         }
         
+    }
+    
+    
+    public int vecinosVivos(Elemento[] vecinos){
+        int vivos = 0;
+        for (int i=0;i<vecinos.length;i++){
+            if (vecinos[i]!=null && vecinos[i].isVivo()){
+                vivos++;
+            }
+        }
+        return vivos;
     }
 }
