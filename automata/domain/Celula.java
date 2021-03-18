@@ -56,6 +56,7 @@ public class Celula extends Ser implements Elemento{
     
 
     /**Decide cual va a ser su  siguiente estado 
+    @param Elemento [] vecinos lista de los vecinos que rodean al elemento
      */
     public void decida(Elemento [] vecinos){
     }
