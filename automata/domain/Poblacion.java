@@ -15,7 +15,7 @@ public class Poblacion implements Elemento
         automata=ac;
         this.fila=fila;
         this.columna=columna;
-        automata.setElemento(fila,columna,(Elemento)this); 
+        automata.setElemento(fila,columna,(Elemento)this);
         this.color=Color.white;
     }
 

@@ -94,7 +94,7 @@ public class AutomataCelular{
         CelulaEspecial agamenon = new CelulaEspecial(this,5,1);
         CelulaEspecial venus = new CelulaEspecial(this,8,1);
         */
-        
+       
         /* Horton y Jhon
         CelulaConway jhon = new CelulaConway(this,5,1);
         CelulaConway horton = new CelulaConway(this,5,2);
@@ -111,7 +111,7 @@ public class AutomataCelular{
         CelulaConway celulaParpadeador1 = new CelulaConway(this,28,13);
         CelulaConway celulaParpadeador2 = new CelulaConway(this,28,14);
         CelulaConway celulaParpadeador3 = new CelulaConway(this,28,15);
-         */
+        */
         
     }
     

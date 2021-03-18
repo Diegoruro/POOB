@@ -19,10 +19,10 @@ public class Celula extends Ser implements Elemento{
 
 
     /**Crea una célula en la posición (<b>fila,columna</b>) del autómta <b>ac</b>.Toda nueva célula va a estar viva en el estado siguiente.
-    @param ac automata celular en el que se va a ubicar la nueva célula
-    @param fila fila en el automata celular
-    @param columna columna en el automata celula
-     */
+    *@param ac automata celular en el que se va a ubicar la nueva célula
+    *@param fila fila en el automata celular
+    *@param columna columna en el automata celula
+    */
     public Celula(AutomataCelular ac,int fila, int columna){
         automata=ac;
         this.fila=fila;
