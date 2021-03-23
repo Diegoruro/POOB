@@ -1,7 +1,12 @@
 package domain;
 import java.awt.Color;
 
-
+/**
+ * Comportamientos del elemento población.
+ * 
+ * @author (Juan Aguas - Diego Ruiz) 
+ * @version (1)
+ */
 public class Poblacion implements Elemento
 {
     protected Color color;
@@ -45,13 +50,13 @@ public class Poblacion implements Elemento
     
     public void cambie(){
         int n=automata.poblacion;
-        if (n>0 && n<10){
+        if (n>0 && n<30){
             this.color=Color.green;
         }
-        else if (n>=10 && n<20){
+        else if (n>=30 && n<60){
             this.color=Color.orange;
         }
-        else if (n>=20){
+        else if (n>=60){
             this.color=Color.red;
         }
     }

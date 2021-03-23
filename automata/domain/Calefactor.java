@@ -1,7 +1,12 @@
 package domain;
 import java.awt.Color;
 
-
+/**
+ * Comportamientos de un calefactor.
+ * 
+ * @author (Juan Aguas - Diego Ruiz) 
+ * @version (1)
+ */
 public class Calefactor implements Elemento
 {
     protected Color color;

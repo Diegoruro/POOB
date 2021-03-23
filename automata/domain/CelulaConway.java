@@ -2,10 +2,10 @@ package domain;
 import java.awt.Color;
 
 /**
- * Write a description of class JuegoDeLaVida here.
+ * Comportamientos de una celula del Juego De La Vida.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author (Juan Aguas - Diego Ruiz) 
+ * @version (1)
  */
 public class CelulaConway extends Celula
 {

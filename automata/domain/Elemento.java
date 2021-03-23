@@ -1,7 +1,9 @@
 package domain;
 import java.awt.Color;
 
-/*No olviden adicionar la documentacion*/
+/**
+* Funcionalidades de cualquier elemento
+*/
 public interface Elemento{
   int REDONDA = 1;
   int CUADRADA = 2;
