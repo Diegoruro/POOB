@@ -2,6 +2,10 @@ package domain;
 import java.awt.Color;
 
 /**
+ * Comportamientos de una celula del Juego De La Vida.
+ * 
+ * @author (Juan Aguas - Diego Ruiz) 
+ * @version (1)
  */
 public class CelulaConway extends Celula
 {

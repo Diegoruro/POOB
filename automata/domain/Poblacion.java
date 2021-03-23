@@ -1,7 +1,12 @@
 package domain;
 import java.awt.Color;
 
-
+/**
+ * Comportamientos del elemento población.
+ * 
+ * @author (Juan Aguas - Diego Ruiz) 
+ * @version (1)
+ */
 public class Poblacion implements Elemento
 {
     public Color color;

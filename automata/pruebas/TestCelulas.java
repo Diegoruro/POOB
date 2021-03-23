@@ -8,6 +8,10 @@ import org.junit.Test;
 import java.awt.Color;
 
 /**
+ * Tests unitarios para las células y elementos creados.
+ *
+ * @author  (Juan Aguas - Diego Ruiz)
+ * @version (1)
  */
 public class TestCelulas
 {
@@ -132,17 +136,21 @@ public class TestCelulas
         automata.ticTac();
         assertEquals(Color.green, pob.color);
         
+<<<<<<< HEAD:automata/pruebas/TestCelulas.java
         for (int i=1;i<17;i++){
             new CelulaNormal(automata,i,i);
             new CelulaNormal(automata,i,i+1);
         }
         
+=======
+        for (int i=1; i<30;i++){
+            new CelulaNormal(automata,i,i);
+        }
+>>>>>>> e89b8e01b7f52a6ca2f487bb1503654a16f8fc16:automata/domain/TestCelulas.java
         
         //Caso 2
         automata.ticTac();
         assertEquals(Color.orange, pob.color);
-        
-        
     }
     
     @Test

@@ -1,4 +1,5 @@
 #BlueJ package file
+<<<<<<< HEAD
 dependency1.from=CelulaNormal
 dependency1.to=AutomataCelular
 dependency1.type=UsesDependency
@@ -37,10 +38,72 @@ dependency6.to=AutomataCelular
 dependency6.type=UsesDependency
 dependency7.from=CelulaAsustada
 dependency7.to=AutomataCelular
+=======
+dependency1.from=Celula
+dependency1.to=AutomataCelular
+dependency1.type=UsesDependency
+dependency10.from=Calefactor
+dependency10.to=Elemento
+dependency10.type=UsesDependency
+dependency11.from=Poblacion
+dependency11.to=AutomataCelular
+dependency11.type=UsesDependency
+dependency12.from=Poblacion
+dependency12.to=Elemento
+dependency12.type=UsesDependency
+dependency13.from=AutomataCelular
+dependency13.to=Elemento
+dependency13.type=UsesDependency
+dependency14.from=AutomataCelular
+dependency14.to=CelulaConway
+dependency14.type=UsesDependency
+dependency15.from=AutomataCelular
+dependency15.to=CelulaNormal
+dependency15.type=UsesDependency
+dependency16.from=TestCelulas
+dependency16.to=AutomataCelular
+dependency16.type=UsesDependency
+dependency17.from=TestCelulas
+dependency17.to=CelulaNormal
+dependency17.type=UsesDependency
+dependency18.from=TestCelulas
+dependency18.to=CelulaEspecial
+dependency18.type=UsesDependency
+dependency19.from=TestCelulas
+dependency19.to=Calefactor
+dependency19.type=UsesDependency
+dependency2.from=Celula
+dependency2.to=Elemento
+dependency2.type=UsesDependency
+dependency20.from=TestCelulas
+dependency20.to=CelulaAsustada
+dependency20.type=UsesDependency
+dependency21.from=TestCelulas
+dependency21.to=Poblacion
+dependency21.type=UsesDependency
+dependency22.from=TestCelulas
+dependency22.to=CelulaConway
+dependency22.type=UsesDependency
+dependency3.from=Celula
+dependency3.to=Ser
+dependency3.type=UsesDependency
+dependency4.from=CelulaEspecial
+dependency4.to=AutomataCelular
+dependency4.type=UsesDependency
+dependency5.from=CelulaAsustada
+dependency5.to=AutomataCelular
+dependency5.type=UsesDependency
+dependency6.from=CelulaNormal
+dependency6.to=AutomataCelular
+dependency6.type=UsesDependency
+dependency7.from=CelulaNormal
+dependency7.to=Ser
+>>>>>>> e89b8e01b7f52a6ca2f487bb1503654a16f8fc16
 dependency7.type=UsesDependency
 dependency8.from=CelulaConway
 dependency8.to=AutomataCelular
 dependency8.type=UsesDependency
+<<<<<<< HEAD
 dependency9.from=Celula
 dependency9.to=AutomataCelular
 dependency9.type=UsesDependency
@@ -56,6 +119,23 @@ package.frame.height=800
 package.frame.width=1146
 package.numDependencies=15
 package.numTargets=10
+=======
+dependency9.from=Calefactor
+dependency9.to=AutomataCelular
+dependency9.type=UsesDependency
+objectbench.height=99
+objectbench.width=637
+package.divider.horizontal=0.5801801801801801
+package.divider.vertical=0.8500707213578501
+package.editor.height=594
+package.editor.width=990
+package.editor.x=419
+package.editor.y=99
+package.frame.height=807
+package.frame.width=1146
+package.numDependencies=22
+package.numTargets=11
+>>>>>>> e89b8e01b7f52a6ca2f487bb1503654a16f8fc16
 package.showExtends=true
 package.showUses=true
 readme.height=58
@@ -74,9 +154,22 @@ target10.height=50
 target10.name=CelulaConway
 target10.showInterface=false
 target10.type=ClassTarget
+<<<<<<< HEAD
 target10.width=120
 target10.x=750
 target10.y=370
+=======
+target10.width=80
+target10.x=320
+target10.y=260
+target11.height=50
+target11.name=CelulaConway
+target11.showInterface=false
+target11.type=ClassTarget
+target11.width=120
+target11.x=520
+target11.y=310
+>>>>>>> e89b8e01b7f52a6ca2f487bb1503654a16f8fc16
 target2.height=50
 target2.name=CelulaNormal
 target2.showInterface=false
@@ -89,8 +182,13 @@ target3.name=Poblacion
 target3.showInterface=false
 target3.type=ClassTarget
 target3.width=120
+<<<<<<< HEAD
 target3.x=120
 target3.y=70
+=======
+target3.x=100
+target3.y=80
+>>>>>>> e89b8e01b7f52a6ca2f487bb1503654a16f8fc16
 target4.height=50
 target4.name=AutomataCelular
 target4.showInterface=false
@@ -103,15 +201,25 @@ target5.name=Calefactor
 target5.showInterface=false
 target5.type=ClassTarget
 target5.width=90
+<<<<<<< HEAD
 target5.x=70
 target5.y=250
+=======
+target5.x=10
+target5.y=170
+>>>>>>> e89b8e01b7f52a6ca2f487bb1503654a16f8fc16
 target6.height=50
 target6.name=Elemento
 target6.showInterface=false
 target6.type=InterfaceTarget
 target6.width=90
+<<<<<<< HEAD
 target6.x=150
 target6.y=160
+=======
+target6.x=240
+target6.y=140
+>>>>>>> e89b8e01b7f52a6ca2f487bb1503654a16f8fc16
 target7.height=50
 target7.name=CelulaEspecial
 target7.showInterface=false

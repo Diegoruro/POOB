@@ -2,6 +2,10 @@ package domain;
 import java.awt.Color;
 
 /**
+ * Comportamientos de una célula especial
+ * 
+ * @author (Juan Aguas - Diego Ruiz) 
+ * @version (1)
  */
 public class CelulaEspecial extends Celula 
 {

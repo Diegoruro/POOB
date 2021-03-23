@@ -2,6 +2,10 @@ package domain;
 import java.awt.Color;
 
 /**
+ * comportamientos de una célula asustada.
+ * 
+ * @author (Juan Aguas - Diego Ruiz) 
+ * @version (1)
  */
 public class CelulaAsustada extends Celula 
 {

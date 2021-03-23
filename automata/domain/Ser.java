@@ -3,6 +3,9 @@ package domain;
 import java.awt.Color;
 
 
+/**
+ * Funcionalidades de cualquier Ser.
+ */
 public abstract class Ser{
     
     public final static char DESCONOCIDO='d', VIVO='v', MUERTO='m';

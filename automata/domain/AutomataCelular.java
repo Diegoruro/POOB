@@ -2,7 +2,9 @@ package domain;
 import java.util.*;
 
 
-/*No olviden adicionar la documentacion*/
+/**
+ * Clase principal del dominio en donde se llama a ejecución el resto de clases de dominio
+ */
 public class AutomataCelular{
     static private int LONGITUD=30;
     private Elemento[][] automata;
