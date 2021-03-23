@@ -1,5 +1,5 @@
-package domain;
-
+package pruebas;
+import domain.*;
 
 import static org.junit.Assert.*;
 import org.junit.After;
@@ -8,10 +8,6 @@ import org.junit.Test;
 import java.awt.Color;
 
 /**
- * The test class TestCelulas.
- *
- * @author  (your name)
- * @version (a version number or a date)
  */
 public class TestCelulas
 {
@@ -136,16 +132,11 @@ public class TestCelulas
         automata.ticTac();
         assertEquals(Color.green, pob.color);
         
-        CelulaNormal cel2 = new CelulaNormal(automata,4,4);
-        CelulaNormal cel3 = new CelulaNormal(automata,3,4);
-        CelulaNormal cel4 = new CelulaNormal(automata,3,3);
-        CelulaNormal cel5 = new CelulaNormal(automata,3,2);
-        CelulaNormal cel6 = new CelulaNormal(automata,4,5);
-        CelulaNormal cel7 = new CelulaNormal(automata,2,4);
-        CelulaNormal cel8 = new CelulaNormal(automata,5,4);
-        CelulaNormal cel9 = new CelulaNormal(automata,20,4);
-        CelulaNormal cel10 = new CelulaNormal(automata,15,24);
-        CelulaNormal cel11 = new CelulaNormal(automata,29,29);
+        for (int i=1;i<17;i++){
+            new CelulaNormal(automata,i,i);
+            new CelulaNormal(automata,i,i+1);
+        }
+        
         
         //Caso 2
         automata.ticTac();

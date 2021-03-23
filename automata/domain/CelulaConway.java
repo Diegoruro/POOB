@@ -2,10 +2,6 @@ package domain;
 import java.awt.Color;
 
 /**
- * Write a description of class JuegoDeLaVida here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
  */
 public class CelulaConway extends Celula
 {

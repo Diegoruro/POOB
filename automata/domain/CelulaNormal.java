@@ -6,7 +6,6 @@ public class CelulaNormal extends Celula
 {
 
     /**
-     * Constructor for objects of class CelulaNormal
      */
     public CelulaNormal(AutomataCelular ac,int fila, int columna)
     {
@@ -14,7 +13,8 @@ public class CelulaNormal extends Celula
         color=Color.blue;
     }
     
-    /**Decide cual va a ser su  siguiente estado 
+    /**
+    @see Elemento.decida()
      */
     public void decida(Elemento [] vecinos){
         if (getEdad()>=3){

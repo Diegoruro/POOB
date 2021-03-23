@@ -2,17 +2,12 @@ package domain;
 import java.awt.Color;
 
 /**
- * Write a description of class CelulaAsustada here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
  */
 public class CelulaAsustada extends Celula 
 {
     public boolean estaSola=true;
     public boolean nulls=false;
     /**
-     * Constructor for objects of class CelulaAsustada
      */
     public CelulaAsustada(AutomataCelular ac, int fila, int columna)
     {
@@ -20,7 +15,9 @@ public class CelulaAsustada extends Celula
         color=Color.magenta;
     }
 
-    
+    /**
+    @see Elemento.decida()
+     */
     public void decida(Elemento [] vecinos){
         int muertos = getMuertos(vecinos);
         if (muertos==8){
@@ -40,6 +37,10 @@ public class CelulaAsustada extends Celula
         }
     }
     
+    /**Calcula los vecinos muertos al rededor de una celula
+    @param Elemento[] vecinos lista de vecinos alrededor una celula
+    @return la cantidad de vecinos muertos
+     */
     private int getMuertos(Elemento [] vecinos){
         int muertos = 0;
         for (int i = 0;i<vecinos.length;i++){

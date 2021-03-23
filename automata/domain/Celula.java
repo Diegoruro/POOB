@@ -9,10 +9,10 @@ estado actual y el estado que van a tomar en el siguiente instante.<br>
 Todas las células son de color azul<br>
  */
 public class Celula extends Ser implements Elemento{
-    protected char estadoSiguiente;
-    protected Color color;
-    protected AutomataCelular automata;
-    protected int fila,columna;
+    public char estadoSiguiente;
+    public Color color;
+    public AutomataCelular automata;
+    public int fila,columna;
     private Elemento[] vecinos;
     private Elemento[][] matrix;
     private int vecinosVivos;
@@ -47,22 +47,23 @@ public class Celula extends Ser implements Elemento{
     }
 
     
-    /**Retorna el color de  la célula
-    @return 
+    /**
+    @see Elemento.getColor()
      */
     public final Color getColor(){
         return color;
     }    
     
 
-    /**Decide cual va a ser su  siguiente estado 
-    @param Elemento [] vecinos lista de los vecinos que rodean al elemento
+    /**
+    @see Elemento.decida()
      */
     public void decida(Elemento [] vecinos){
     }
 
     
-    /**Actualiza su estado actual considerando lo definido como siguiente estado
+    /**
+    @see Elemento.cambie()
      */
     public final void cambie(){
         cumple();

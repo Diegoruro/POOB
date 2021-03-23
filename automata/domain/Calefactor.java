@@ -4,9 +4,9 @@ import java.awt.Color;
 
 public class Calefactor implements Elemento
 {
-    protected Color color;
-    protected AutomataCelular automata;
-    protected int fila,columna;
+    public Color color;
+    public AutomataCelular automata;
+    public int fila,columna;
     /**
      * Constructor for objects of class Calefactor
      */
@@ -35,14 +35,16 @@ public class Calefactor implements Elemento
         return columna;
     }
 
-    /**Retorna el color del calefactor
-    @return 
+    /**
+    @see Elemento.getColor()
      */
     public final Color getColor(){
         return color;
     }    
     
-    
+    /**
+    @see Elemento.cambie()
+     */
     public void cambie(){
         if (this.color==Color.red){
             this.color=Color.yellow;
@@ -52,11 +54,16 @@ public class Calefactor implements Elemento
         }
     }
     
-    
+    /**
+    @see Elemento.forma()
+     */
     public int forma(){
       return 2;
     }
     
+    /**
+    @see Elemento.isVivo()
+     */
     public boolean isVivo(){
       return true;
   }

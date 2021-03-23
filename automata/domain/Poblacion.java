@@ -4,9 +4,9 @@ import java.awt.Color;
 
 public class Poblacion implements Elemento
 {
-    protected Color color;
-    protected AutomataCelular automata;
-    protected int fila,columna;
+    public Color color;
+    public AutomataCelular automata;
+    public int fila,columna;
     /**
      * Constructor for objects of class poblacion
      */
@@ -35,32 +35,39 @@ public class Poblacion implements Elemento
         return columna;
     }
 
-    /**Retorna el color del calefactor
-    @return 
+    /**
+    @see Elemento.getColor()
      */
     public final Color getColor(){
         return color;
     }    
     
-    
+    /**
+    @see Elemento.decida()
+     */
     public void cambie(){
         int n=automata.poblacion;
-        if (n>0 && n<10){
+        if (n>0 && n<30){
             this.color=Color.green;
         }
-        else if (n>=10 && n<20){
+        else if (n>=30 && n<60){
             this.color=Color.orange;
         }
-        else if (n>=20){
+        else if (n>=60){
             this.color=Color.red;
         }
     }
     
-    
+    /**
+    @see Elemento.forma()
+     */
     public int forma(){
       return 2;
     }
     
+    /**
+    @see Elemento.isVivo()
+     */
     public boolean isVivo(){
       return true;
     }
