@@ -15,6 +15,10 @@ public class Barco extends Maquina{
         this.marinos.add(new Marino(nombre, rango));
     }
     
+    public ArrayList<Marino> getMarinos(){
+        return this.marinos;
+    }
+    
     @Override
     public boolean isDebil(){
         boolean cond = false;

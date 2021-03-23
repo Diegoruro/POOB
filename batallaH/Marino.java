@@ -8,4 +8,8 @@ public class Marino {
         this.nombre = nombre;
         this.rango = rango;
     }
+    
+    public void selfDestroy(){
+        this.nombre = null;
+    }
 }

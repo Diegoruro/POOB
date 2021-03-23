@@ -30,4 +30,9 @@ public class Avion extends Maquina{
         }
         return cond;
     }
+    
+    public void selfDestroy(){
+        this.isDestroyed = true;
+        System.out.println("PortaAviones destruido");
+    }
 }

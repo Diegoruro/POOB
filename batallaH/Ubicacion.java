@@ -15,5 +15,11 @@ public class Ubicacion {
         }
     }
     
+    public int getLatitud(){
+        return this.latitud;
+    }
     
+    public int getLongitud(){
+        return this.longitud;
+    }
 }
