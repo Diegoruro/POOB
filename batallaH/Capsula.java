@@ -1,9 +1,6 @@
 
 /**
- * Write a description of class Capsula here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Clase capsula
  */
 public class Capsula extends Maquina
 {
@@ -28,6 +25,10 @@ public class Capsula extends Maquina
     }
     
     
+    /**
+     * Autodestruye la capsula
+     *
+     */
     public void selfDestroy(){
         if (this.nodriza.isDestroyed){
             System.out.println("Nodriza destruida");

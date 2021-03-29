@@ -1,3 +1,4 @@
+package mission;
 
 /**
  * Write a description of class Principal here.
@@ -32,7 +33,7 @@ public class Principal extends Bodega
             {
                 this.valores[i][j]+=1;
                 this.top[i][j].changeColor("blue");
-                this.lado[this.width-this.valores[i][j]][i].changeColor("blue");
+                this.lado[this.lenght-this.valores[i][j]][i].changeColor("blue");
                 this.entry[this.lenght-this.valores[i][j]][j].changeColor("blue");
                 this.sePudo=true;
             }   

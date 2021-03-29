@@ -1,5 +1,8 @@
+package mission;
+
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.Arrays;
 
 /**
 * Write a description of class Mission here.
@@ -81,7 +84,7 @@ public class Mission
      */
     public void store(int i, int j){
         this.ppal.store(i, j);
-        this.loadUndo("store",i,j,null,null);
+        this.loadUndo("store",i,j,0,0);
         if (this.plan.isVisible){
             this.colorDifferent();
         }
@@ -147,11 +150,7 @@ public class Mission
         int j=from[1];
         int k=to[0];
         int l=to[1];
-        i--;
-        j--;
-        k--;
-        l--;
-        this.loadUndo("arrange",(Integer) i+1, (Integer) j+1, (Integer) k+1, (Integer) l+1);
+        this.loadUndo("arrange",(Integer) i, (Integer) j, (Integer) k, (Integer) l);
         this.colorDifferent();
     }
     
@@ -195,9 +194,11 @@ public class Mission
         return this.ppal.warehouse();
     }
     
+    
     /**
      * Hace una copia de la bodega desde sus 3 puntos de vista
      */
+    /*
     private void copy2()
     {  
        this.plan.valores = this.ppal.valores;
@@ -224,34 +225,36 @@ public class Mission
         this.plan.stolenCrates=0;
         this.sePudo=true;
     }
+    */
     
     
     /**
      * Hace una copia de la bodega desde sus 3 puntos de vista
      */
-    public void copy()
-    {  
-       this.plan.valores = this.ppal.valores;
+    public void copy(){
        for (int i=0;i<this.lenght;i++)
        {
-           for (int j=0;j<this.width;j++)
-           {
-                  this.plan.top[i][j].changeColor("magenta");
-                  this.plan.lado[i][j].changeColor("magenta");
-                  this.plan.entry[i][j].changeColor("magenta");
-           } 
-       }
-        for (int i=0;i<this.lenght;i++)
+            for (int j=0;j<this.width;j++)
+            { 
+                this.plan.valores[i][j] = this.ppal.valores[i][j];
+                this.plan.top[i][j].changeColor("magenta");
+                this.plan.lado[i][j].changeColor("magenta");
+                this.plan.entry[i][j].changeColor("magenta");
+            }
+        }
+        
+        
+       for (int i=0;i<this.lenght;i++)
        {
             for (int j=0;j<this.width;j++)
-            {   
+            {                  
                 int x=this.ppal.valores[i][j];
                 if (x>0)
                 {
                     for (int k=this.ppal.valores[i][j];k>0;k--)
                     {
                         this.plan.top[i][j].changeColor("blue");
-                        this.plan.lado[this.width-k][i].changeColor("blue");
+                        this.plan.lado[this.lenght-k][i].changeColor("blue");
                         this.plan.entry[this.lenght-k][j].changeColor("blue");
                     }
                 }
@@ -272,7 +275,7 @@ public class Mission
      */
     public void makeVisible(){
         this.plan.makeVisible();
-        this.ppal.makeInvisible();
+        this.ppal.makeVisible();
         this.loadUndo("makeVisible",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
     }
     
@@ -331,16 +334,17 @@ public class Mission
      */
     public boolean areEqual()
     {
-        for (int i = 0; i < this.lenght; i++){
-            for (int j = 0; j < this.width; j++){
-                if (this.ppal.valores[i][j] != this.plan.valores[i][j]){
-                    return false;
+        for (int i=0;i<this.lenght;i++)
+            {
+                for (int j=0;j<this.width;j++)
+                {
+                    if (this.ppal.valores[i][j] != this.plan.valores[i][j]){
+                        return false;
+                    }
                 }
             }
-        }
-        return true;
+           return true;
     }
-    
     
     /**
      * Pinta el plan de rojo si las bodegas son diferentes
@@ -367,7 +371,7 @@ public class Mission
                } 
             }
         }else{
-           this.copy2();
+           this.copy();
         }
     }
 
@@ -397,16 +401,20 @@ public class Mission
 
     
     /**
-     * deshace la ultima accion realizada
+     * Deshace la ultima accion realizada
      */
     public void undo()
     {
         int i, j, k, l;
         Integer[] values = acciones.peek().coordenadas;
         i = (int) values[0];
+        i--;
         j = (int) values[1];
+        j--;
         k = (int) values[2];
+        k--;
         l = (int) values[3];
+        l--;
         switch(acciones.peek().action){
             case "copy":
                 this.plan.ceros();
@@ -415,7 +423,7 @@ public class Mission
             case "store":
                 k=this.ppal.valores[i][j];
                 this.ppal.top[i][j].changeColor("green");
-                this.ppal.lado[this.width-k][i].changeColor("green");
+                this.ppal.lado[this.lenght-k][i].changeColor("green");
                 this.ppal.entry[this.lenght-k][j].changeColor("green");
                 this.ppal.valores[i][j]-=1;
                 values[0]++;
@@ -425,7 +433,7 @@ public class Mission
                 this.plan.valores[i][j]+=1;
                 k=this.plan.valores[i][j];
                 this.plan.top[i][j].changeColor("blue");
-                this.plan.lado[this.width-k][i].changeColor("blue");
+                this.plan.lado[this.lenght-k][i].changeColor("blue");
                 this.plan.entry[this.lenght-k][j].changeColor("blue");
                 values[0]++;
                 values[1]++;
@@ -435,11 +443,16 @@ public class Mission
                 int[] from = new int[2];
                 from[0] = k;
                 from[1] = l;
+                from[0]++;
+                from[1]++;
                 int[] to = new int[2];
                 to[0] = i;
                 to[1] = j;
+                to[0]++;
+                to[1]++;
                 this.plan.arrange(from,to);
                 this.acciones.pop();
+                this.colorDifferent();
                 break;
             case "return":
                 this.plan.steal(i,j);

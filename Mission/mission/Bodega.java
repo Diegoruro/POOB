@@ -1,3 +1,6 @@
+package mission;
+
+import shapes.*;
 
 /**
  * Write a description of class Bodega here.

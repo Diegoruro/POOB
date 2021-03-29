@@ -31,6 +31,10 @@ public class Avion extends Maquina{
         return cond;
     }
     
+    /**
+     * Autodestruye el avion
+     *
+     */
     public void selfDestroy(){
         this.isDestroyed = true;
         System.out.println("PortaAviones destruido");

@@ -9,6 +9,10 @@ public class Ubicacion {
         this.latitud = latitud;
     }
     
+    /**
+     * Aumenta la ubicación al norte
+     *
+     */
     public void alNorte(){
         if (latitud<89){
             latitud++;

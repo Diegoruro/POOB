@@ -1,3 +1,5 @@
+package mission;
+
 import java.util.ArrayList;
 
 /**
@@ -37,7 +39,7 @@ public class Plan extends Bodega
             this.robadas.add(crate);
             this.stolenCrates++;
             this.top[i][j].changeColor("yellow");
-            this.lado[this.width-this.valores[i][j]][i].changeColor("yellow");
+            this.lado[this.lenght-this.valores[i][j]][i].changeColor("yellow");
             this.entry[this.lenght-this.valores[i][j]][j].changeColor("yellow");
             this.valores[i][j]-=1;
             this.sePudo=true;
@@ -73,7 +75,7 @@ public class Plan extends Bodega
         int j = Integer.parseInt(coordenada[1]);
         this.valores[i][j]+=1;
         this.top[i][j].changeColor("blue");
-        this.lado[this.width-this.valores[i][j]][i].changeColor("blue");
+        this.lado[this.lenght-this.valores[i][j]][i].changeColor("blue");
         this.entry[this.lenght-this.valores[i][j]][j].changeColor("blue");
         this.sePudo=true;
     }
@@ -108,10 +110,10 @@ public class Plan extends Bodega
         {
             this.top[i][j].changeColor("magenta");
             this.entry[this.lenght-this.valores[i][j]][j].changeColor("magenta");
-            this.lado[this.width-this.valores[i][j]][i].changeColor("magenta");
+            this.lado[this.lenght-this.valores[i][j]][i].changeColor("magenta");
             this.valores[i][j]-=1;
             this.top[k][l].changeColor("blue");
-            this.lado[this.width-this.valores[k][l]][k].changeColor("blue");
+            this.lado[this.lenght-this.valores[k][l]][k].changeColor("blue");
             this.entry[this.lenght-this.valores[k][l]][l].changeColor("blue");
             this.sePudo=true;
             
