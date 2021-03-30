@@ -13,11 +13,12 @@ public class Bodega
     public int lenght;
     public int width;
     public int size=20;
-    public Caja[][] top;
-    public Caja[][] lado;
-    public Caja[][] entry;
+    public Rectangle[][] top;
+    public Rectangle[][] lado;
+    public Rectangle[][] entry;
     public boolean isVisible;
     public int[][] valores;
+    public static Caja[][] cajas;
     public boolean sePudo;
     
     
@@ -28,18 +29,20 @@ public class Bodega
     {
         this.lenght = lenght;
         this.width = width;
-        this.top=new Caja[lenght][width];
-        this.lado=new Caja[lenght][width];
-        this.entry=new Caja[lenght][width];
+        this.top=new Rectangle[lenght][width];
+        this.lado=new Rectangle[lenght][width];
+        this.entry=new Rectangle[lenght][width];
         this.valores=new int[lenght][width];
+        this.cajas = new Caja[lenght][width];
         for (int i=0;i<lenght;i++)
         {
             for (int j=0;j<width;j++)
             {   
                 this.valores[i][j]=0;
-                this.top[i][j]=new Caja(this, i,j);
-                this.lado[i][j]=new Caja(this,i,j);
-                this.entry[i][j]=new Caja(this,i,j);
+                this.top[i][j]=new Rectangle();
+                this.lado[i][j]=new Rectangle();
+                this.entry[i][j]=new Rectangle();
+                this.cajas[i][j] = new Caja(this, null , i, j);
             }
         }
     }
@@ -114,6 +117,20 @@ public class Bodega
         }
     }
     
-    public void store(int i,int j){
+    public void store(int i,int j) throws MissionException{
+    }
+    
+    public void isPosible(String tipo,int i,int j) throws MissionException{
+        i--;
+        j--;
+        if (this.valores[i][j]>=1){
+            if (this.cajas[i][j].getTipo() == "delicate"){
+                throw new MissionException(MissionException.INVALIDSTORE);
+            }
+            if (tipo=="heavy"){
+                throw new MissionException(MissionException.INVALIDSTORE);
+            }
+        }
+        
     }
 }

@@ -7,7 +7,7 @@ package shapes;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Shape
+public class Shapes
 {
     protected int xPosition;
     protected int yPosition;
@@ -17,7 +17,7 @@ public class Shape
     /**
      * Create a new circle at default position with default color.
      */
-    public Shape()
+    public Shapes()
     {
         xPosition = 70;
         yPosition = 15;

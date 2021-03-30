@@ -17,13 +17,4 @@ public class Heavy extends Caja
         super(bodega, "heavy", i,j);
         this.color = "black";
     }
-
-    @Override
-    public void store(){
-        if (this.bodega.valores[i][j]==0){
-            this.bodega.store(this.i, this.j);
-        }else{
-            //Exepcion
-        }        
-    }
 }

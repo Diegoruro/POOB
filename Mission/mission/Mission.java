@@ -83,8 +83,12 @@ public class Mission
      * @param  i,j   1,1
      */
     public void store(int i, int j){
-        this.ppal.store(i, j);
-        this.loadUndo("store",i,j,0,0);
+        try{
+                this.ppal.store(i, j);
+            }catch(MissionException e){
+                System.out.println(MissionException.INVALIDSTORE);
+            }
+        this.loadUndo("store",null,i,j,0,0);
         if (this.plan.isVisible){
             this.colorDifferent();
         }
@@ -101,12 +105,53 @@ public class Mission
     }
     
     public void store(String tipo, int i, int j){
-        new Caja(this.ppal, tipo,i,j);
-        this.loadUndo("store",i,j,0,0);
-        if (this.plan.isVisible){
-            this.colorDifferent();
+        try{
+            if (tipo == "rebel"){
+                ppal.isPosible(tipo,j,i);
+                crearCaja(tipo,j,i);
+                store(j,i);
+                this.loadUndo("store",null,j,i,0,0);
+            }else{
+                ppal.isPosible(tipo,i,j);
+                crearCaja(tipo,i,j);
+                store(i,j);
+                this.loadUndo("store",null,i,j,0,0);
+            }
+            if (this.plan.isVisible){
+                this.colorDifferent();
+            }
+        }catch(MissionException e){
+            System.out.println(MissionException.INVALIDSTORE);
         }
     }
+    
+    private void crearCaja(String tipo, int i, int j){
+        i--;
+        j--;
+        switch(tipo){
+            case "normal":
+                this.ppal.cajas[i][j] = new Normal(this.ppal, i, j);
+                break;
+            case "delicate":
+                this.ppal.cajas[i][j] = new Delicate(this.ppal, i, j);
+                break;
+            case "rebel":
+                this.ppal.cajas[i][j] = new Rebel(this.ppal, i, j);
+                break;
+            case "frost":
+                this.ppal.cajas[i][j] = new Frost(this.ppal, i, j);
+                break;
+            case "safe":
+                this.ppal.cajas[i][j] = new Safe(this.ppal, i, j);
+                break;
+            case "heavy":
+                this.ppal.cajas[i][j] = new Heavy(this.ppal, i, j);
+                break;
+                
+        }
+    }
+    
+    
     
     /**
      * Roba una caja de la bodega en el plan.
@@ -114,8 +159,12 @@ public class Mission
      * @param  i,j 1,1
      */
     public void steal(int i,int j){
-        this.plan.steal(i, j);
-        this.loadUndo("steal",(Integer) i, (Integer) j, (Integer) 0, (Integer) 0);
+        try{
+            this.plan.steal(i, j);
+        }catch(MissionException e){
+            System.out.println(MissionException.INVALIDSTEAL);
+        }
+        this.loadUndo("steal",null,(Integer) i, (Integer) j, (Integer) 0, (Integer) 0);
         this.colorDifferent();
     }
     
@@ -142,8 +191,9 @@ public class Mission
         
         this.plan.returnCrate();
         
-        this.loadUndo("return",(Integer) i, (Integer) j, (Integer) 0, (Integer) 0);
+        this.loadUndo("return",null,(Integer) i, (Integer) j, (Integer) 0, (Integer) 0);
         this.colorDifferent();
+        this.acciones.pop();
     }
     
     /**
@@ -158,7 +208,7 @@ public class Mission
         int j=from[1];
         int k=to[0];
         int l=to[1];
-        this.loadUndo("arrange",(Integer) i, (Integer) j, (Integer) k, (Integer) l);
+        this.loadUndo("arrange",null,(Integer) i, (Integer) j, (Integer) k, (Integer) l);
         this.colorDifferent();
     }
     
@@ -206,75 +256,42 @@ public class Mission
     /**
      * Hace una copia de la bodega desde sus 3 puntos de vista
      */
-    /*
-    private void copy2()
-    {  
-       this.plan.valores = this.ppal.valores;
-        for (int i=0;i<this.lenght;i++)
-       {
-            for (int j=0;j<this.width;j++)
-            {   
-                int x=this.ppal.valores[i][j];
-                if (x>0)
-                {
-                    for (int k=this.ppal.valores[i][j];k>0;k--)
-                    {
-                        this.plan.top[i][j].changeColor("blue");
-                        this.plan.lado[this.width-k][i].changeColor("blue");
-                        this.plan.entry[this.lenght-k][j].changeColor("blue");
-                    }
-                }
-                this.plan.top[i][j].makeVisible();
-                this.plan.lado[i][j].makeVisible();
-                this.plan.entry[i][j].makeVisible();
-            }
-       }
-        this.plan.lastStolenCrates=this.plan.stolenCrates;
-        this.plan.stolenCrates=0;
-        this.sePudo=true;
-    }
-    */
-    
-    
-    /**
-     * Hace una copia de la bodega desde sus 3 puntos de vista
-     */
     public void copy(){
        for (int i=0;i<this.lenght;i++)
        {
             for (int j=0;j<this.width;j++)
             { 
                 this.plan.valores[i][j] = this.ppal.valores[i][j];
-                this.plan.top[i][j].changeColor("magenta");
-                this.plan.lado[i][j].changeColor("magenta");
-                this.plan.entry[i][j].changeColor("magenta");
-            }
-        }
-        
-        
-       for (int i=0;i<this.lenght;i++)
-       {
-            for (int j=0;j<this.width;j++)
-            {                  
-                int x=this.ppal.valores[i][j];
-                if (x>0)
-                {
-                    for (int k=this.ppal.valores[i][j];k>0;k--)
-                    {
-                        this.plan.top[i][j].changeColor("blue");
-                        this.plan.lado[this.lenght-k][i].changeColor("blue");
-                        this.plan.entry[this.lenght-k][j].changeColor("blue");
-                    }
+                
+                String color = this.ppal.top[i][j].color;
+                if(color == "green"){
+                    this.plan.top[i][j].changeColor("magenta");
+                }else{
+                    this.plan.top[i][j].changeColor(color);
+                }
+                
+                color = this.ppal.lado[i][j].color;
+                if(color == "green"){
+                    this.plan.lado[i][j].changeColor("magenta");
+                }else{
+                    this.plan.lado[i][j].changeColor(color);
+                }
+                
+                color = this.ppal.entry[i][j].color;
+                if(color == "green"){
+                    this.plan.entry[i][j].changeColor("magenta");
+                }else{
+                    this.plan.entry[i][j].changeColor(color);
                 }
                 this.plan.top[i][j].makeVisible();
                 this.plan.lado[i][j].makeVisible();
                 this.plan.entry[i][j].makeVisible();
             }
-       }
+        }
         this.plan.lastStolenCrates=this.plan.stolenCrates;
         this.plan.stolenCrates=0;
         this.sePudo=true;
-        this.loadUndo("copy",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
+        this.loadUndo("copy",null,(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
     }    
     
     
@@ -284,7 +301,7 @@ public class Mission
     public void makeVisible(){
         this.plan.makeVisible();
         this.ppal.makeVisible();
-        this.loadUndo("makeVisible",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
+        this.loadUndo("makeVisible",null,(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
     }
     
     
@@ -294,7 +311,7 @@ public class Mission
     public void makeInvisible(){
         this.plan.makeInvisible();
         this.ppal.makeInvisible();
-        this.loadUndo("makeInvisible",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
+        this.loadUndo("makeInvisible",null,(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
     }
     
     
@@ -396,14 +413,14 @@ public class Mission
      *         k:fila final
      *         l:columna final
      */
-    private void loadUndo(String accion,Integer i, Integer j, Integer k, Integer l)
+    private void loadUndo(String accion, String tipo, Integer i, Integer j, Integer k, Integer l)
     {
         Integer[] temp = new Integer[4];
         temp[0] = i;
         temp[1] = j;
         temp[2] = k;
         temp[3] = l;
-        Accion action = new Accion(accion, temp);
+        Accion action = new Accion(accion,tipo, temp);
         acciones.push(action);
     }
 
@@ -463,7 +480,11 @@ public class Mission
                 this.colorDifferent();
                 break;
             case "return":
-                this.plan.steal(i,j);
+                try{
+                    this.plan.steal(i+2, j+2);
+                }catch(MissionException e){
+                    System.out.println(MissionException.INVALIDSTEAL);
+                }
                 break;
             case "makeVisible":
                 this.makeInvisible();
@@ -480,7 +501,7 @@ public class Mission
                 zoom('-');
                 this.acciones.pop();
                 break;
-        }
+           }
         
         this.undos.push(acciones.peek());
         this.acciones.pop();
@@ -503,10 +524,18 @@ public class Mission
                 copy();
                 break;
             case "store":
-                this.ppal.store(i,j);
+                try{
+                    this.ppal.store(i, j);
+                }catch(MissionException e){
+                    System.out.println(MissionException.INVALIDSTORE);
+                }
                 break;
             case "steal":
-                this.plan.steal(i,j);
+                try{
+                    this.plan.steal(i, j);
+                }catch(MissionException e){
+                    System.out.println(MissionException.INVALIDSTEAL);
+                }
                 break;
             case "arrange":
                 int[] from = new int[2];
@@ -543,11 +572,11 @@ public class Mission
     public void zoom(char z)
     {
         if(z == '-'){
-            this.loadUndo("-",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
+            this.loadUndo("-", null,(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
             this.ppal.size -= this.ppal.size*0.1;
         }
         else{
-            this.loadUndo("+",(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
+            this.loadUndo("+", null,(Integer) 0, (Integer) 0, (Integer) 0, (Integer) 0);
             this.ppal.size += this.ppal.size*0.1;
         }
         this.ppal.restorePosition();

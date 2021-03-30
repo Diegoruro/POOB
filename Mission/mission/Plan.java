@@ -28,26 +28,30 @@ public class Plan extends Bodega
      *
      * @param  i,j 1,1
      */
-    public void steal(int i,int j)
+    public void steal(int i,int j) throws MissionException
     {
         i--;
         j--;
         if (this.valores[i][j]>0)
         {
-            
-            String crate=i+"-"+j;
-            this.robadas.add(crate);
-            this.stolenCrates++;
-            this.top[i][j].changeColor("yellow");
-            this.lado[this.lenght-this.valores[i][j]][i].changeColor("yellow");
-            this.entry[this.lenght-this.valores[i][j]][j].changeColor("yellow");
-            this.valores[i][j]-=1;
-            this.sePudo=true;
+            if(this.cajas[i][j].getTipo() == "safe"){
+                this.sePudo=false;
+                throw new MissionException(MissionException.INVALIDSTEAL);
+            }else{
+                String crate=i+"-"+j;
+                this.robadas.add(crate);
+                this.stolenCrates++;
+                this.top[i][j].changeColor("yellow");
+                this.lado[this.lenght-this.valores[i][j]][i].changeColor("yellow");
+                this.entry[this.lenght-this.valores[i][j]][j].changeColor("yellow");
+                this.valores[i][j]-=1;
+                this.sePudo=true;
+            }
         }
         else
         {
-            System.out.println("no hay nada que robar en esta posición");
             this.sePudo=false;
+            throw new MissionException(MissionException.INVALIDSTEAL);
         }
         
     }
@@ -59,7 +63,11 @@ public class Plan extends Bodega
      */
     public void steal(int[] crate)
     {
-        this.steal(crate[0],crate[1]);
+        try{
+            this.steal(crate[0],crate[1]);
+        }catch(MissionException e){
+            System.out.println(MissionException.INVALIDSTEAL);
+        }
     }
     
     
@@ -105,28 +113,36 @@ public class Plan extends Bodega
         j--;
         k--;
         l--;
-        this.valores[k][l]+=1;
-        if (this.valores[i][j]>0 && (this.valores[k][l]<this.lenght && this.valores[k][l]<this.width))
-        {
-            this.top[i][j].changeColor("magenta");
-            this.entry[this.lenght-this.valores[i][j]][j].changeColor("magenta");
-            this.lado[this.lenght-this.valores[i][j]][i].changeColor("magenta");
-            this.valores[i][j]-=1;
-            this.top[k][l].changeColor("blue");
-            this.lado[this.lenght-this.valores[k][l]][k].changeColor("blue");
-            this.entry[this.lenght-this.valores[k][l]][l].changeColor("blue");
-            this.sePudo=true;
+        try{
+            isPosible(this.cajas[i][j].getTipo(), k+1,l+1);
             
-        }
-        else
-        {
-            System.out.println("no hay nada que mover en esta posición o no hay espacio en la posicion a mover");
-            this.sePudo=false;
+            if (this.valores[i][j]>0 && (this.valores[k][l]+1<this.lenght && this.valores[k][l]+1<this.width))
+            {
+                this.valores[k][l]+=1;
+                this.top[i][j].changeColor("magenta");
+                this.entry[this.lenght-this.valores[i][j]][j].changeColor("magenta");
+                this.lado[this.lenght-this.valores[i][j]][i].changeColor("magenta");
+                this.valores[i][j]-=1;
+                String newColor = this.cajas[i][j].color;
+                this.top[k][l].changeColor(newColor);
+                this.lado[this.lenght-this.valores[k][l]][k].changeColor(newColor);
+                this.entry[this.lenght-this.valores[k][l]][l].changeColor(newColor);
+                this.sePudo=true;
+                
+            }
+            else
+            {
+                this.sePudo=false;
+                throw new MissionException(MissionException.INVALIDARRANGE);
+            }
+        }catch(MissionException e){
+            System.out.println(MissionException.INVALIDARRANGE);
         }
         
     }
-    
-    /**
+        
+     
+   /**
      * Calcula la cantidad de cajas robadas del plan anterior.
      *
      * @return la cantidad de cajas robadas del plan anterior.

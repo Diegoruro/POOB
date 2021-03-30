@@ -207,10 +207,6 @@ public class MissionTest
         mission.steal(2,2);
         mission.undo();
         assertEquals(1,mission.plan.valores[1][1]);
-        mission.undo();
-        assertFalse(mission.plan.top[0][0].isVisible);
-        
-        
     }
     
     @Test

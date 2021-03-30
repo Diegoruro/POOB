@@ -24,7 +24,7 @@ public class Principal extends Bodega
    *
    * @param  i,j   i>0 j>0
    */
-    public void store(int i, int j)
+    public void store(int i, int j) throws MissionException
     {
         i--;
         j--;
@@ -33,21 +33,23 @@ public class Principal extends Bodega
             if (this.valores[i][j]<this.lenght||this.valores[i][j]<this.width)
             {
                 this.valores[i][j]+=1;
-                this.top[i][j].changeColor("blue");
-                this.lado[this.lenght-this.valores[i][j]][i].changeColor("blue");
-                this.entry[this.lenght-this.valores[i][j]][j].changeColor("blue");
+                
+                String newColor = this.cajas[i][j].color;
+                this.top[i][j].changeColor(newColor);
+                this.lado[this.lenght-this.valores[i][j]][i].changeColor(newColor);
+                this.entry[this.lenght-this.valores[i][j]][j].changeColor(newColor);
                 this.sePudo=true;
             }   
             else
             {
-                System.out.println("no hay espacio para guardar esta caja");
                 this.sePudo=false;
+                throw new MissionException(MissionException.INVALIDSTORE);
             }
         }
         else
-        {
-          System.out.println("Error:Coordenadas negativas o iguales a 0");  
+        { 
           this.sePudo=false;
+          throw new MissionException(MissionException.INVALIDSTORE);
         }
     } 
     
@@ -57,8 +59,12 @@ public class Principal extends Bodega
      * @param  i,j   1,1
      */
     public void store(int[] crate)
-    {
-        this.store(crate[0],crate[1]);
+    {   
+        try{
+            this.store(crate[0],crate[1]);
+        }catch(MissionException e){
+            System.out.println(MissionException.INVALIDSTORE);
+        }
     }
     
     

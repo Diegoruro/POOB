@@ -9,8 +9,6 @@ package mission;
  */
 public class Delicate extends Caja
 {
-    public static final String TIPO = "Delicate";
-
     /**
      * Constructor for objects of class Delicate
      */

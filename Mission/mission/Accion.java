@@ -13,14 +13,16 @@ public class Accion
 {
     public Integer[] coordenadas;
     public String action;
+    public String tipo;
 
     /**
      * Constructor for objects of class Accion
      */
-    public Accion(String action, Integer[] coordenadas)
+    public Accion(String action,String tipo, Integer[] coordenadas)
     {
         this.coordenadas = coordenadas;
         this.action = action;
+        this.tipo = tipo;
     }
 
 }

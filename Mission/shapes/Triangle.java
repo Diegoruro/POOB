@@ -9,7 +9,7 @@ import java.awt.*;
  * @version 1.0  (15 July 2000)
  */
 
-public class Triangle extends Shape
+public class Triangle extends Shapes
 {
     private int height;
     private int width;

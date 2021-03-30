@@ -11,7 +11,7 @@ import java.awt.*;
 
 
  
-public class Rectangle extends Shape{
+public class Rectangle extends Shapes{
 
     public static int EDGES = 4;
     

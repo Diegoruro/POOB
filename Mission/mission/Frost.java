@@ -15,12 +15,8 @@ public class Frost extends Caja
      */
     public Frost(Bodega bodega, int i, int j)
     {
-        super(bodega, "normal", i,j);
+        super(bodega, "frost", i,j);
         this.color = "cyan";
     }
 
-    @Override
-    public void store(){
-        //this.bodega.valores[this.i][this.j]+=1;
-    }
 }

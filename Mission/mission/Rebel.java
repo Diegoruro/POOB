@@ -19,14 +19,4 @@ public class Rebel extends Caja
         this.color = "orange";
     }
 
-    @Override
-    public void store(){
-        if (this.bodega.valores[j-1][i-1]>=1){
-            if (this.bodega.top[j][i].getTipo() == "delicate"){
-                //exepcion
-            }
-            this.bodega.store(this.j, this.i);
-        }
-        this.bodega.store(this.j,this.i);
-    }
 }
