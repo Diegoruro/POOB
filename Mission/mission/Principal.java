@@ -17,7 +17,8 @@ public class Principal extends Bodega
     {
         super(lenght,width);
     }
-
+    
+   @Override
    /**
    * Guarda una caja en la bodega real
    *
@@ -50,7 +51,6 @@ public class Principal extends Bodega
         }
     } 
     
-    
     /**
      * Guarda una caja en la bodega real
      *
@@ -60,6 +60,7 @@ public class Principal extends Bodega
     {
         this.store(crate[0],crate[1]);
     }
+    
     
     /**
      * verifica la cantidad de cajas que hay en la bodega real.

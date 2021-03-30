@@ -13,9 +13,9 @@ public class Bodega
     public int lenght;
     public int width;
     public int size=20;
-    public Rectangle[][] top;
-    public Rectangle[][] lado;
-    public Rectangle[][] entry;
+    public Caja[][] top;
+    public Caja[][] lado;
+    public Caja[][] entry;
     public boolean isVisible;
     public int[][] valores;
     public boolean sePudo;
@@ -28,18 +28,18 @@ public class Bodega
     {
         this.lenght = lenght;
         this.width = width;
-        this.top=new Rectangle[lenght][width];
-        this.lado=new Rectangle[lenght][width];
-        this.entry=new Rectangle[lenght][width];
+        this.top=new Caja[lenght][width];
+        this.lado=new Caja[lenght][width];
+        this.entry=new Caja[lenght][width];
         this.valores=new int[lenght][width];
         for (int i=0;i<lenght;i++)
         {
             for (int j=0;j<width;j++)
             {   
                 this.valores[i][j]=0;
-                this.top[i][j]=new Rectangle();
-                this.lado[i][j]=new Rectangle();
-                this.entry[i][j]=new Rectangle();
+                this.top[i][j]=new Caja(this, i,j);
+                this.lado[i][j]=new Caja(this,i,j);
+                this.entry[i][j]=new Caja(this,i,j);
             }
         }
     }
@@ -112,5 +112,8 @@ public class Bodega
                this.entry[i][j].setYPosition(15);
             }
         }
+    }
+    
+    public void store(int i,int j){
     }
 }

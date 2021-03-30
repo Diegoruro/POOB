@@ -100,6 +100,14 @@ public class Mission
         this.store(crate[0],crate[1]);
     }
     
+    public void store(String tipo, int i, int j){
+        new Caja(this.ppal, tipo,i,j);
+        this.loadUndo("store",i,j,0,0);
+        if (this.plan.isVisible){
+            this.colorDifferent();
+        }
+    }
+    
     /**
      * Roba una caja de la bodega en el plan.
      *
