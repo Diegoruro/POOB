@@ -1,15 +1,14 @@
 #BlueJ package file
-dependency1.from=Delicate
+dependency1.from=Heavy
 dependency1.to=Bodega
 dependency1.type=UsesDependency
-<<<<<<< HEAD
-dependency10.from=Rebel
-dependency10.to=Bodega
+dependency10.from=Plan
+dependency10.to=MissionException
 dependency10.type=UsesDependency
-dependency11.from=Caja
-dependency11.to=Bodega
+dependency11.from=MissionContest
+dependency11.to=Mission
 dependency11.type=UsesDependency
-dependency12.from=Frost
+dependency12.from=Light
 dependency12.to=Bodega
 dependency12.type=UsesDependency
 dependency13.from=Mission
@@ -32,43 +31,11 @@ dependency18.to=Delicate
 dependency18.type=UsesDependency
 dependency19.from=Mission
 dependency19.to=Rebel
-=======
-dependency10.from=Bodega
-dependency10.to=MissionException
-dependency10.type=UsesDependency
-dependency11.from=Plan
-dependency11.to=MissionException
-dependency11.type=UsesDependency
-dependency12.from=MissionContest
-dependency12.to=Mission
-dependency12.type=UsesDependency
-dependency13.from=Principal
-dependency13.to=MissionException
-dependency13.type=UsesDependency
-dependency14.from=Mission
-dependency14.to=Principal
-dependency14.type=UsesDependency
-dependency15.from=Mission
-dependency15.to=Plan
-dependency15.type=UsesDependency
-dependency16.from=Mission
-dependency16.to=Accion
-dependency16.type=UsesDependency
-dependency17.from=Mission
-dependency17.to=MissionException
-dependency17.type=UsesDependency
-dependency18.from=Mission
-dependency18.to=Normal
-dependency18.type=UsesDependency
-dependency19.from=Mission
-dependency19.to=Delicate
->>>>>>> b95610301b5659021c1dfd6427dffb72403bc31b
 dependency19.type=UsesDependency
-dependency2.from=Delicate
-dependency2.to=Bodega
+dependency2.from=Bodega
+dependency2.to=Caja
 dependency2.type=UsesDependency
 dependency20.from=Mission
-<<<<<<< HEAD
 dependency20.to=Frost
 dependency20.type=UsesDependency
 dependency21.from=Mission
@@ -77,84 +44,45 @@ dependency21.type=UsesDependency
 dependency22.from=Mission
 dependency22.to=Heavy
 dependency22.type=UsesDependency
-dependency3.from=Normal
-=======
-dependency20.to=Rebel
-dependency20.type=UsesDependency
-dependency21.from=Mission
-dependency21.to=Frost
-dependency21.type=UsesDependency
-dependency22.from=Mission
-dependency22.to=Safe
-dependency22.type=UsesDependency
 dependency23.from=Mission
-dependency23.to=Heavy
+dependency23.to=Light
 dependency23.type=UsesDependency
-dependency24.from=Mission
-dependency24.to=Light
+dependency24.from=Principal
+dependency24.to=MissionException
 dependency24.type=UsesDependency
-dependency3.from=Frost
->>>>>>> b95610301b5659021c1dfd6427dffb72403bc31b
-dependency3.to=Bodega
+dependency3.from=Bodega
+dependency3.to=MissionException
 dependency3.type=UsesDependency
-dependency4.from=Safe
+dependency4.from=Rebel
 dependency4.to=Bodega
 dependency4.type=UsesDependency
-<<<<<<< HEAD
-dependency5.from=Plan
-dependency5.to=MissionException
-=======
-dependency5.from=Normal
+dependency5.from=Caja
 dependency5.to=Bodega
->>>>>>> b95610301b5659021c1dfd6427dffb72403bc31b
 dependency5.type=UsesDependency
-dependency6.from=Light
+dependency6.from=Safe
 dependency6.to=Bodega
 dependency6.type=UsesDependency
-<<<<<<< HEAD
-dependency7.from=Bodega
-dependency7.to=MissionException
-=======
-dependency7.from=Rebel
+dependency7.from=Delicate
 dependency7.to=Bodega
->>>>>>> b95610301b5659021c1dfd6427dffb72403bc31b
 dependency7.type=UsesDependency
-dependency8.from=Principal
-dependency8.to=MissionException
+dependency8.from=Frost
+dependency8.to=Bodega
 dependency8.type=UsesDependency
-<<<<<<< HEAD
-dependency9.from=Heavy
+dependency9.from=Normal
 dependency9.to=Bodega
 dependency9.type=UsesDependency
-objectbench.height=93
-objectbench.width=556
-package.divider.horizontal=0.6002132196162047
-package.divider.vertical=0.8944033790918691
-package.editor.height=840
-package.editor.width=818
-package.editor.x=953
-package.editor.y=0
-package.frame.height=1047
-package.frame.width=974
-package.numDependencies=22
-package.numTargets=14
-=======
-dependency9.from=Bodega
-dependency9.to=Caja
-dependency9.type=UsesDependency
-objectbench.height=137
-objectbench.width=1016
-package.divider.horizontal=0.5494736842105263
-package.divider.vertical=0.8190954773869347
-package.editor.height=645
+objectbench.height=141
+objectbench.width=605
+package.divider.horizontal=0.6
+package.divider.vertical=0.8140703517587939
+package.editor.height=641
 package.editor.width=887
-package.editor.x=1411
-package.editor.y=341
+package.editor.x=611
+package.editor.y=136
 package.frame.height=896
 package.frame.width=1056
 package.numDependencies=24
 package.numTargets=15
->>>>>>> b95610301b5659021c1dfd6427dffb72403bc31b
 package.showExtends=true
 package.showUses=true
 readme.height=58
@@ -174,13 +102,8 @@ target10.name=Plan
 target10.showInterface=false
 target10.type=ClassTarget
 target10.width=80
-<<<<<<< HEAD
-target10.x=200
-target10.y=370
-=======
 target10.x=350
 target10.y=580
->>>>>>> b95610301b5659021c1dfd6427dffb72403bc31b
 target11.height=50
 target11.name=MissionContest
 target11.showInterface=false
@@ -194,11 +117,7 @@ target12.showInterface=false
 target12.type=ClassTarget
 target12.width=130
 target12.x=0
-<<<<<<< HEAD
-target12.y=480
-=======
 target12.y=460
->>>>>>> b95610301b5659021c1dfd6427dffb72403bc31b
 target13.height=50
 target13.name=Light
 target13.showInterface=false
@@ -211,10 +130,6 @@ target14.name=Mission
 target14.showInterface=false
 target14.type=ClassTarget
 target14.width=80
-<<<<<<< HEAD
-target14.x=290
-target14.y=330
-=======
 target14.x=140
 target14.y=130
 target15.height=50
@@ -224,7 +139,6 @@ target15.type=ClassTarget
 target15.width=80
 target15.x=370
 target15.y=360
->>>>>>> b95610301b5659021c1dfd6427dffb72403bc31b
 target2.height=50
 target2.name=Bodega
 target2.showInterface=false

@@ -112,10 +112,10 @@ public class MissionTestC4
     
     @Test
     public void stealHeavyTest(){
-        mission.store("heavy",4,4);
+        mission.store("heavy",3,3);
         mission.copy();
-        mission.steal(4,4);
-        assertEquals(mission.plan.top[3][3].color, "yellow");
+        mission.steal(3,3);
+        assertEquals(mission.plan.top[2][2].color, "yellow");
     }
     
     //Tests for the other modified methods
