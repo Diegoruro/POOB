@@ -1,23 +1,31 @@
 package tests;
 import mission.*;
 
+
 import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * The test class MissionTest.
+ * The test class MissionTestC2.
  *
  * @author  (your name)
  * @version (a version number or a date)
  */
-public class MissionTest
+public class MissionTestC2
 {
     private static final int rows = 4;
     private static final int columns = 4;
     Mission mission;
     
+    /**
+     * Default constructor for test class MissionTestC2
+     */
+    public MissionTestC2()
+    {
+    }
+
     /**
      * Sets up the test fixture.
      *
@@ -122,6 +130,10 @@ public class MissionTest
         assertEquals(1,ans);
     }
     
+    @Test
+    public void toStealTest(){
+        assertEquals(0, mission.plan.robadas.size());        
+    }    
     
     @Test
     public void warehouseTest()
@@ -142,64 +154,7 @@ public class MissionTest
         
         assertEquals(1,mission.layout()[from[0]-1][from[1]-1]);
     }
-    
-    
-    @Test
-    public void makeVisibleTest()
-    {
-        mission.copy();
-        mission.makeInvisible();
-        mission.makeVisible();
-        
-        assertTrue(mission.ppal.isVisible);
-        assertTrue(mission.plan.isVisible);
-    }
-    
-    
-    @Test
-    public void makeInvisibleTest()
-    {
-        mission.copy();
-        mission.makeVisible();
-        mission.makeInvisible();
-        
-        assertFalse(mission.ppal.isVisible);
-        assertFalse(mission.plan.isVisible);
-    }
-    
-    
-    @Test
-    public void finishTest()
-    {
-        int[] from={1,1};
-        mission.store(from);
-        mission.copy();
-        mission.steal(from);
-        mission.finish();
-        
-        assertFalse(mission.ppal.isVisible);
-        assertFalse(mission.plan.isVisible);
-        assertEquals(0,mission.plan.stolenCrates);
-        assertEquals(0,mission.plan.valores[from[0]-1][from[1]-1]);
-        assertEquals(0,mission.ppal.valores[from[0]-1][from[1]-1]);
-    }
-    
-    
-    @Test
-    public void okTest()
-    {
-        int[] from={3,2};
-        int[] fromFalse={2,1};
-        int[] to={1,1};
-        mission.store(from);
-        mission.copy();
-        mission.arrange(from,to);
-        assertFalse(mission.ok());
-        mission.store(1,2);
-        assertTrue(mission.ok());
-    }
-    
-    
+
     @Test
     public void undoTest(){
         mission.store(2,2);
@@ -226,10 +181,58 @@ public class MissionTest
     }
     
     @Test
-    public void toStealTest(){
-        assertEquals(0, mission.plan.robadas.size());        
+    public void makeVisibleTest()
+    {
+        mission.copy();
+        mission.makeInvisible();
+        mission.makeVisible();
+        
+        assertTrue(mission.ppal.isVisible);
+        assertTrue(mission.plan.isVisible);
     }
     
+    
+    @Test
+    public void makeInvisibleTest()
+    {
+        mission.copy();
+        mission.makeVisible();
+        mission.makeInvisible();
+        
+        assertFalse(mission.ppal.isVisible);
+        assertFalse(mission.plan.isVisible);
+    }
+    
+    @Test
+    public void finishTest()
+    {
+        int[] from={1,1};
+        mission.store(from);
+        mission.copy();
+        mission.steal(from);
+        mission.finish();
+        
+        assertFalse(mission.ppal.isVisible);
+        assertFalse(mission.plan.isVisible);
+        assertEquals(0,mission.plan.stolenCrates);
+        assertEquals(0,mission.plan.valores[from[0]-1][from[1]-1]);
+        assertEquals(0,mission.ppal.valores[from[0]-1][from[1]-1]);
+    }
+    
+    @Test
+    public void okTest()
+    {
+        int[] from={3,2};
+        int[] fromFalse={2,1};
+        int[] to={1,1};
+        mission.store(from);
+        mission.copy();
+        mission.arrange(from,to);
+        assertFalse(mission.ok());
+        mission.store(1,2);
+        assertTrue(mission.ok());
+    }
+
     /**
      * Tears down the test fixture.
      *

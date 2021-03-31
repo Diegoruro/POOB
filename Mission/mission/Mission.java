@@ -357,7 +357,7 @@ public class Mission
      *
      * @return      Booleano según si son iguales o no
      */
-    public boolean areEqual()
+    private boolean areEqual()
     {
         for (int i=0;i<this.lenght;i++)
             {
