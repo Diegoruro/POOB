@@ -2,17 +2,17 @@ package mission;
 
 
 /**
- * Write a description of class Normal here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Esta es una caja comun y corriente
  */
 public class Normal extends Caja
 {
     
 
     /**
-     * Constructor for objects of class Normal
+     * Constructor for objects of class Delicate
+     * 
+     * @param Bodega la bodega donde se guarda la caja
+     *        i,j posicion a guardar la caja 
      */
     public Normal(Bodega bodega, int i, int j)
     {

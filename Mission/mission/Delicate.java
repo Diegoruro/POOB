@@ -2,15 +2,15 @@ package mission;
 
 
 /**
- * Write a description of class Delicate here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Esta caja puede tener cajas debajo pero no encima porque es una caja fragil
  */
 public class Delicate extends Caja
 {
     /**
      * Constructor for objects of class Delicate
+     * 
+     * @param Bodega la bodega donde se guarda la caja
+     *        i,j posicion a guardar la caja 
      */
     public Delicate(Bodega bodega, int i, int j)
     {

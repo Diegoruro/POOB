@@ -1,10 +1,7 @@
 package mission;
 
 /**
- * Write a description of class Principal here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * La bodega principal donde estan guardadas las cajas
  */
 public class Principal extends Bodega
 {

@@ -4,12 +4,6 @@ import java.util.ArrayList;
 import java.util.Stack;
 import java.util.Arrays;
 
-/**
-* Write a description of class Mission here.
-* 
-* @author (your name) 
-* @version (a version number or a date)
-*/
 public class Mission
 {
     public int width;
@@ -88,7 +82,6 @@ public class Mission
             }catch(MissionException e){
                 System.out.println(MissionException.INVALIDSTORE);
             }
-        this.loadUndo("store",null,i,j,0,0);
         if (this.plan.isVisible){
             this.colorDifferent();
         }
@@ -104,18 +97,24 @@ public class Mission
         this.store(crate[0],crate[1]);
     }
     
+    /**
+     * Guarda una caja en la bodega real
+     *
+     * @param int i,j Posición de la caja a guardar
+     *        String tipo El tipo de caja a guardar
+     */
     public void store(String tipo, int i, int j){
         try{
             if (tipo == "rebel"){
                 ppal.isPosible(tipo,j,i);
                 crearCaja(tipo,j,i);
                 store(j,i);
-                this.loadUndo("store",null,j,i,0,0);
+                this.loadUndo("store",tipo,j,i,0,0);
             }else{
                 ppal.isPosible(tipo,i,j);
                 crearCaja(tipo,i,j);
                 store(i,j);
-                this.loadUndo("store",null,i,j,0,0);
+                this.loadUndo("store",tipo,i,j,0,0);
             }
             if (this.plan.isVisible){
                 this.colorDifferent();
@@ -125,6 +124,12 @@ public class Mission
         }
     }
     
+    /**
+     * Crea una caja segun su tipo y la guarda en una matriz de cajas
+     *
+     * @param int i,j Posición de la caja a guardar
+     *        String tipo El tipo de caja a guardar
+     */
     private void crearCaja(String tipo, int i, int j){
         i--;
         j--;
@@ -147,6 +152,9 @@ public class Mission
             case "heavy":
                 this.ppal.cajas[i][j] = new Heavy(this.ppal, i, j);
                 break;
+            case "light":
+                this.ppal.cajas[i][j] = new Light(this.ppal, i, j);
+                break;
                 
         }
     }
@@ -164,7 +172,7 @@ public class Mission
         }catch(MissionException e){
             System.out.println(MissionException.INVALIDSTEAL);
         }
-        this.loadUndo("steal",null,(Integer) i, (Integer) j, (Integer) 0, (Integer) 0);
+        this.loadUndo("steal",this.plan.cajas[i][j].getTipo(),(Integer) i, (Integer) j, (Integer) 0, (Integer) 0);
         this.colorDifferent();
     }
     
@@ -262,7 +270,6 @@ public class Mission
             for (int j=0;j<this.width;j++)
             { 
                 this.plan.valores[i][j] = this.ppal.valores[i][j];
-                
                 String color = this.ppal.top[i][j].color;
                 if(color == "green"){
                     this.plan.top[i][j].changeColor("magenta");
@@ -278,6 +285,7 @@ public class Mission
                 }
                 
                 color = this.ppal.entry[i][j].color;
+                this.plan.cajas[i][j] = this.ppal.cajas[i][j];
                 if(color == "green"){
                     this.plan.entry[i][j].changeColor("magenta");
                 }else{
@@ -451,8 +459,6 @@ public class Mission
                 this.ppal.lado[this.lenght-k][i].changeColor("green");
                 this.ppal.entry[this.lenght-k][j].changeColor("green");
                 this.ppal.valores[i][j]-=1;
-                values[0]++;
-                values[1]++;
                 break;
             case "steal":
                 this.plan.valores[i][j]+=1;
@@ -463,6 +469,7 @@ public class Mission
                 values[0]++;
                 values[1]++;
                 this.colorDifferent();
+                this.acciones.pop();
                 break;
             case "arrange":
                 int[] from = new int[2];
@@ -501,7 +508,7 @@ public class Mission
                 zoom('-');
                 this.acciones.pop();
                 break;
-           }
+        }
         
         this.undos.push(acciones.peek());
         this.acciones.pop();
@@ -524,18 +531,10 @@ public class Mission
                 copy();
                 break;
             case "store":
-                try{
-                    this.ppal.store(i, j);
-                }catch(MissionException e){
-                    System.out.println(MissionException.INVALIDSTORE);
-                }
+                    this.store(undos.peek().tipo,i, j);
                 break;
             case "steal":
-                try{
-                    this.plan.steal(i, j);
-                }catch(MissionException e){
-                    System.out.println(MissionException.INVALIDSTEAL);
-                }
+                    this.steal(i, j);
                 break;
             case "arrange":
                 int[] from = new int[2];
