@@ -2,16 +2,16 @@ package mission;
 
 
 /**
- * Write a description of class Frost here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Esta caja no la detecta la camara
  */
 public class Frost extends Caja
 {
 
     /**
-     * Constructor for objects of class Frost
+     * Constructor for objects of class Delicate
+     * 
+     * @param Bodega la bodega donde se guarda la caja
+     *        i,j posicion a guardar la caja 
      */
     public Frost(Bodega bodega, int i, int j)
     {

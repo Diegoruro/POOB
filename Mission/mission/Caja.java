@@ -13,11 +13,14 @@ public class Caja extends Rectangle
     protected Bodega bodega;
     private String tipo;
     public int i, j;
-    public Caja caja;
     
 
     /**
-     * Constructor for objects of class Caja
+     * Constructor for objects of class Delicate
+     * 
+     * @param Bodega bodega La bodega donde se guarda la caja
+     *        String tipo El tipo de caja que va a guardar
+     *        int i,j posición a guardar la caja 
      */
     public Caja(Bodega bodega,String tipo, int i, int j)
     {

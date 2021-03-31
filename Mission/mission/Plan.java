@@ -3,10 +3,7 @@ package mission;
 import java.util.ArrayList;
 
 /**
- * Write a description of class Plan here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * El boceto de la bodega principal con todas las cajas que se movieron por ultima vez
  */
 public class Plan extends Bodega
 {

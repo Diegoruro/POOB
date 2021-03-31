@@ -16,7 +16,11 @@ public class Accion
     public String tipo;
 
     /**
-     * Constructor for objects of class Accion
+     * Guarda las acciones que se han realizado en la bodega/plan
+     *
+     * @param int[] coordenadas Posición de la caja que se manipulo
+     *        String action La accion realizada
+     *        String tipo El tipo de caja que se manipulo
      */
     public Accion(String action,String tipo, Integer[] coordenadas)
     {

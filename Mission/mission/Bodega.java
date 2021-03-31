@@ -18,7 +18,7 @@ public class Bodega
     public Rectangle[][] entry;
     public boolean isVisible;
     public int[][] valores;
-    public static Caja[][] cajas;
+    public Caja[][] cajas;
     public boolean sePudo;
     
     
@@ -117,14 +117,25 @@ public class Bodega
         }
     }
     
+    /**
+     * Guarda una caja en la bodega real
+     *
+     * @param int i,j Posición de la caja a guardar
+     */
     public void store(int i,int j) throws MissionException{
     }
     
+    /**
+     * Verifica si es posible guardar la caja segun su tipo
+     *
+     * @param int i,j Posición de la caja a guardar
+     *        String tipo El tipo de caja a guardar
+     */
     public void isPosible(String tipo,int i,int j) throws MissionException{
         i--;
         j--;
         if (this.valores[i][j]>=1){
-            if (this.cajas[i][j].getTipo() == "delicate"){
+            if (this.cajas[i][j].getTipo() == "delicate" && tipo!="light"){
                 throw new MissionException(MissionException.INVALIDSTORE);
             }
             if (tipo=="heavy"){
