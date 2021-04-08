@@ -20,6 +20,23 @@ public class Registro{
             logger.addHandler(file);
             logger.log(Level.SEVERE,e.toString(),e);
             file.close();
+
+            System.exit(0);
+        }catch (Exception oe){
+            oe.printStackTrace();
+            System.exit(0);
+        }
+    }
+
+    public static void registre2(Exception e){
+        try{
+            Logger logger=Logger.getLogger(nombre);
+            logger.setUseParentHandlers(false);
+            FileHandler file=new FileHandler(nombre+".log",true);
+            file.setFormatter(new SimpleFormatter());
+            logger.addHandler(file);
+            logger.log(Level.SEVERE,e.toString(),e);
+            file.close();
         }catch (Exception oe){
             oe.printStackTrace();
             System.exit(0);

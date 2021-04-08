@@ -269,23 +269,30 @@ public class SinapGUI extends JFrame{
             areas.adicione(textoOriginal.getText(),textoEspa_ol.getText(),textoPais.getText(), textoDirector.getText(),
                     textoDescripcion.getText());
         }catch (SINAPExcepcion e){
-            JOptionPane.showMessageDialog(null, SINAPExcepcion.SIN_NOMBRE_INT);
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
     }
 
     private void accionBuscar(){
-        String patronBusqueda=busquedaTexto.getText();
-        StringBuffer buffer = new StringBuffer();
-        if(patronBusqueda.length() > 0) {
-            ArrayList <Area> results = areas.busque(patronBusqueda);
-            for(int i = 0; i < results.size(); i++) {
-                buffer.append(results.get(i).toString());
-                buffer.append('\n');
-                buffer.append('\n');
-             }
+        try {
+            String patronBusqueda = busquedaTexto.getText();
+            StringBuffer buffer = new StringBuffer();
+            if (patronBusqueda.length() > 0) {
+                ArrayList<Area> results = areas.busque(patronBusqueda);
+                for (int i = 0; i < results.size(); i++) {
+                    buffer.append(results.get(i).toString());
+                    buffer.append('\n');
+                    buffer.append('\n');
+                }
+            }
+            resultadosTexto.setText(buffer.toString());
+        }catch (NullPointerException e){
+            JOptionPane.showMessageDialog(null, "Houston tuvimos un problema!");
+            Registro registro = new Registro();
+            registro.registre(e);
+
         }
-        resultadosTexto.setText(buffer.toString());
     } 
     
    public static void main(String args[]){

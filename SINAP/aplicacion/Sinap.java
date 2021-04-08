@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class Sinap{
     private LinkedList <Area> areas;
+    private static final int maxChars = 1000;
 
 
     /**
@@ -26,7 +27,7 @@ public class Sinap{
      */
     public void adicioneCinco(){
         	Area ejemplos[] = {
-	        new Area("Ciénaga Grande de Santa Marta","Large Marsh of Saint Martha", "Madalena","4280" , 
+	        new Area("Ciénaga Grande de Santa Marta","Large Marsh of Saint Martha", "Magdalena","4280" ,
 	        "Santuario de flora y fauna."+
             " Propender por la recuperación del modelo hidráulico del complejo lagunar CGSM en el área del Santuario,"+
             " con el fin de garantizar el estado de conservación de la biodiversidad de flora y fauna y la productividad pesquera,"+
@@ -48,7 +49,7 @@ public class Sinap{
             " El ecosistema lo integra un humedal de 25 mil hectáreas donde impera la variedad de palma de moriche "+
             "que sirve de refugio a buena parte de la fauna llanera y donde igualmente residen unas 200 familias que por décadas "+
             "han habitado este paradisíaco lugar."),
-            new Area("Parque Isla de Salamanca","Salamanca Island Road Park","Magalena", " 	562 km²",
+            new Area("Parque Isla de Salamanca","Salamanca Island Road Park","Magdalena", " 	562 km²",
             "Vía parque'."+
             "Posee 98 especies de invertebrados, 9 especies de anfibios, 35 especies de reptiles, más de 140 especies de peces, "+
             "199 de aves, muchas de ellas migratorias, endémicas y residentes. La existencia de 33 especies de mamíferos indica "+
@@ -61,7 +62,7 @@ public class Sinap{
             try {
                 adicioneDetalles(detalles);
             }catch (SINAPExcepcion e){
-                JOptionPane.showMessageDialog(null, SINAPExcepcion.SIN_NOMBRE_INT);
+                JOptionPane.showMessageDialog(null, e.getMessage());
             }
 
         }
@@ -101,7 +102,6 @@ public class Sinap{
 
         adicioneDetalles(new Area(nombre,name, ubicacion, area, descripcion));
 
-
     }
 
     /**
@@ -111,13 +111,29 @@ public class Sinap{
     public void adicioneDetalles(Area detalles) throws SINAPExcepcion {
         if(detalles.getName().equals("") || detalles.getName() == null) {
             throw new SINAPExcepcion(SINAPExcepcion.SIN_NOMBRE_INT);
+        }else if (detalles.getUbicacion().equals("")){
+            throw new SINAPExcepcion(SINAPExcepcion.SIN_UBICACION);
         }
         int i = 0;
         while ((i < areas.size()) && (areas.get(i).getNombre().compareToIgnoreCase(detalles.getNombre()) < 0)) {
             i++;
         }
+        if (detalles.getDescripcion().length()>maxChars){
+            throw new SINAPExcepcion(SINAPExcepcion.DESCRIPCION_MUY_LARGA);
+        }
+        inAreas(detalles.getNombre());
         areas.add(i, detalles);
 
+    }
+
+
+
+    private void inAreas(String nombre) throws SINAPExcepcion {
+        for (Area area: this.areas){
+            if (area.getNombre().equals(nombre)){
+                throw new SINAPExcepcion(SINAPExcepcion.NOMBRE_REPETIDO);
+            }
+        }
     }
     
 
@@ -128,7 +144,7 @@ public class Sinap{
      * @return Los detalles encontrados
      */
     public ArrayList<Area> busque(String prefijo){
-    ArrayList<Area> resultados=null;
+    ArrayList<Area> resultados= new ArrayList<Area>();
 	prefijo=prefijo.toUpperCase();
 	for(int i=0;i<areas.size();i++){
 	    if(areas.get(i).getNombre().toUpperCase().startsWith(prefijo)){
