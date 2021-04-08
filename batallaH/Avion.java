@@ -25,7 +25,7 @@ public class Avion extends Maquina{
     @Override
     public boolean isDebil(){
         boolean cond = false;
-        if (this.piloto == null){
+        if (this.getPiloto() == null){
             cond = true;
         }
         return cond;

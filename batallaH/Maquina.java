@@ -1,6 +1,6 @@
  
 
-public class Maquina {
+public abstract class Maquina {
     private Ubicacion ubicacion;
     public boolean isDestroyed;
     
@@ -13,10 +13,11 @@ public class Maquina {
         }
     }
     
-    public boolean isDebil(){
-        return true;
-    }
+    public abstract boolean isDebil();
     
+    /**
+     * @see flota.alNorte()
+     */
     public void alNorte(){
         ubicacion.alNorte();
     }

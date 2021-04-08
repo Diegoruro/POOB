@@ -17,6 +17,7 @@ public class Ubicacion {
         if (latitud<89){
             latitud++;
         }
+        //[-90,90]
     }
     
     public int getLatitud(){

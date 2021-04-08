@@ -19,10 +19,14 @@ public class Barco extends Maquina{
         return this.marinos;
     }
     
+    public int getMarinosSize(){
+        return this.marinos.size();
+    }
+    
     @Override
     public boolean isDebil(){
         boolean cond = false;
-        if (marinos.size() < 5){
+        if (getMarinosSize() < 5){
             cond = true;
         }
         return cond;
