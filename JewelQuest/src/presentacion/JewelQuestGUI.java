@@ -10,12 +10,14 @@ public class JewelQuestGUI extends JFrame {
     //Items menu
     JMenuItem nuevoMenu, abrirMenu, salvarMenu, salvarComoMenu, salirMenu, cambiarColorMenu;
 
-    private JPanel principal, ventanaTablero, ventanaNivel, color;
+    private JPanel principal, ventanaTablero, ventanaNivel, ventanaColor;
     private CardLayout cd;
     private JButton[][] tablero;
     private int row, column;
-    private JLabel gemas, movimientos;
-
+    private JLabel puntos, movimientos;
+    private Color color1, color2;
+    private JButton colorPpal, colorSec, guardarColores, volverColores;
+    private ImageIcon logo;
 
     public JewelQuestGUI(){
         prepareElementos();
@@ -33,6 +35,7 @@ public class JewelQuestGUI extends JFrame {
             }
         });
         prepareAccionesMenu();
+
     }
 
     private void prepareAccionesMenu(){
@@ -60,6 +63,13 @@ public class JewelQuestGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 guardar(e);
+            }
+        });
+
+        cambiarColorMenu.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cambiarColor();
             }
         });
     }
@@ -94,31 +104,42 @@ public class JewelQuestGUI extends JFrame {
     }
 
     private void prepareElementosTablero(){
+        color1 = Color.WHITE;
+        color2 = Color.BLACK;
+        cambiarColorMenu.setVisible(true);
+
+        //Creación paneles de la ventana ppal
         ventanaNivel= new JPanel();
         ventanaTablero = new JPanel();
         ventanaNivel.add(ventanaTablero, "Tablero");
         principal.add(ventanaNivel,"Nivel");
+
+        //Evitar problemas de ubicación
         ventanaTablero.setLayout(null);
         ventanaNivel.setLayout(null);
+
+        //Tamaños y ubicaciones de cada panel
         ventanaNivel.setBounds(0,0,principal.getWidth(),principal.getHeight());
         ventanaTablero.setBounds(0,0,(ventanaNivel.getWidth()/4)*3,principal.getHeight());
         ventanaNivel.setBackground(Color.red);
-        matrizTablero(Color.white,Color.black,6,6);
+        matrizTablero(6,6);
 
 
-        gemas = new JLabel("Puntuación \n 0");
-        gemas.setBounds((ventanaNivel.getWidth()/8)*6,0,ventanaNivel.getWidth()/4,ventanaNivel.getHeight()/4);
-        gemas.setFont(new Font("Monaco",Font.BOLD,25));
-        ventanaNivel.add(gemas);
+        puntos = new JLabel();
+        puntos.setText("<html><div style='text-align: center;'> Puntuación<br>0</div></html>");
+        puntos.setBounds((ventanaNivel.getWidth()/8)*6 + 50,0,ventanaNivel.getWidth()/4,ventanaNivel.getHeight()/4);
+        puntos.setFont(new Font("Monaco",Font.BOLD,25));
+        ventanaNivel.add(puntos);
 
-        movimientos = new JLabel("Movimientos \n 0");
-        movimientos.setBounds((ventanaNivel.getWidth()/8)*6,(ventanaNivel.getHeight()/4)*2,ventanaNivel.getWidth()/4,ventanaNivel.getHeight()/4);
+        movimientos = new JLabel();
+        movimientos.setText("<html><div style='text-align: center;'> Movimientos<br>0</div></html>");
+        movimientos.setBounds((ventanaNivel.getWidth()/8)*6 + 50,(ventanaNivel.getHeight()/4)*2,ventanaNivel.getWidth()/4,ventanaNivel.getHeight()/4);
         movimientos.setFont(new Font("Monaco",Font.BOLD,25));
         ventanaNivel.add(movimientos);
 
     }
 
-    private void matrizTablero(Color color1, Color color2, int row, int column){
+    private void matrizTablero(int row, int column){
         tablero = new JButton[row][column];
         int heigth = ventanaTablero.getHeight()/row;
         int width = ventanaTablero.getWidth()/column;
@@ -159,6 +180,7 @@ public class JewelQuestGUI extends JFrame {
         archivo.addSeparator();
         cambiarColorMenu = new JMenuItem("Cambiar Color");
         archivo.add(cambiarColorMenu);
+        cambiarColorMenu.setVisible(false);
         abrirMenu = new JMenuItem("Abrir");
         archivo.add(abrirMenu);
         salvarMenu = new JMenuItem("Salvar");
@@ -193,6 +215,91 @@ public class JewelQuestGUI extends JFrame {
         }
     }
 
+    private void refresque(){
+        ventanaNivel.remove(ventanaTablero);
+        ventanaTablero = new JPanel();
+        ventanaTablero.setLayout(null);
+        ventanaNivel.add(ventanaTablero, "Tablero");
+        ventanaTablero.setBounds(0,0,(ventanaNivel.getWidth()/4)*3,principal.getHeight());
+        matrizTablero(6, 6);
+    }
+
+    private void cambiarColor(){
+        prepareElementosCambiarColor();
+        prepareAccionesCambiarColor();
+        cd.show(principal, "Color");
+    }
+
+    private void prepareElementosCambiarColor(){
+        ventanaColor = new JPanel();
+        ventanaColor.setLayout(null);
+        principal.add(ventanaColor, "Color");
+
+        colorPpal = new JButton("Color Principal");
+        colorPpal.setBounds((principal.getWidth()/8)*3,(principal.getHeight()/8)*2,(principal.getWidth()/8)*2,principal.getHeight()/8);
+        ventanaColor.add(colorPpal);
+
+        colorSec = new JButton("Color Secundario");
+        colorSec.setBounds((principal.getWidth()/8)*3,(principal.getHeight()/8)*4,(principal.getWidth()/8)*2,principal.getHeight()/8);
+        ventanaColor.add(colorSec);
+
+        volverColores = new JButton("Volver");
+        volverColores.setBounds(10,(principal.getHeight()/8)*7,(principal.getWidth()/8),principal.getHeight()/8);
+        ventanaColor.add(volverColores);
+
+        guardarColores = new JButton("Guardar");
+        guardarColores.setBounds((principal.getWidth()/8)*7-10,(principal.getHeight()/8)*7,(principal.getWidth()/8),principal.getHeight()/8);
+        ventanaColor.add(guardarColores);
+    }
+
+    private void prepareAccionesCambiarColor(){
+        colorPpal.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                elegirColorPpal();
+            }
+        });
+
+        colorSec.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                elegirColorSec();
+            }
+        });
+
+        volverColores.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                volverColor();
+            }
+        });
+
+        guardarColores.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                guardarCambiosColores();
+            }
+        });
+    }
+
+    private void elegirColorPpal(){
+        JColorChooser selector = new JColorChooser();
+        color1 = selector.showDialog(null, "Elige un color", Color.GRAY);
+    }
+
+    private void elegirColorSec(){
+        JColorChooser selector = new JColorChooser();
+        color2 = selector.showDialog(null, "Elige un color", Color.GRAY);
+    }
+
+    private void volverColor(){
+        cd.show(principal, "Nivel");
+    }
+
+    private void guardarCambiosColores(){
+        refresque();
+        cd.show(principal, "Nivel");
+    }
 
     public static void main(String[] args) {
         JewelQuestGUI gui = new JewelQuestGUI();
