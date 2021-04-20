@@ -7,18 +7,17 @@ import java.io.File;
 
 public class JewelQuestGUI extends JFrame {
 
-    JMenuItem nuevoMenu, abrirMenu, salvarMenu, salvarComoMenu, salirMenu;
-    private JPanel principal;
-    private JPanel ventanaTablero;
-    private JPanel opciones;
+    //Items menu
+    JMenuItem nuevoMenu, abrirMenu, salvarMenu, salvarComoMenu, salirMenu, cambiarColorMenu;
+
+    private JPanel principal, ventanaTablero, ventanaNivel, color;
     private CardLayout cd;
     private JButton[][] tablero;
     private int row, column;
+    private JLabel gemas, movimientos;
+
 
     public JewelQuestGUI(){
-        cd = new CardLayout();
-        principal = new JPanel(cd);
-        add(principal);
         prepareElementos();
         prepareAcciones();
     }
@@ -41,7 +40,7 @@ public class JewelQuestGUI extends JFrame {
         nuevoMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                prepareElementosTablero();
+                nuevo();
             }
         });
         salirMenu.addActionListener(new ActionListener() {
@@ -66,7 +65,8 @@ public class JewelQuestGUI extends JFrame {
     }
 
     private void nuevo(){
-        cd.show(principal,"Tablero");
+        prepareElementosTablero();
+        cd.show(principal,"Nivel");
     }
 
 
@@ -84,45 +84,68 @@ public class JewelQuestGUI extends JFrame {
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         int width = (int) size.getWidth();
         int height = (int) size.getHeight();
-        this.setLocation(width / 4, height / 4);
+        this.setBounds(width / 4, height / 4,width / 2, height / 2);
 
-        this.setSize(width / 2, height / 2);
-
+        cd = new CardLayout();
+        principal = new JPanel(cd);
+        principal.setBounds(width / 4, height / 4,width / 2, height / 2);
+        add(principal);
         prepareElementosMenu();
     }
 
     private void prepareElementosTablero(){
+        ventanaNivel= new JPanel();
         ventanaTablero = new JPanel();
-        row=6;
-        column=6;
-        tablero = new JButton[row][column];
+        ventanaNivel.add(ventanaTablero, "Tablero");
+        principal.add(ventanaNivel,"Nivel");
         ventanaTablero.setLayout(null);
+        ventanaNivel.setLayout(null);
+        ventanaNivel.setBounds(0,0,principal.getWidth(),principal.getHeight());
+        ventanaTablero.setBounds(0,0,(ventanaNivel.getWidth()/4)*3,principal.getHeight());
+        ventanaNivel.setBackground(Color.red);
+        matrizTablero(Color.white,Color.black,6,6);
+
+
+        gemas = new JLabel("Puntuación \n 0");
+        gemas.setBounds((ventanaNivel.getWidth()/8)*6,0,ventanaNivel.getWidth()/4,ventanaNivel.getHeight()/4);
+        gemas.setFont(new Font("Monaco",Font.BOLD,25));
+        ventanaNivel.add(gemas);
+
+        movimientos = new JLabel("Movimientos \n 0");
+        movimientos.setBounds((ventanaNivel.getWidth()/8)*6,(ventanaNivel.getHeight()/4)*2,ventanaNivel.getWidth()/4,ventanaNivel.getHeight()/4);
+        movimientos.setFont(new Font("Monaco",Font.BOLD,25));
+        ventanaNivel.add(movimientos);
+
+    }
+
+    private void matrizTablero(Color color1, Color color2, int row, int column){
+        tablero = new JButton[row][column];
         int heigth = ventanaTablero.getHeight()/row;
         int width = ventanaTablero.getWidth()/column;
         int x;
         int y=0;
-        principal.add(ventanaTablero, "Tablero");
-        boolean intermitente=false;
+        boolean intermitente=true;
         for(int i=0;i<row;i++){
             x=0;
             for(int j=0;j<column;j++){
                 tablero[i][j]=new JButton();
                 tablero[i][j].setBounds(x,y,width,heigth);
+                tablero[i][j].setBorderPainted(false);
                 if(intermitente){
-                    tablero[i][j].setBackground(Color.white);
-                    intermitente=false;
+                    tablero[i][j].setBackground(color1);
                 }
                 else{
-                    tablero[i][j].setBackground(Color.black);
-                    intermitente=true;
+                    tablero[i][j].setBackground(color2);
                 }
                 ventanaTablero.add(tablero[i][j]);
-                x+=heigth;
+                intermitente=!intermitente;
+                x+= width;
             }
-            y+=width;
+            intermitente=!intermitente;
+            y+= heigth;
         }
-        nuevo();
     }
+
 
     private void prepareElementosMenu(){
         JMenuBar menuBar = new JMenuBar();
@@ -134,6 +157,8 @@ public class JewelQuestGUI extends JFrame {
         nuevoMenu = new JMenuItem("Nuevo");
         archivo.add(nuevoMenu);
         archivo.addSeparator();
+        cambiarColorMenu = new JMenuItem("Cambiar Color");
+        archivo.add(cambiarColorMenu);
         abrirMenu = new JMenuItem("Abrir");
         archivo.add(abrirMenu);
         salvarMenu = new JMenuItem("Salvar");
