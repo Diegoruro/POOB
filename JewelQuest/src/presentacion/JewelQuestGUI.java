@@ -10,11 +10,11 @@ public class JewelQuestGUI extends JFrame {
     //Items menu
     JMenuItem nuevoMenu, abrirMenu, salvarMenu, salvarComoMenu, salirMenu, cambiarColorMenu;
 
-    private JPanel principal, ventanaTablero, ventanaNivel, ventanaColor;
+    private JPanel principal,ventanaInicio, ventanaTablero, ventanaNivel, ventanaColor;
     private CardLayout cd;
     private JButton[][] tablero;
     private int row, column;
-    private JLabel puntos, movimientos;
+    private JLabel puntos, movimientos, inicio;
     private Color color1, color2;
     private JButton colorPpal, colorSec, guardarColores, volverColores;
     private ImageIcon logo;
@@ -95,13 +95,24 @@ public class JewelQuestGUI extends JFrame {
         int width = (int) size.getWidth();
         int height = (int) size.getHeight();
         this.setBounds(width / 4, height / 4,width / 2, height / 2);
-
+        logo = new ImageIcon("./images/jewel-quest.png");
         cd = new CardLayout();
         principal = new JPanel(cd);
         principal.setBounds(width / 4, height / 4,width / 2, height / 2);
         add(principal);
+        ventanaInicio = new JPanel();
+        principal.add(ventanaInicio, "Inicio");
+        ventanaInicio.setLayout(null);
+        inicio = new JLabel();
+        inicio.setIcon(logo);
+        ventanaInicio.add(inicio);
+        ventanaInicio.setBounds(0,0, principal.getWidth(), principal.getHeight());
+        ventanaInicio.setBackground(new Color(242, 153, 74, 255));
+        inicio.setBounds((ventanaInicio.getWidth()/10)*3,(ventanaInicio.getHeight()/10)*2,(ventanaInicio.getWidth()/6)*3,(ventanaInicio.getHeight()/4)*2);
+        cd.show(principal,"Inicio");
         prepareElementosMenu();
     }
+
 
     private void prepareElementosTablero(){
         color1 = Color.WHITE;
@@ -121,7 +132,7 @@ public class JewelQuestGUI extends JFrame {
         //Tamaños y ubicaciones de cada panel
         ventanaNivel.setBounds(0,0,principal.getWidth(),principal.getHeight());
         ventanaTablero.setBounds(0,0,(ventanaNivel.getWidth()/4)*3,principal.getHeight());
-        ventanaNivel.setBackground(Color.red);
+        ventanaNivel.setBackground(new Color(242, 153, 74, 255));
         matrizTablero(6,6);
 
 
