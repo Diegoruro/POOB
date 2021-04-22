@@ -25,12 +25,17 @@ public class JewelQuestGUI extends JFrame {
     private boolean intermitente = true;
     private int fromI, fromJ, toI, toJ;
 
-
+    /**
+     * Constructor del GUI para JewelQuest
+     */
     public JewelQuestGUI(){
         prepareElementos();
         prepareAcciones();
     }
 
+    /**
+     * Método encargado de asignar el listener para cuando se desee cerrar la ventana
+     */
     private void prepareAcciones() {
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         //Salir de la app
@@ -45,6 +50,9 @@ public class JewelQuestGUI extends JFrame {
 
     }
 
+    /**
+     * Método que asigna los listeners a los items del menu
+     */
     private void prepareAccionesMenu(){
 
         nuevoMenu.addActionListener(new ActionListener() {
@@ -81,6 +89,9 @@ public class JewelQuestGUI extends JFrame {
         });
     }
 
+    /**
+     * Método que crea un listener para los botones del tablero y lo asigna a estos
+     */
     public void prepareAccionesJuego(){
         ActionListener casillaTablero = new ActionListener() {
             @Override
@@ -123,6 +134,9 @@ public class JewelQuestGUI extends JFrame {
         }
     }
 
+    /**
+     * Método que genera un nuevo juego y lo muestra
+     */
     private void nuevo(){
         jq = new JewelQuest(row, column);
         prepareElementosTablero();
@@ -131,6 +145,9 @@ public class JewelQuestGUI extends JFrame {
         cd.show(principal,"Nivel");
     }
 
+    /**
+     * Método que genera la pestaña de confirmación de salida
+     */
     private void salir(){
         int ans = JOptionPane.showConfirmDialog(this, "Desea salir?", "Salida", JOptionPane.YES_NO_OPTION);
         if (ans==JOptionPane.YES_OPTION){
@@ -138,6 +155,9 @@ public class JewelQuestGUI extends JFrame {
         }
     }
 
+    /**
+     * Método que genera la pestaña de seleccionar archivo a abrir
+     */
     private void abrir() {
         JFileChooser fc = new JFileChooser();
         int sel = fc.showOpenDialog(this);
@@ -149,6 +169,9 @@ public class JewelQuestGUI extends JFrame {
         }
     }
 
+    /**
+     * Método que genera la pestaña de seleccionar archivo a guardar
+     */
     private void guardar(){
         JFileChooser fc = new JFileChooser();
         int sel =fc.showSaveDialog(this);
@@ -157,16 +180,21 @@ public class JewelQuestGUI extends JFrame {
             File archivo = fc.getSelectedFile();
             String nombre = archivo.getName();
             JOptionPane.showMessageDialog(null,"Funcionalidad Guardar en construccion.\n Archivo a guardar : "+nombre);
-
         }
     }
 
+    /**
+     * Método que genera la pestaña para realizar el cambio de color
+     */
     private void cambiarColor(){
         prepareElementosCambiarColor();
         prepareAccionesCambiarColor();
         cd.show(principal, "Color");
     }
 
+    /**
+     * Método que genera la ventana principal
+     */
     private void prepareElementos() {
         this.setTitle("Jewel Quest");
         //Tomamos dimensiones de la pantalla y ajustamos la ventana a 1/4 de esta
@@ -201,6 +229,9 @@ public class JewelQuestGUI extends JFrame {
         prepareElementosMenu();
     }
 
+    /**
+     * Método que asigna el menu y sus items a la ventana
+     */
     private void prepareElementosMenu(){
         JMenuBar menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
@@ -230,6 +261,9 @@ public class JewelQuestGUI extends JFrame {
         archivo.add(salirMenu);
     }
 
+    /**
+     * Método que crea la ventana de juego
+     */
     private void prepareElementosTablero(){
         color1 = Color.WHITE;
         color2 = Color.BLACK;
@@ -269,6 +303,9 @@ public class JewelQuestGUI extends JFrame {
 
     }
 
+    /**
+     * Método que crea los objetos de la ventana de cambio de color
+     */
     private void prepareElementosCambiarColor(){
         ventanaColor = new JPanel();
         ventanaColor.setLayout(null);
@@ -291,6 +328,11 @@ public class JewelQuestGUI extends JFrame {
         ventanaColor.add(guardarColores);
     }
 
+    /**
+     * Método que genera una matriz de botones dada su dimension
+     * @param row Cantidad de filas
+     * @param column Cantidad de columnas
+     */
     private void matrizTablero(int row, int column){
         tablero = new JButton[row][column];
         int heigth = ventanaTablero.getHeight()/row;
@@ -320,6 +362,9 @@ public class JewelQuestGUI extends JFrame {
         }
     }
 
+    /**
+     * Método que actualiza la ventana
+     */
     private void refresque(){
         ventanaNivel.remove(ventanaTablero);
         ventanaTablero = new JPanel();
@@ -332,11 +377,17 @@ public class JewelQuestGUI extends JFrame {
         updateStats();
     }
 
+    /**
+     * Método que actualiza el puntaje y los movimientos
+     */
     private void updateStats(){
         puntos.setText("<html><div style='text-align: center;'> Puntuación<br>" + jq.getScore() +"</div></html>");
         movimientos.setText("<html><div style='text-align: center;'> Movimientos<br>" + jq.getMovements() + "</div></html>");
     }
 
+    /**
+     * Método que añade los listeners para realizar el cambio de color
+     */
     private void prepareAccionesCambiarColor(){
         colorPpal.addActionListener(new ActionListener(){
             @Override
@@ -367,20 +418,32 @@ public class JewelQuestGUI extends JFrame {
         });
     }
 
+    /**
+     * Método que genera la ventana para seleccionar el color principal
+     */
     private void elegirColorPpal(){
         JColorChooser selector = new JColorChooser();
         color1 = selector.showDialog(null, "Elige un color", Color.GRAY);
     }
 
+    /**
+     * Método que genera la ventana para seleccionar el color secundario
+     */
     private void elegirColorSec(){
         JColorChooser selector = new JColorChooser();
         color2 = selector.showDialog(null, "Elige un color", Color.GRAY);
     }
 
+    /**
+     * Método que vuelve de la ventana de cambio de color a la ventana de juego
+     */
     private void volverColor(){
         cd.show(principal, "Nivel");
     }
 
+    /**
+     * Método que guarada la selección de colores y los aplica en la ventana de juego
+     */
     private void guardarCambiosColores(){
         refresque();
         cd.show(principal, "Nivel");

@@ -6,7 +6,10 @@ import java.util.Scanner;
 
 public class JewelQuest {
     public Gema[][] tablero;
-    int rows, columns, score, movements;
+    private final int rows;
+    private final int columns;
+    private int score;
+    private int movements;
     int filaGanador, columnaGanador;
 
     /**
@@ -353,7 +356,7 @@ public class JewelQuest {
      * Método que dice si hay un ganador
      * @return Booleano por si hay o no un movimiento ganador
      */
-    private boolean hayGanadores(){
+    public boolean hayGanadores(){
         for (int i = 2; i < rows + 2; i++) {
             for (int j = 2; j < columns + 2; j++) {
                 try {
@@ -406,6 +409,14 @@ public class JewelQuest {
 
     public int getMovements() {
         return movements;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public int getColumns() {
+        return columns;
     }
 
     public static void main(String[] args) {
