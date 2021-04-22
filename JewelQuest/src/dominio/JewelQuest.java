@@ -352,6 +352,10 @@ public class JewelQuest {
         score += 3;
     }
 
+    public Gema[][] getTablero() {
+        return tablero;
+    }
+
     /**
      * Método que dice si hay un ganador
      * @return Booleano por si hay o no un movimiento ganador
@@ -385,6 +389,25 @@ public class JewelQuest {
                 }
             }
         }
+    }
+
+    public Gema[][] copiaMatriz(){
+        Gema[][] copia =new Gema[rows+4][columns+4];
+        for (int i=0;i<rows+4;i++){
+            for (int j = 0; j < columns+4; j++) {
+                try {
+                    copia[i][j] = new Gema(tablero[i][j].getType());
+                }catch (NullPointerException e){
+                    copia[i][j] = null;
+                }
+            }
+        }
+        return copia;
+    }
+
+    public void reiniciarStats(){
+        this.score=0;
+        this.movements=0;
     }
 
     /**

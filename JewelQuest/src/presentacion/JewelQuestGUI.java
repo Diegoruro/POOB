@@ -9,18 +9,18 @@ import java.io.File;
 
 public class JewelQuestGUI extends JFrame {
 
-    JewelQuest jq;
-
+    JewelQuest jq, jqCopia;
     //Items menu
-    JMenuItem nuevoMenu, abrirMenu, salvarMenu, salvarComoMenu, salirMenu, cambiarColorMenu;
+    JMenuItem nuevoMenu, abrirMenu, salvarMenu, salvarComoMenu, salirMenu, cambiarColorMenu, reiniciarMenu, configuracionMenu;
 
-    private JPanel principal,ventanaInicio, ventanaTablero, ventanaNivel, ventanaColor, vacio;
+    private JPanel principal,ventanaInicio, ventanaTablero, ventanaNivel, ventanaColor, vacio, ventanaConfiguracion;
     private CardLayout cd;
     private JButton[][] tablero;
     private int row = 6, column=6;
-    private JLabel puntos, movimientos, inicio;
+    private JLabel puntos, movimientos, inicio,filas,columnas;
     private Color color1, color2;
-    private JButton colorPpal, colorSec, guardarColores, volverColores;
+    private JButton colorPpal, colorSec, guardarColores, volverColores, guardarConfiguracion, volverConfiguracion;
+    private JTextField cRow,cColumn;
     private ImageIcon logo;
     private boolean intermitente = true;
     private int fromI, fromJ, toI, toJ;
@@ -87,6 +87,20 @@ public class JewelQuestGUI extends JFrame {
                 cambiarColor();
             }
         });
+
+        reiniciarMenu.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reiniciar();
+            }
+        });
+
+        configuracionMenu.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                configuracion();
+            }
+        });
     }
 
     /**
@@ -134,11 +148,80 @@ public class JewelQuestGUI extends JFrame {
         }
     }
 
+    private void configuracion(){
+        prepareElementosConfiguracion();
+        prepareAccionesConfiguracion();
+        cd.show(principal,"Configuracion");
+    }
+
+    private void prepareElementosConfiguracion(){
+        ventanaConfiguracion = new JPanel();
+        ventanaConfiguracion.setLayout(null);
+        principal.add(ventanaConfiguracion,"Configuracion");
+
+        cRow = new JTextField("6");
+        cRow.setBounds((principal.getWidth()/8)*4,(principal.getHeight()/8)*2,principal.getWidth()/20,principal.getHeight()/16);
+        ventanaConfiguracion.add(cRow);
+
+        cColumn = new JTextField("6");
+        cColumn.setBounds((principal.getWidth()/8)*4,(principal.getHeight()/8)*4,principal.getWidth()/20,principal.getHeight()/16);
+        ventanaConfiguracion.add(cColumn);
+
+        filas = new JLabel("Filas");
+        filas.setBounds((principal.getWidth()/8)*4-50,(principal.getHeight()/8)*2,principal.getWidth()/20,principal.getHeight()/16);
+        filas.setFont(new Font("Monaco",Font.BOLD,20));
+        ventanaConfiguracion.add(filas);
+
+        columnas = new JLabel("columnas");
+        columnas.setBounds((principal.getWidth()/8)*4-100,(principal.getHeight()/8)*4,principal.getWidth()/10,principal.getHeight()/16);
+        columnas.setFont(new Font("Monaco",Font.BOLD,20));
+        ventanaConfiguracion.add(columnas);
+
+        volverConfiguracion = new JButton("Volver");
+        volverConfiguracion.setBounds(10,(principal.getHeight()/8)*7,(principal.getWidth()/8),principal.getHeight()/8);
+        ventanaConfiguracion.add(volverConfiguracion);
+
+        guardarConfiguracion = new JButton("Guardar");
+        guardarConfiguracion.setBounds((principal.getWidth()/8)*7-10,(principal.getHeight()/8)*7,(principal.getWidth()/8),principal.getHeight()/8);
+        ventanaConfiguracion.add(guardarConfiguracion);
+    }
+
+    private void prepareAccionesConfiguracion(){
+        volverConfiguracion.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                volverConfiguraciones();
+            }
+        });
+        guardarConfiguracion.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                guardarConfiguraciones();
+            }
+        });
+    }
+
+    private void volverConfiguraciones(){
+        cd.show(principal,"Inicio");
+    }
+
+    private void guardarConfiguraciones(){
+        try {
+            row = Integer.parseInt(cRow.getText());
+            column = Integer.parseInt(cColumn.getText());
+            cd.show(principal, "Inicio");
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(ventanaConfiguracion,"Por favor ingrese solo numeros enteros.");
+        }
+    }
+
     /**
      * Método que genera un nuevo juego y lo muestra
      */
     private void nuevo(){
         jq = new JewelQuest(row, column);
+        jqCopia = new JewelQuest(row,column);
+        jqCopia.tablero = jq.copiaMatriz();
         prepareElementosTablero();
         prepareAccionesJuego();
         jq.prettyPrint();
@@ -192,6 +275,13 @@ public class JewelQuestGUI extends JFrame {
         cd.show(principal, "Color");
     }
 
+    private void reiniciar(){
+        jq.tablero=jqCopia.copiaMatriz();
+        refresque();
+        jq.reiniciarStats();
+        updateStats();
+    }
+
     /**
      * Método que genera la ventana principal
      */
@@ -241,11 +331,19 @@ public class JewelQuestGUI extends JFrame {
 
         nuevoMenu = new JMenuItem("Nuevo");
         archivo.add(nuevoMenu);
+
+        configuracionMenu = new JMenuItem("Configuracion");
+        archivo.add(configuracionMenu);
+
         archivo.addSeparator();
 
         cambiarColorMenu = new JMenuItem("Cambiar Color");
         archivo.add(cambiarColorMenu);
         cambiarColorMenu.setVisible(false);
+
+        reiniciarMenu = new JMenuItem("Reiniciar");
+        archivo.add(reiniciarMenu);
+        reiniciarMenu.setVisible(false);
 
         abrirMenu = new JMenuItem("Abrir");
         archivo.add(abrirMenu);
@@ -268,6 +366,8 @@ public class JewelQuestGUI extends JFrame {
         color1 = Color.WHITE;
         color2 = Color.BLACK;
         cambiarColorMenu.setVisible(true);
+        reiniciarMenu.setVisible(true);
+        configuracionMenu.setVisible(false);
 
         //Creación paneles de la ventana ppal
         ventanaNivel= new JPanel();
@@ -285,7 +385,7 @@ public class JewelQuestGUI extends JFrame {
         ventanaNivel.setBounds(0,0,principal.getWidth(),principal.getHeight());
         ventanaTablero.setBounds(0,0,(ventanaNivel.getWidth()/4)*3,principal.getHeight());
         ventanaNivel.setBackground(new Color(242, 153, 74, 255));
-        matrizTablero(6,6);
+        matrizTablero(row,column);
 
         //Etiqueta puntuación
         puntos = new JLabel();
@@ -357,7 +457,9 @@ public class JewelQuestGUI extends JFrame {
                 intermitente=!intermitente;
                 x+= width;
             }
-            intermitente=!intermitente;
+            if(column%2==0) {
+                intermitente = !intermitente;
+            }
             y+= heigth;
         }
     }
@@ -372,7 +474,7 @@ public class JewelQuestGUI extends JFrame {
         ventanaNivel.add(ventanaTablero, "Tablero");
         ventanaTablero.setBounds(0,0,(ventanaNivel.getWidth()/4)*3,principal.getHeight());
         jq.limpiar();
-        matrizTablero(6, 6);
+        matrizTablero(row, column);
         prepareAccionesJuego();
         updateStats();
     }
