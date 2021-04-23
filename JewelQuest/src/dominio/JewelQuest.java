@@ -3,6 +3,7 @@ package dominio;
 import javax.swing.*;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class JewelQuest {
     public Gema[][] tablero;
@@ -10,6 +11,7 @@ public class JewelQuest {
     private final int columns;
     private int score;
     private int movements;
+    public ArrayList<int[]> ganadores;
     int filaGanador, columnaGanador;
 
     /**
@@ -23,8 +25,10 @@ public class JewelQuest {
         this.tablero = new Gema[rows+4][columns+4];
         this.score = 0;
         this.movements = 0;
+        this.ganadores= new ArrayList<>();
         createTablero(rows, columns);
         limpiar();
+        this.ganadores.clear();
         this.score = 0;
     }
 
@@ -284,6 +288,15 @@ public class JewelQuest {
         int tipo = this.tablero[i][j].getType();
         switch (forma){
             case "Hor":
+                if (!inGanadores(new int[]{i ,j-1})) {
+                    ganadores.add(new int[]{i, j-1});
+                }
+                if (!inGanadores(new int[]{i, j})) {
+                    ganadores.add(new int[]{i, j});
+                }
+                if (!inGanadores(new int[]{i, j+1})) {
+                    ganadores.add(new int[]{i, j+1});
+                }
                 while(i-1 >= 2){
                     this.tablero[i][j].setType(this.tablero[i-1][j].getType());
                     this.tablero[i][j+1].setType(this.tablero[i-1][j+1].getType());
@@ -295,6 +308,15 @@ public class JewelQuest {
                 this.tablero[i][j-1].setType(generateRandInt());
                 break;
             case "Ver":
+                if (!inGanadores(new int[]{i-1,j})) {
+                    ganadores.add(new int[]{i-1, j});
+                }
+                if (!inGanadores(new int[]{i, j})) {
+                    ganadores.add(new int[]{i, j});
+                }
+                if (!inGanadores(new int[]{i+1, j})) {
+                    ganadores.add(new int[]{i+1, j});
+                }
                 i--;
                 while(i-1 >= 2){
                     this.tablero[i][j].setType(this.tablero[i-1][j].getType());
@@ -307,6 +329,15 @@ public class JewelQuest {
                 this.tablero[i+2][j].setType(generateRandInt());
                 break;
             case "Diag1":
+                if (!inGanadores(new int[]{i -1,j-1})) {
+                    ganadores.add(new int[]{i-1, j-1});
+                }
+                if (!inGanadores(new int[]{i, j})) {
+                    ganadores.add(new int[]{i, j});
+                }
+                if (!inGanadores(new int[]{i+1, j+1})) {
+                    ganadores.add(new int[]{i+1, j+1});
+                }
                 i++;
                 j++;
                 while(i-1 >= 2){
@@ -328,6 +359,16 @@ public class JewelQuest {
                 break;
 
             case "Diag2":
+
+                if (!inGanadores(new int[]{i+1, j-1})) {
+                    ganadores.add(new int[]{i+1, j-1});
+                }
+                if (!inGanadores(new int[]{i, j})) {
+                    ganadores.add(new int[]{i, j});
+                }
+                if (!inGanadores(new int[]{i-1, j+1})) {
+                    ganadores.add(new int[]{i-1, j+1});
+                }
                 i++;
                 j--;
                 while(i-1 >= 2) {
@@ -393,6 +434,7 @@ public class JewelQuest {
                 }
             }
         }
+        hayUno();
     }
 
     /**
@@ -467,6 +509,20 @@ public class JewelQuest {
      */
     public int getColumns() {
         return columns;
+    }
+    public boolean inGanadores(int[] coords){
+        for (int[] ganador: ganadores) {
+            if (coords[0]==ganador[0] && coords[1]==ganador[1]){
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
+     * Método que verifica si hay coordenadas erroneas en la lista de posiciones ganadas
+     */
+    private void hayUno(){
+        ganadores.removeIf(tupla -> tupla[0] == 1 || tupla[1] == 1);
     }
 
     public static void main(String[] args) {

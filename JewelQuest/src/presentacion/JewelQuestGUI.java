@@ -16,7 +16,7 @@ public class JewelQuestGUI extends JFrame {
     private JPanel principal,ventanaInicio, ventanaTablero, ventanaNivel, ventanaColor, vacio, ventanaConfiguracion;
     private CardLayout cd;
     private JButton[][] tablero;
-    private int row = 6, column=6;
+    private int row = 6, column=6, coloreadas=0;
     private JLabel puntos, movimientos, inicio,filas,columnas;
     private Color color1, color2;
     private JButton colorPpal, colorSec, guardarColores, volverColores, guardarConfiguracion, volverConfiguracion;
@@ -32,271 +32,6 @@ public class JewelQuestGUI extends JFrame {
         prepareElementos();
         prepareAcciones();
     }
-
-    /**
-     * Método encargado de asignar el listener para cuando se desee cerrar la ventana
-     */
-    private void prepareAcciones() {
-        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        //Salir de la app
-        addWindowListener(new WindowAdapter() {
-
-            @Override
-            public void windowClosing(WindowEvent e) {
-                salir();
-            }
-        });
-        prepareAccionesMenu();
-
-    }
-
-    /**
-     * Método que asigna los listeners a los items del menu
-     */
-    private void prepareAccionesMenu(){
-
-        nuevoMenu.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                nuevo();
-            }
-        });
-        salirMenu.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                salir();
-            }
-        });
-        abrirMenu.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                abrir();
-            }
-        });
-
-        salvarMenu.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guardar();
-            }
-        });
-
-        cambiarColorMenu.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cambiarColor();
-            }
-        });
-
-        reiniciarMenu.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                reiniciar();
-            }
-        });
-
-        configuracionMenu.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                configuracion();
-            }
-        });
-    }
-
-    /**
-     * Método que crea un listener para los botones del tablero y lo asigna a estos
-     */
-    public void prepareAccionesJuego(){
-        ActionListener casillaTablero = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Object o = e.getSource();
-                if (intermitente){
-                    for (int i = 0; i < row; i++) {
-                        for (int j = 0; j < column; j++) {
-                            if (tablero[i][j].equals(o)){
-                                fromI = i+2;
-                                fromJ = j+2;
-                            }
-                        }
-                    }
-                    intermitente = !intermitente;
-                }else if (!intermitente){
-                    for (int i = 0; i < row; i++) {
-                        for (int j = 0; j < column; j++) {
-                            if (tablero[i][j].equals(o)) {
-                                toI = i + 2;
-                                toJ = j + 2;
-                                jq.doMovement(fromI, fromJ, toI, toJ);
-                                refresque();
-
-                            }
-                        }
-                    }
-                    intermitente = !intermitente;
-                    cd.show(principal, "Tablero");
-                }
-            }
-        };
-
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < column; j++) {
-                tablero[i][j].addActionListener(casillaTablero);
-            }
-        }
-    }
-
-    /**
-     * Método que genera la ventana de configuración
-     */
-    private void configuracion(){
-        prepareElementosConfiguracion();
-        prepareAccionesConfiguracion();
-        cd.show(principal,"Configuracion");
-    }
-
-    /**
-     * Método que genera los botones y las casillas de la ventana de configuración
-     */
-    private void prepareElementosConfiguracion(){
-        ventanaConfiguracion = new JPanel();
-        ventanaConfiguracion.setLayout(null);
-        principal.add(ventanaConfiguracion,"Configuracion");
-
-        cRow = new JTextField("6");
-        cRow.setBounds((principal.getWidth()/8)*4,(principal.getHeight()/8)*2,principal.getWidth()/20,principal.getHeight()/16);
-        ventanaConfiguracion.add(cRow);
-
-        cColumn = new JTextField("6");
-        cColumn.setBounds((principal.getWidth()/8)*4,(principal.getHeight()/8)*4,principal.getWidth()/20,principal.getHeight()/16);
-        ventanaConfiguracion.add(cColumn);
-
-        filas = new JLabel("Filas");
-        filas.setBounds((principal.getWidth()/8)*4-50,(principal.getHeight()/8)*2,principal.getWidth()/20,principal.getHeight()/16);
-        filas.setFont(new Font("Monaco",Font.BOLD,20));
-        ventanaConfiguracion.add(filas);
-
-        columnas = new JLabel("columnas");
-        columnas.setBounds((principal.getWidth()/8)*4-100,(principal.getHeight()/8)*4,principal.getWidth()/10,principal.getHeight()/16);
-        columnas.setFont(new Font("Monaco",Font.BOLD,20));
-        ventanaConfiguracion.add(columnas);
-
-        volverConfiguracion = new JButton("Volver");
-        volverConfiguracion.setBounds(10,(principal.getHeight()/8)*7,(principal.getWidth()/8),principal.getHeight()/8);
-        ventanaConfiguracion.add(volverConfiguracion);
-
-        guardarConfiguracion = new JButton("Guardar");
-        guardarConfiguracion.setBounds((principal.getWidth()/8)*7-10,(principal.getHeight()/8)*7,(principal.getWidth()/8),principal.getHeight()/8);
-        ventanaConfiguracion.add(guardarConfiguracion);
-    }
-
-    /**+
-     * Método que genera los listeners de la ventana de configuración
-     */
-    private void prepareAccionesConfiguracion(){
-        volverConfiguracion.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                volverConfiguraciones();
-            }
-        });
-        guardarConfiguracion.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guardarConfiguraciones();
-            }
-        });
-    }
-
-    /**
-     * Método que sale de la ventana de configuración
-     */
-    private void volverConfiguraciones(){
-        cd.show(principal,"Inicio");
-    }
-
-    /**
-     * Método que guarda las configuraciones y cierra la ventana de configuración
-     */
-    private void guardarConfiguraciones(){
-        try {
-            row = Integer.parseInt(cRow.getText());
-            column = Integer.parseInt(cColumn.getText());
-            cd.show(principal, "Inicio");
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(ventanaConfiguracion,"Por favor ingrese solo numeros enteros.");
-        }
-    }
-
-    /**
-     * Método que genera un nuevo juego y lo muestra
-     */
-    private void nuevo(){
-        jq = new JewelQuest(row, column);
-        jqCopia = new JewelQuest(row,column);
-        jqCopia.tablero = jq.copiaMatriz();
-        prepareElementosTablero();
-        prepareAccionesJuego();
-        cd.show(principal,"Nivel");
-    }
-
-    /**
-     * Método que genera la pestaña de confirmación de salida
-     */
-    private void salir(){
-        int ans = JOptionPane.showConfirmDialog(this, "Desea salir?", "Salida", JOptionPane.YES_NO_OPTION);
-        if (ans==JOptionPane.YES_OPTION){
-            System.exit(0);
-        }
-    }
-
-    /**
-     * Método que genera la pestaña de seleccionar archivo a abrir
-     */
-    private void abrir() {
-        JFileChooser fc = new JFileChooser();
-        int sel = fc.showOpenDialog(this);
-
-        if (sel==JFileChooser.APPROVE_OPTION){
-            File archivo = fc.getSelectedFile();
-            String nombre = archivo.getName();
-            JOptionPane.showMessageDialog(null,"Funcionalidad Abrir en construccion.\n Archivo a abrir : "+nombre);
-        }
-    }
-
-    /**
-     * Método que genera la pestaña de seleccionar archivo a guardar
-     */
-    private void guardar(){
-        JFileChooser fc = new JFileChooser();
-        int sel =fc.showSaveDialog(this);
-
-        if (sel==JFileChooser.APPROVE_OPTION){
-            File archivo = fc.getSelectedFile();
-            String nombre = archivo.getName();
-            JOptionPane.showMessageDialog(null,"Funcionalidad Guardar en construccion.\n Archivo a guardar : "+nombre);
-        }
-    }
-
-    /**
-     * Método que genera la pestaña para realizar el cambio de color
-     */
-    private void cambiarColor(){
-        prepareElementosCambiarColor();
-        prepareAccionesCambiarColor();
-        cd.show(principal, "Color");
-    }
-
-    /**
-     * Método que reinicia la partida al tablero original
-     */
-    private void reiniciar(){
-        jq.tablero=jqCopia.copiaMatriz();
-        refresque();
-        jq.reiniciarStats();
-        updateStats();
-    }
-
     /**
      * Método que genera la ventana principal
      */
@@ -444,62 +179,173 @@ public class JewelQuestGUI extends JFrame {
     }
 
     /**
-     * Método que genera una matriz de botones dada su dimension
-     * @param row Cantidad de filas
-     * @param column Cantidad de columnas
+     * Método que genera los botones y las casillas de la ventana de configuración
      */
-    private void matrizTablero(int row, int column){
-        tablero = new JButton[row][column];
-        int heigth = ventanaTablero.getHeight()/row;
-        int width = ventanaTablero.getWidth()/column;
-        int x;
-        int y=0;
-        boolean intermitente=true;
-        for(int i=0;i<row;i++){
-            x=0;
-            for(int j=0;j<column;j++){
-                tablero[i][j]=new JButton();
-                tablero[i][j].setBounds(x,y,width,heigth);
-                tablero[i][j].setBorderPainted(false);
-                if(intermitente){
-                    tablero[i][j].setBackground(color1);
-                }
-                else{
-                    tablero[i][j].setBackground(color2);
-                }
-                tablero[i][j].setIcon(new ImageIcon(jq.tablero[i+2][j+2].getRuta()));
-                ventanaTablero.add(tablero[i][j]);
-                intermitente=!intermitente;
-                x+= width;
+    private void prepareElementosConfiguracion(){
+        ventanaConfiguracion = new JPanel();
+        ventanaConfiguracion.setLayout(null);
+        principal.add(ventanaConfiguracion,"Configuracion");
+
+        cRow = new JTextField("6");
+        cRow.setBounds((principal.getWidth()/8)*4,(principal.getHeight()/8)*2,principal.getWidth()/20,principal.getHeight()/16);
+        ventanaConfiguracion.add(cRow);
+
+        cColumn = new JTextField("6");
+        cColumn.setBounds((principal.getWidth()/8)*4,(principal.getHeight()/8)*4,principal.getWidth()/20,principal.getHeight()/16);
+        ventanaConfiguracion.add(cColumn);
+
+        filas = new JLabel("Filas");
+        filas.setBounds((principal.getWidth()/8)*4-50,(principal.getHeight()/8)*2,principal.getWidth()/20,principal.getHeight()/16);
+        filas.setFont(new Font("Monaco",Font.BOLD,20));
+        ventanaConfiguracion.add(filas);
+
+        columnas = new JLabel("columnas");
+        columnas.setBounds((principal.getWidth()/8)*4-100,(principal.getHeight()/8)*4,principal.getWidth()/10,principal.getHeight()/16);
+        columnas.setFont(new Font("Monaco",Font.BOLD,20));
+        ventanaConfiguracion.add(columnas);
+
+        volverConfiguracion = new JButton("Volver");
+        volverConfiguracion.setBounds(10,(principal.getHeight()/8)*7,(principal.getWidth()/8),principal.getHeight()/8);
+        ventanaConfiguracion.add(volverConfiguracion);
+
+        guardarConfiguracion = new JButton("Guardar");
+        guardarConfiguracion.setBounds((principal.getWidth()/8)*7-10,(principal.getHeight()/8)*7,(principal.getWidth()/8),principal.getHeight()/8);
+        ventanaConfiguracion.add(guardarConfiguracion);
+    }
+
+    /**
+     * Método encargado de asignar el listener para cuando se desee cerrar la ventana
+     */
+    private void prepareAcciones() {
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        //Salir de la app
+        addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                salir();
             }
-            if(column%2==0) {
-                intermitente = !intermitente;
+        });
+        prepareAccionesMenu();
+
+    }
+
+    /**
+     * Método que asigna los listeners a los items del menu
+     */
+    private void prepareAccionesMenu(){
+
+        nuevoMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                nuevo();
             }
-            y+= heigth;
+        });
+        salirMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                salir();
+            }
+        });
+        abrirMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                abrir();
+            }
+        });
+
+        salvarMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                guardar();
+            }
+        });
+
+        cambiarColorMenu.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cambiarColor();
+            }
+        });
+
+        reiniciarMenu.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reiniciar();
+            }
+        });
+
+        configuracionMenu.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                configuracion();
+            }
+        });
+    }
+
+    /**
+     * Método que crea un listener para los botones del tablero y lo asigna a estos
+     */
+    public void prepareAccionesJuego(){
+        ActionListener casillaTablero = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object o = e.getSource();
+                if (intermitente){
+                    for (int i = 0; i < row; i++) {
+                        for (int j = 0; j < column; j++) {
+                            if (tablero[i][j].equals(o)){
+                                fromI = i+2;
+                                fromJ = j+2;
+                            }
+                        }
+                    }
+                    intermitente = !intermitente;
+                }else if (!intermitente){
+                    for (int i = 0; i < row; i++) {
+                        for (int j = 0; j < column; j++) {
+                            if (tablero[i][j].equals(o)) {
+                                toI = i + 2;
+                                toJ = j + 2;
+                                jq.doMovement(fromI, fromJ, toI, toJ);
+                                refresque();
+
+                            }
+                        }
+                    }
+                    intermitente = !intermitente;
+                    cd.show(principal, "Tablero");
+                    if (gano()){
+                        JOptionPane.showMessageDialog(ventanaTablero,"felicidades has ganado");
+                        cd.show(principal,"Inicio");
+                    }
+                }
+            }
+        };
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                tablero[i][j].addActionListener(casillaTablero);
+            }
         }
     }
 
-    /**
-     * Método que actualiza la ventana
+    /**+
+     * Método que genera los listeners de la ventana de configuración
      */
-    private void refresque(){
-        ventanaNivel.remove(ventanaTablero);
-        ventanaTablero = new JPanel();
-        ventanaTablero.setLayout(null);
-        ventanaNivel.add(ventanaTablero, "Tablero");
-        ventanaTablero.setBounds(0,0,(ventanaNivel.getWidth()/4)*3,principal.getHeight());
-        jq.limpiar();
-        matrizTablero(row, column);
-        prepareAccionesJuego();
-        updateStats();
-    }
-
-    /**
-     * Método que actualiza el puntaje y los movimientos
-     */
-    private void updateStats(){
-        puntos.setText("<html><div style='text-align: center;'> Puntuación<br>" + jq.getScore() +"</div></html>");
-        movimientos.setText("<html><div style='text-align: center;'> Movimientos<br>" + jq.getMovements() + "</div></html>");
+    private void prepareAccionesConfiguracion(){
+        volverConfiguracion.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                volverConfiguraciones();
+            }
+        });
+        guardarConfiguracion.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                guardarConfiguraciones();
+            }
+        });
     }
 
     /**
@@ -536,6 +382,167 @@ public class JewelQuestGUI extends JFrame {
     }
 
     /**
+     * Método que genera la ventana de configuración
+     */
+    private void configuracion(){
+        prepareElementosConfiguracion();
+        prepareAccionesConfiguracion();
+        cd.show(principal,"Configuracion");
+    }
+
+    /**
+     * Método que sale de la ventana de configuración
+     */
+    private void volverConfiguraciones(){
+        cd.show(principal,"Inicio");
+    }
+
+    /**
+     * Método que guarda las configuraciones y cierra la ventana de configuración
+     */
+    private void guardarConfiguraciones(){
+        try {
+            row = Integer.parseInt(cRow.getText());
+            column = Integer.parseInt(cColumn.getText());
+            cd.show(principal, "Inicio");
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(ventanaConfiguracion,"Por favor ingrese solo numeros enteros.");
+        }
+    }
+
+    /**
+     * Método que genera un nuevo juego y lo muestra
+     */
+    private void nuevo(){
+        jq = new JewelQuest(row, column);
+        jqCopia = new JewelQuest(row,column);
+        jqCopia.tablero = jq.copiaMatriz();
+        prepareElementosTablero();
+        prepareAccionesJuego();
+        cd.show(principal,"Nivel");
+    }
+
+    /**
+     * Método que genera la pestaña de confirmación de salida
+     */
+    private void salir(){
+        int ans = JOptionPane.showConfirmDialog(this, "Desea salir?", "Salida", JOptionPane.YES_NO_OPTION);
+        if (ans==JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+    }
+
+    /**
+     * Método que genera la pestaña de seleccionar archivo a abrir
+     */
+    private void abrir() {
+        JFileChooser fc = new JFileChooser();
+        int sel = fc.showOpenDialog(this);
+
+        if (sel==JFileChooser.APPROVE_OPTION){
+            File archivo = fc.getSelectedFile();
+            String nombre = archivo.getName();
+            JOptionPane.showMessageDialog(null,"Funcionalidad Abrir en construccion.\n Archivo a abrir : "+nombre);
+        }
+    }
+
+    /**
+     * Método que genera la pestaña de seleccionar archivo a guardar
+     */
+    private void guardar(){
+        JFileChooser fc = new JFileChooser();
+        int sel =fc.showSaveDialog(this);
+
+        if (sel==JFileChooser.APPROVE_OPTION){
+            File archivo = fc.getSelectedFile();
+            String nombre = archivo.getName();
+            JOptionPane.showMessageDialog(null,"Funcionalidad Guardar en construccion.\n Archivo a guardar : "+nombre);
+        }
+    }
+
+    /**
+     * Método que genera la pestaña para realizar el cambio de color
+     */
+    private void cambiarColor(){
+        prepareElementosCambiarColor();
+        prepareAccionesCambiarColor();
+        cd.show(principal, "Color");
+    }
+
+    /**
+     * Método que reinicia la partida al tablero original
+     */
+    private void reiniciar(){
+        jq.tablero=jqCopia.copiaMatriz();
+        refresque();
+        jq.reiniciarStats();
+        updateStats();
+    }
+
+    /**
+     * Método que genera una matriz de botones dada su dimension
+     * @param row Cantidad de filas
+     * @param column Cantidad de columnas
+     */
+    private void matrizTablero(int row, int column){
+        tablero = new JButton[row][column];
+        int heigth = ventanaTablero.getHeight()/row;
+        int width = ventanaTablero.getWidth()/column;
+        int x;
+        int y=0;
+        boolean intermitente=true;
+        for(int i=0;i<row;i++){
+            x=0;
+            for(int j=0;j<column;j++){
+                tablero[i][j]=new JButton();
+                tablero[i][j].setBounds(x,y,width,heigth);
+                tablero[i][j].setBorderPainted(false);
+                if(intermitente){
+                    tablero[i][j].setBackground(color1);
+                }
+                else{
+                    tablero[i][j].setBackground(color2);
+                }
+                tablero[i][j].setIcon(new ImageIcon(jq.tablero[i+2][j+2].getRuta()));
+                ventanaTablero.add(tablero[i][j]);
+                intermitente=!intermitente;
+                x+= width;
+                if(jq.inGanadores(new int[]{i+2,j+2})){
+                    tablero[i][j].setBackground(new Color(0xC69900));
+                }
+            }
+            if(column%2==0) {
+                intermitente = !intermitente;
+            }
+            y+= heigth;
+        }
+    }
+
+    /**
+     * Método que actualiza la ventana
+     */
+    private void refresque(){
+        ventanaNivel.remove(ventanaTablero);
+        ventanaTablero = new JPanel();
+        ventanaTablero.setLayout(null);
+        ventanaNivel.add(ventanaTablero, "Tablero");
+        ventanaTablero.setBounds(0,0,(ventanaNivel.getWidth()/4)*3,principal.getHeight());
+        jq.limpiar();
+        matrizTablero(row, column);
+        prepareAccionesJuego();
+        updateStats();
+    }
+
+    /**
+     * Método que actualiza el puntaje y los movimientos
+     */
+    private void updateStats(){
+        puntos.setText("<html><div style='text-align: center;'> Puntuación<br>" + jq.getScore() +"</div></html>");
+        movimientos.setText("<html><div style='text-align: center;'> Movimientos<br>" + jq.getMovements() + "</div></html>");
+    }
+
+
+    /**
      * Método que genera la ventana para seleccionar el color principal
      */
     private void elegirColorPpal(){
@@ -566,6 +573,13 @@ public class JewelQuestGUI extends JFrame {
         cd.show(principal, "Nivel");
     }
 
+    /**
+     * Método que verifica si el jugador ha ganado
+     * @return true si ganó
+     */
+    private boolean gano(){
+        return jq.ganadores.size()-1==row*column;
+    }
 
     public static void main(String[] args) {
         JewelQuestGUI gui = new JewelQuestGUI();
