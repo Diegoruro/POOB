@@ -133,8 +133,6 @@ public class JewelQuestGUI extends JFrame {
                             }
                         }
                     }
-                    jq.prettyPrint();
-                    System.out.println();
                     intermitente = !intermitente;
                     cd.show(principal, "Tablero");
                 }
@@ -224,7 +222,6 @@ public class JewelQuestGUI extends JFrame {
         jqCopia.tablero = jq.copiaMatriz();
         prepareElementosTablero();
         prepareAccionesJuego();
-        jq.prettyPrint();
         cd.show(principal,"Nivel");
     }
 

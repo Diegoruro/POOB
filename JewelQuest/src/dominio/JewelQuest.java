@@ -444,7 +444,6 @@ public class JewelQuest {
 
     public static void main(String[] args) {
         JewelQuest jq = new JewelQuest(6,6);
-        jq.prettyPrint();
         Scanner sc = new Scanner(System.in);
         while (sc.hasNextInt()){
             int fromI = sc.nextInt();
