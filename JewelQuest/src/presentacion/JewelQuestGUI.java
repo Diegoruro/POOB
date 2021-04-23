@@ -146,12 +146,18 @@ public class JewelQuestGUI extends JFrame {
         }
     }
 
+    /**
+     * Método que genera la ventana de configuración
+     */
     private void configuracion(){
         prepareElementosConfiguracion();
         prepareAccionesConfiguracion();
         cd.show(principal,"Configuracion");
     }
 
+    /**
+     * Método que genera los botones y las casillas de la ventana de configuración
+     */
     private void prepareElementosConfiguracion(){
         ventanaConfiguracion = new JPanel();
         ventanaConfiguracion.setLayout(null);
@@ -184,6 +190,9 @@ public class JewelQuestGUI extends JFrame {
         ventanaConfiguracion.add(guardarConfiguracion);
     }
 
+    /**+
+     * Método que genera los listeners de la ventana de configuración
+     */
     private void prepareAccionesConfiguracion(){
         volverConfiguracion.addActionListener(new ActionListener(){
             @Override
@@ -199,10 +208,16 @@ public class JewelQuestGUI extends JFrame {
         });
     }
 
+    /**
+     * Método que sale de la ventana de configuración
+     */
     private void volverConfiguraciones(){
         cd.show(principal,"Inicio");
     }
 
+    /**
+     * Método que guarda las configuraciones y cierra la ventana de configuración
+     */
     private void guardarConfiguraciones(){
         try {
             row = Integer.parseInt(cRow.getText());
@@ -272,6 +287,9 @@ public class JewelQuestGUI extends JFrame {
         cd.show(principal, "Color");
     }
 
+    /**
+     * Método que reinicia la partida al tablero original
+     */
     private void reiniciar(){
         jq.tablero=jqCopia.copiaMatriz();
         refresque();

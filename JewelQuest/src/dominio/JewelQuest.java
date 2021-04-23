@@ -352,6 +352,10 @@ public class JewelQuest {
         score += 3;
     }
 
+    /**
+     * Método que retorna el tablero de juego
+     * @return Tablero actual
+     */
     public Gema[][] getTablero() {
         return tablero;
     }
@@ -391,6 +395,10 @@ public class JewelQuest {
         }
     }
 
+    /**
+     * Método que genera una copia del tablero
+     * @return Matriz de copia
+     */
     public Gema[][] copiaMatriz(){
         Gema[][] copia =new Gema[rows+4][columns+4];
         for (int i=0;i<rows+4;i++){
@@ -405,6 +413,9 @@ public class JewelQuest {
         return copia;
     }
 
+    /**
+     * Método que reinicia el puntaje y los movimientos
+     */
     public void reiniciarStats(){
         this.score=0;
         this.movements=0;
@@ -426,18 +437,34 @@ public class JewelQuest {
         }
     }
 
+    /**
+     * Método que retorna el puntaje
+     * @return Int puntaje
+     */
     public int getScore() {
         return score;
     }
 
+    /**
+     * Método que retorna la cantidad de movimientos
+     * @return Int movimientos
+     */
     public int getMovements() {
         return movements;
     }
 
+    /**
+     * Método que retorna la cantidad de filas
+     * @return int rows
+     */
     public int getRows() {
         return rows;
     }
 
+    /**
+     * Método que retorna la cantidad de columnas
+     * @return int columns
+     */
     public int getColumns() {
         return columns;
     }
