@@ -510,6 +510,12 @@ public class JewelQuest {
     public int getColumns() {
         return columns;
     }
+
+    /**
+     * Método que verifica si las coordenadas dadas ya fueron ganadoras
+     * @param coords coordenadas a verificar
+     * @return boolean si las coordenadas ya ganaron alguna vez
+     */
     public boolean inGanadores(int[] coords){
         for (int[] ganador: ganadores) {
             if (coords[0]==ganador[0] && coords[1]==ganador[1]){

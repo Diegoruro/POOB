@@ -18,10 +18,6 @@ public class Gema {
         this.ruta = rutas[type];
     }
 
-    /**
-     *
-     * @return
-     */
     public int getType() {
         return type;
     }
