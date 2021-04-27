@@ -13,6 +13,9 @@ public class SnOOPeGUI extends JFrame {
     JPanel principal, vistaMenuPrincipal;
     JMenuBar menuBar;
     JMenuItem abrirMenu, guardarMenu,guardarComoMenu, salirMenu;
+    JButton jugarBoton;
+    GameModes gameMode;
+    int width,height;
 
 
     public SnOOPeGUI(){
@@ -24,8 +27,8 @@ public class SnOOPeGUI extends JFrame {
 
         //Dimensiones de la pantalla para que quede centralizado y con dimensiones de 1/4 de la pantalla
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = (int) size.getWidth();
-        int height = (int) size.getHeight();
+        this.width = (int) size.getWidth();
+        this.height = (int) size.getHeight();
         this.setBounds(width / 4, height / 4,width / 2, height / 2);
 
         //Definimos el panel Principal para poder recorrer entre las diferentes vistas
@@ -44,10 +47,12 @@ public class SnOOPeGUI extends JFrame {
         vistaMenuPrincipal = new JPanel();
         principal.add(vistaMenuPrincipal, "MenuPpal");
         vistaMenuPrincipal.setLayout(null);
+        vistaMenuPrincipal.setBounds(this.width / 4, this.height / 4,this.width / 2,this.height / 2);
         vistaMenuPrincipal.setBackground(new Color(56, 87, 53));
 
-
-
+        jugarBoton = new JButton("Jugar");
+        jugarBoton.setBounds(vistaMenuPrincipal.getWidth()/4,vistaMenuPrincipal.getHeight()/4,vistaMenuPrincipal.getWidth()/4,vistaMenuPrincipal.getHeight()/4);
+        vistaMenuPrincipal.add(jugarBoton);
     }
 
     public void prepareElementosMenuBarra(){
@@ -76,6 +81,7 @@ public class SnOOPeGUI extends JFrame {
         archivo.add(salirMenu);
     }
 
+
     public void prepareAcciones(){
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
@@ -90,7 +96,12 @@ public class SnOOPeGUI extends JFrame {
     }
 
     public void prepareAccionesMenu(){
-
+        jugarBoton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jugar();
+            }
+        });
     }
     public void prepareAccionesMenuBarra(){
         //Acciones de las opciones de archivo
@@ -119,6 +130,12 @@ public class SnOOPeGUI extends JFrame {
             }
         });
     }
+
+    private void jugar(){
+        gameMode = new GameModes(this);
+        cd.show(principal, "GameMode");
+    }
+
     public void abrir(){
         JFileChooser fc = new JFileChooser();
         int sel = fc.showOpenDialog(this);
