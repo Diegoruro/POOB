@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="automataConsola">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/automataConsola/Automata.jar!/" />
+      <root url="jar://$PROJECT_DIR$/automataConsola/AutomataGUI.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

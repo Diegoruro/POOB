@@ -81,7 +81,9 @@ public class Sistema {
                 Ruta ruta = findRuta(paradas[i][1]);
                 assert ruta != null;
                 if(ruta.getEstaciones().contains(estacion)){
-                    time += ruta.getEstaciones().size();
+                    for (Estacion aux: ruta.getEstaciones()){
+
+                    }
                 }
             }
         }

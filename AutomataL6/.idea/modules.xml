@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AguasRuiz.iml" filepath="$PROJECT_DIR$/AguasRuiz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/automataConsola/automataConsola.iml" filepath="$PROJECT_DIR$/automataConsola/automataConsola.iml" />
+    </modules>
+  </component>
+</project>
