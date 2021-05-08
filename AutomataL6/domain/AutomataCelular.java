@@ -613,7 +613,7 @@ public class AutomataCelular implements Serializable{
      * @param line Linea a cargar
      * @throws AutomataExcepcion
      */
-    public void cargarLinea(String line) throws AutomataExcepcion{
+    private void cargarLinea(String line) throws AutomataExcepcion{
         char estadoChar;
         int i = -1,j=-1;
         String[] info = line.split(" ");
@@ -622,12 +622,8 @@ public class AutomataCelular implements Serializable{
         }
 
         try {
-            System.out.println("Antes: "+info[1]);
-            System.out.println("Antes: "+info[2]);
             i = Integer.parseInt(info[1]);
             j = Integer.parseInt(info[2]);
-            System.out.println("Despues: "+i);
-            System.out.println("Despues: "+j);
         }catch (NumberFormatException e){
             throw new AutomataExcepcion(AutomataExcepcion.ERROR_NUMERO);
         }
@@ -655,7 +651,7 @@ public class AutomataCelular implements Serializable{
      * @param line Linea a cargar
      * @throws AutomataExcepcion
      */
-    public void cargarLinea00(String line) throws AutomataExcepcion {
+    private void cargarLinea00(String line) throws AutomataExcepcion {
         char estadoChar;
         int i = -1,j=-1;
         String[] info = line.split(" ");
