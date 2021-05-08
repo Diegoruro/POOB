@@ -210,7 +210,6 @@ public class AutomataCelular implements Serializable{
         return vivos;
     }
 
-    //Diagrama
     /**
      * Método que abre un archivo y lo carga en el gui
      * @param archivo Archivo  a abrir
@@ -278,7 +277,6 @@ public class AutomataCelular implements Serializable{
         throw new AutomataExcepcion(AutomataExcepcion.OPCION_EN_CONSTRUCCION);
     }
 
-    //Diagrama
     /**
      * Método que guarda en un archivo la informacíon del programa
      * @param archivo Archivo a guardar
@@ -326,7 +324,6 @@ public class AutomataCelular implements Serializable{
     }
 
 
-    //Diagrama
     /**
      * Método que exporta un archivo
      * @param archivo Archivo  a exportar
@@ -437,7 +434,7 @@ public class AutomataCelular implements Serializable{
         throw new AutomataExcepcion(AutomataExcepcion.OPCION_EN_CONSTRUCCION);
     }
 
-    //Diagrama
+
     /**
      * Método que importa en un archivo y lo carga en el gui
      * @param archivo Archivo a importar
