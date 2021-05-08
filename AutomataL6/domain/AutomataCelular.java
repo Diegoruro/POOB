@@ -1,6 +1,8 @@
 package domain;
 import javax.swing.*;
 import java.io.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 
@@ -27,7 +29,7 @@ public class AutomataCelular implements Serializable{
     /**Retorna la lista de los vecinos que rodean el elemento en la posicion indiciada
      * @param    fila numero de fila de la posicion del elemento
      *           columna numero de columna de la posicion del elemento
-     * @return  
+     * @return  Vecinos de la posición
      */
     
     public Elemento[] vecinos(int fila, int columna)
@@ -46,14 +48,14 @@ public class AutomataCelular implements Serializable{
     }
     
     /**Retorna el automata en el que se encuentra
-    @return 
+     * @return Automata
      */
     public Elemento[][] getAutomata(){
         return this.automata;
     }
     
     /**Retorna la longitud del automata 
-    @return 
+     * @return Longitud automata
      */
     public int  getLongitud(){
         return LONGITUD;
@@ -68,10 +70,11 @@ public class AutomataCelular implements Serializable{
         return automata[f][c];
     }
 
-    /**Retorna el elemento de la posicion indicada de la copia ampliada de la matriz
-    @param   int fila numero de fila de la posicion del elemento
+    /**
+     * Retorna el elemento de la posicion indicada de la copia ampliada de la matriz
+     * @param   int fila numero de fila de la posicion del elemento
              int columna numero de columna de la posicion del elemento
-    @return 
+     * @return  Elemento de la matriz
      */
     public Elemento getElementoMatrix(int f,int c){
         return this.newMatrix[f][c];
@@ -87,7 +90,8 @@ public class AutomataCelular implements Serializable{
         automata[f][c]=nueva;
     }
 
-    /**inicializa los elementos especificados en el codigo
+    /**
+     * inicializa los elementos especificados en el codigo
      */
     public void algunosElementos(){
         // Indiana y 007
@@ -120,7 +124,8 @@ public class AutomataCelular implements Serializable{
         //Calefactor calefactor = new Calefactor(this, 15,15);
     }
     
-    /**Pasa un instante de tiempo y muestra el cambio de las celulas
+    /**
+     * Pasa un instante de tiempo y muestra el cambio de las celulas
      */
     public void ticTac(){
         for (int i=0; i<LONGITUD;i++){
@@ -171,7 +176,8 @@ public class AutomataCelular implements Serializable{
         }
     }    
     
-    /**copia la matriz del automata y la amplia en una fila y columna por cada lado
+    /**
+     * copia la matriz del automata y la amplia en una fila y columna por cada lado
     */
     public void modifyMatrix(){
         Elemento[][] matrix = this.automata;
@@ -192,7 +198,7 @@ public class AutomataCelular implements Serializable{
     /**
      * Retorna los vecinos vivos al rededor de una celula
     * @param   vecinos lista de los vecinos al rededor de una celula
-    * @return
+    * @return Vecinos vivos alrededor
     */
     public int vecinosVivos(Elemento[] vecinos){
         int vivos = 0;
@@ -204,11 +210,12 @@ public class AutomataCelular implements Serializable{
         return vivos;
     }
 
+    //Diagrama
     /**
      * Método que abre un archivo y lo carga en el gui
      * @param archivo Archivo  a abrir
      * @return AutomataCelular
-     * @throws AutomataExcepcion - Método en construcción
+     * @throws AutomataExcepcion
      */
     public static AutomataCelular abrir(File archivo) throws AutomataExcepcion {
         if (!archivo.getAbsolutePath().endsWith(".dat")){
@@ -238,7 +245,7 @@ public class AutomataCelular implements Serializable{
      * Método que abre un archivo y lo carga en el gui
      * @param archivo Archivo  a abrir
      * @return AutomataCelular
-     * @throws AutomataExcepcion - Método en construcción
+     * @throws AutomataExcepcion
      */
     public static AutomataCelular abrir01(File archivo) throws IOException{
         try {
@@ -265,16 +272,17 @@ public class AutomataCelular implements Serializable{
      * Método que abre un archivo y lo carga en el gui
      * @param archivo Archivo  a abrir
      * @return AutomataCelular
-     * @throws AutomataExcepcion - Método en construcción
+     * @throws AutomataExcepcion
      */
     public static AutomataCelular abrir00(File archivo) throws AutomataExcepcion{
         throw new AutomataExcepcion(AutomataExcepcion.OPCION_EN_CONSTRUCCION);
     }
 
+    //Diagrama
     /**
      * Método que guarda en un archivo la informacíon del programa
      * @param archivo Archivo a guardar
-     * @throws AutomataExcepcion - Método en construcción
+     * @throws AutomataExcepcion
      */
     public void guardar(File archivo) throws AutomataExcepcion {
         if (!archivo.getAbsolutePath().endsWith(".dat")){
@@ -294,7 +302,7 @@ public class AutomataCelular implements Serializable{
     /**
      * Método que guarda en un archivo la informacíon del programa
      * @param archivo Archivo a guardar
-     * @throws AutomataExcepcion - Método en construcción
+     * @throws AutomataExcepcion
      */
     public void guardar01(File archivo) throws IOException {
         try {
@@ -311,18 +319,46 @@ public class AutomataCelular implements Serializable{
     /**
      * Método que guarda en un archivo la informacíon del programa
      * @param archivo Archivo a guardar
-     * @throws AutomataExcepcion - Método en construcción
+     * @throws AutomataExcepcion
      */
     public void guardar00(File archivo) throws AutomataExcepcion{
         throw new AutomataExcepcion(AutomataExcepcion.OPCION_EN_CONSTRUCCION);
     }
 
+
+    //Diagrama
     /**
-     * Método que importa un archivo y lo carga en el gui
-     * @param archivo Archivo  a importar
-     * @throws AutomataExcepcion - Método en construcción
+     * Método que exporta un archivo
+     * @param archivo Archivo  a exportar
+     * @throws AutomataExcepcion
      */
     public void exportar(File archivo) throws AutomataExcepcion{
+        if (!archivo.getAbsolutePath().endsWith(".txt")){
+            throw new AutomataExcepcion(AutomataExcepcion.ERROR_TIPO_EXPORTAR);
+        }
+        try{
+            PrintWriter pw = new PrintWriter(new FileOutputStream(archivo.getAbsolutePath()));
+
+            for (int i=0; i<LONGITUD;i++){
+                for (int j=0; j<LONGITUD;j++){
+                    if (automata[i][j]!=null) {
+                        pw.println(automata[i][j].getClass().toString().replace("class ", "") + " " + i + " " + j + " " + automata[i][j].isVivo());
+                    }
+                }
+            }
+
+            pw.close();
+        }catch (IOException e){
+            throw new AutomataExcepcion(AutomataExcepcion.ERROR_EXPORTAR);
+        }
+    }
+
+    /**
+     * Método que exporta un archivo
+     * @param archivo Archivo  a exportar
+     * @throws AutomataExcepcion
+     */
+    public void exportar03(File archivo) throws AutomataExcepcion{
         if (!archivo.getAbsolutePath().endsWith(".txt")){
             throw new AutomataExcepcion(AutomataExcepcion.ERROR_TIPO_EXPORTAR);
         }
@@ -344,9 +380,35 @@ public class AutomataCelular implements Serializable{
     }
 
     /**
-     * Método que importa un archivo y lo carga en el gui
-     * @param archivo Archivo  a importar
-     * @throws AutomataExcepcion - Método en construcción
+     * Método que exporta un archivo
+     * @param archivo Archivo  a exportar
+     * @throws AutomataExcepcion
+     */
+    public void exportar02(File archivo) throws AutomataExcepcion{
+        if (!archivo.getAbsolutePath().endsWith(".txt")){
+            throw new AutomataExcepcion(AutomataExcepcion.ERROR_TIPO_EXPORTAR);
+        }
+        try{
+            PrintWriter pw = new PrintWriter(new FileOutputStream(archivo.getAbsolutePath()));
+
+            for (int i=0; i<LONGITUD;i++){
+                for (int j=0; j<LONGITUD;j++){
+                    if (automata[i][j]!=null) {
+                        pw.println(automata[i][j].getClass().getSimpleName() + " " + i + " " + j + " " + automata[i][j].isVivo());
+                    }
+                }
+            }
+
+            pw.close();
+        }catch (IOException e){
+            throw new AutomataExcepcion(AutomataExcepcion.ERROR_EXPORTAR);
+        }
+    }
+
+    /**
+     * Método que exporta un archivo
+     * @param archivo Archivo  a exportar
+     * @throws AutomataExcepcion
      */
     public void exportar01(File archivo) throws AutomataExcepcion{
         try{
@@ -367,20 +429,109 @@ public class AutomataCelular implements Serializable{
     }
 
     /**
-     * Método que importa un archivo y lo carga en el gui
-     * @param archivo Archivo  a importar
-     * @throws AutomataExcepcion - Método en construcción
+     * Método que exporta un archivo
+     * @param archivo Archivo  a exportar
+     * @throws AutomataExcepcion
      */
     public void exportar00(File archivo) throws AutomataExcepcion{
         throw new AutomataExcepcion(AutomataExcepcion.OPCION_EN_CONSTRUCCION);
     }
 
+    //Diagrama
     /**
-     * Método que exporta en un archivo la informacíon del programa
-     * @param archivo Archivo a exportar
-     * @throws AutomataExcepcion - Método en construcción
+     * Método que importa en un archivo y lo carga en el gui
+     * @param archivo Archivo a importar
+     * @throws AutomataExcepcion
      */
     public AutomataCelular importar(File archivo) throws AutomataExcepcion{
+        int linea = 0;
+
+        if (!archivo.getAbsolutePath().endsWith(".txt")){
+            throw new AutomataExcepcion(AutomataExcepcion.ERROR_TIPO_IMPORTAR);
+        }
+
+        for (int i=0;i<LONGITUD;i++){
+            for (int j=0;j<LONGITUD;j++){
+                automata[i][j]=null;
+            }
+        }
+
+        for (int i=0;i<LONGITUD+2;i++){
+            for (int j=0;j<LONGITUD+2;j++){
+                newMatrix[i][j]=null;
+            }
+        }
+
+        try{
+            BufferedReader br =new BufferedReader(new FileReader(archivo.getAbsolutePath()));
+
+            String line = br.readLine();
+            linea = 1;
+
+            while (line != null){
+                line = line.trim();
+
+                cargarLinea(line);
+
+                line = br.readLine();
+                linea++;
+            }
+
+            br.close();
+            return this;
+
+        }catch(IOException | AutomataExcepcion e){
+            throw new AutomataExcepcion("Linea " + linea + "\n" + e.getMessage());
+        }
+    }
+
+    /**
+     * Método que importa en un archivo y lo carga en el gui
+     * @param archivo Archivo a importar
+     * @throws AutomataExcepcion
+     */
+    public AutomataCelular importar03(File archivo) throws AutomataExcepcion{
+        int linea = 0;
+
+        if (!archivo.getAbsolutePath().endsWith(".txt")){
+            throw new AutomataExcepcion(AutomataExcepcion.ERROR_TIPO_IMPORTAR);
+        }
+
+        for (int f=0;f<LONGITUD;f++){
+            for (int c=0;c<LONGITUD;c++){
+                automata[f][c]=null;
+            }
+        }
+
+        try{
+            BufferedReader br =new BufferedReader(new FileReader(archivo.getAbsolutePath()));
+
+            String line = br.readLine();
+            linea = 1;
+
+            while (line != null){
+                line = line.trim();
+
+                cargarLinea(line);
+
+                line = br.readLine();
+                linea++;
+            }
+
+            br.close();
+            return this;
+
+        }catch(IOException | AutomataExcepcion e){
+            throw new AutomataExcepcion("Linea " + linea + "\n" + e.getMessage());
+        }
+    }
+
+    /**
+     * Método que importa en un archivo y lo carga en el gui
+     * @param archivo Archivo a importar
+     * @throws AutomataExcepcion
+     */
+    public AutomataCelular importar02(File archivo) throws AutomataExcepcion{
         if (!archivo.getAbsolutePath().endsWith(".txt")){
             throw new AutomataExcepcion(AutomataExcepcion.ERROR_TIPO_IMPORTAR);
         }
@@ -414,9 +565,9 @@ public class AutomataCelular implements Serializable{
     }
 
     /**
-     * Método que exporta en un archivo la informacíon del programa
-     * @param archivo Archivo a exportar
-     * @throws AutomataExcepcion - Método en construcción
+     * Método que importa en un archivo y lo carga en el gui
+     * @param archivo Archivo a importar
+     * @throws AutomataExcepcion
      */
     public AutomataCelular importar01(File archivo) throws AutomataExcepcion{
         for (int f=0;f<LONGITUD;f++){
@@ -448,15 +599,63 @@ public class AutomataCelular implements Serializable{
     }
 
     /**
-     * Método que exporta en un archivo la informacíon del programa
-     * @param archivo Archivo a exportar
-     * @throws AutomataExcepcion - Método en construcción
+     * Método que importa en un archivo y lo carga en el gui
+     * @param archivo Archivo a importar
+     * @throws AutomataExcepcion
      */
     public static AutomataCelular importar00(File archivo) throws AutomataExcepcion{
         throw new AutomataExcepcion(AutomataExcepcion.OPCION_EN_CONSTRUCCION);
     }
 
-    public void cargarLinea(String line) throws AutomataExcepcion {
+    //Diagrama
+    /**
+     * Método que carga una linea y la agrega al automata
+     * @param line Linea a cargar
+     * @throws AutomataExcepcion
+     */
+    public void cargarLinea(String line) throws AutomataExcepcion{
+        char estadoChar;
+        int i = -1,j=-1;
+        String[] info = line.split(" ");
+        if (info.length!=4){
+            throw new AutomataExcepcion(AutomataExcepcion.ERROR_INFORMACIÓN);
+        }
+
+        try {
+            System.out.println("Antes: "+info[1]);
+            System.out.println("Antes: "+info[2]);
+            i = Integer.parseInt(info[1]);
+            j = Integer.parseInt(info[2]);
+            System.out.println("Despues: "+i);
+            System.out.println("Despues: "+j);
+        }catch (NumberFormatException e){
+            throw new AutomataExcepcion(AutomataExcepcion.ERROR_NUMERO);
+        }
+        boolean estado = Boolean.parseBoolean(info[3]);
+
+        if (estado){
+            estadoChar = 'v';
+        }else {
+            estadoChar = 'm';
+        }
+        try {
+            Class<?> nuevaClase = Class.forName(info[0]);
+            Constructor<?> nuevoCons = nuevaClase.getConstructor(AutomataCelular.class, int.class, int.class);
+            Object nuevoObjeto = nuevoCons.newInstance(this, i, j);
+            automata[i][i] = (Elemento)nuevoObjeto;
+            automata[i][j].setEstadoSiguiente(estadoChar);
+            automata[i][j].cambie();
+        } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e) {
+            throw new AutomataExcepcion(AutomataExcepcion.ERROR_CREAR);
+        }
+    }
+
+    /**
+     * Método que carga una linea y la agrega al automata
+     * @param line Linea a cargar
+     * @throws AutomataExcepcion
+     */
+    public void cargarLinea00(String line) throws AutomataExcepcion {
         char estadoChar;
         int i = -1,j=-1;
         String[] info = line.split(" ");
