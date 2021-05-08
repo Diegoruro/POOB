@@ -642,7 +642,7 @@ public class AutomataCelular implements Serializable{
             Class<?> nuevaClase = Class.forName(info[0]);
             Constructor<?> nuevoCons = nuevaClase.getConstructor(AutomataCelular.class, int.class, int.class);
             Object nuevoObjeto = nuevoCons.newInstance(this, i, j);
-            automata[i][i] = (Elemento)nuevoObjeto;
+            automata[i][j] = (Elemento)nuevoObjeto;
             automata[i][j].setEstadoSiguiente(estadoChar);
             automata[i][j].cambie();
         } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e) {
