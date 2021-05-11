@@ -1,0 +1,7 @@
+Dorado
+Promedio Recorrido: 40.0
+Estacion Estacion@3b8aa519
+Estacion Estacion@2e8c429
+Estacion Estacion@17bf7b9d
+Estacion Estacion@730a525e
+Estacion Estacion@cb398e7d

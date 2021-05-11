@@ -13,4 +13,23 @@ public class Troncal {
         this.estaciones = new LinkedList<>();
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public float getPromedioRecorrido() {
+        return promedioRecorrido;
+    }
+
+    public LinkedList<Integer> getTramos() {
+        return tramos;
+    }
+
+    public LinkedList<Estacion> getEstaciones() {
+        return estaciones;
+    }
+
+    public void addEstacion(Estacion estacion){
+        this.estaciones.add(estacion);
+    }
 }

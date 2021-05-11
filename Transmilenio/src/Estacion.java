@@ -12,4 +12,12 @@ public class Estacion {
     public String getNombre() {
         return nombre;
     }
+
+    public char getNivelOcu() {
+        return nivelOcu;
+    }
+
+    public int gettEspera() {
+        return tEspera;
+    }
 }
